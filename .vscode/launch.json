@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "name": "Server",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}/server/",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"]
+    },
+    {
+      "name": "Client",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}/client/",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Server/Client",
+      "configurations": ["Server", "Client"]
+    }
+  ]
+}
