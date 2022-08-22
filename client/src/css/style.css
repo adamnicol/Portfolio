@@ -1,8 +1,34 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.header {
+  background-color: black;
+}
+.header .main-menu {
+  height: 80px;
+}
+.header .main-menu .nav-link {
+  color: #ffffff;
+  font-size: 18px;
+  text-decoration: none;
+}
+.header .main-menu .nav-link:hover {
+  color: lightgray;
+}
+.header .login {
+  background-color: black;
+}
+.header .login .login-link {
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+}
+.header .login .login-link:hover {
+  color: lightgray;
+}
+.fa-icon {
+  color: white;
 }
