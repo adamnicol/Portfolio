@@ -1,17 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import "./css/bootstrap.min.css";
-import "./css/style.css";
-
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import SidePanel from "./components/layout/SidePanel";
 import Home from "./components/Home";
+
+import "bootstrap/dist/css/bootstrap.css";
+import "./css/style.css";
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
-      <div className="container">
+      <SidePanel />
+      <div className="container-fluid">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" />

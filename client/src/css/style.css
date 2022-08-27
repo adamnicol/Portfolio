@@ -1,34 +1,89 @@
+@font-face {
+  font-family: Rajdhani;
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(fonts/Rajdhani-Light.ttf) format("truetype");
+}
+@font-face {
+  font-family: Rajdhani;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Rajdhani-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: Rajdhani;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/Rajdhani-Medium.ttf) format("truetype");
+}
+@font-face {
+  font-family: Rajdhani;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/Rajdhani-SemiBold.ttf) format("truetype");
+}
+@font-face {
+  font-family: Rajdhani;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(fonts/Rajdhani-Bold.ttf) format("truetype");
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: lightgrey;
+  font-family: Rajdhani;
 }
-.header {
-  background-color: black;
+.side-panel {
+  float: left;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
 }
-.header .main-menu {
-  height: 80px;
+.side-panel .side-panel-left {
+  background-color: #001919;
+  text-align: center;
 }
-.header .main-menu .nav-link {
-  color: #ffffff;
+.side-panel .side-panel-left .fa-icon {
+  color: gray;
+}
+.side-panel .side-panel-right {
+  width: 180px;
+  background-color: #003232;
+  padding-left: 10px;
+}
+.side-panel .side-panel-right .menu-link {
+  text-decoration: none;
   font-size: 18px;
-  text-decoration: none;
+  font-weight: 600;
+  color: lightgrey;
+  line-height: 0px;
 }
-.header .main-menu .nav-link:hover {
-  color: lightgray;
-}
-.header .login {
-  background-color: black;
-}
-.header .login .login-link {
+.side-panel .side-panel-right .menu-link:hover {
   color: white;
-  font-size: 16px;
-  text-decoration: none;
 }
-.header .login .login-link:hover {
-  color: lightgray;
+.side-panel .side-panel-header {
+  height: 80px;
+  margin-top: 20px;
 }
-.fa-icon {
-  color: white;
+.side-panel .side-panel-header .header-image {
+  border-radius: 50%;
+  width: 40px;
+}
+.side-panel .side-panel-header .header-text {
+  font-size: 26px;
+  font-weight: 600;
+  color: lightgrey;
+}
+.side-panel ul {
+  list-style-type: none;
+  overflow: hidden;
+  padding: 0px;
+}
+.side-panel li {
+  line-height: 50px;
 }
