@@ -35,7 +35,7 @@
 }
 body {
   margin: 0;
-  background-color: lightgrey;
+  background-color: white;
   font-family: Rajdhani;
 }
 .side-panel {
@@ -51,10 +51,14 @@ body {
 .side-panel .side-panel-left .fa-icon {
   color: gray;
 }
+.side-panel .side-panel-left .fa-icon:hover {
+  color: white;
+}
 .side-panel .side-panel-right {
   width: 180px;
   background-color: #003232;
-  padding-left: 10px;
+  transition: 0.2s;
+  overflow-x: hidden;
 }
 .side-panel .side-panel-right .menu-link {
   text-decoration: none;
@@ -62,6 +66,7 @@ body {
   font-weight: 600;
   color: lightgrey;
   line-height: 0px;
+  margin-left: 10px;
 }
 .side-panel .side-panel-right .menu-link:hover {
   color: white;
@@ -75,9 +80,10 @@ body {
   width: 40px;
 }
 .side-panel .side-panel-header .header-text {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 600;
   color: lightgrey;
+  margin-left: 10px;
 }
 .side-panel ul {
   list-style-type: none;

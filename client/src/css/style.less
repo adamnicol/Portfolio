@@ -40,7 +40,7 @@
 
 body {
   margin: 0;
-  background-color: lightgrey;
+  background-color: white;
   font-family: Rajdhani;
 }
 
@@ -57,12 +57,17 @@ body {
     .fa-icon {
       color: gray;
     }
+
+    .fa-icon:hover {
+      color: white;
+    }
   }
 
   .side-panel-right {
     width: 180px;
     background-color: rgb(0, 50, 50);
-    padding-left: 10px;
+    transition: 0.2s;
+    overflow-x: hidden;
 
     .menu-link {
       text-decoration: none;
@@ -70,6 +75,7 @@ body {
       font-weight: 600;
       color: lightgrey;
       line-height: 0px;
+      margin-left: 10px;
     }
 
     .menu-link:hover {
@@ -87,9 +93,10 @@ body {
     }
 
     .header-text {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 600;
       color: lightgrey;
+      margin-left: 10px;
     }
   }
 
