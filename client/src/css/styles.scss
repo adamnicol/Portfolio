@@ -53,6 +53,7 @@ body {
   height: 100vh;
 
   .side-panel-left {
+    width: 45px;
     background-color: rgb(0, 25, 25);
     text-align: center;
 
@@ -89,7 +90,7 @@ body {
     height: 80px;
     margin-top: 20px;
 
-    .header-image {
+    .logo-image {
       border-radius: 50%;
       width: 40px;
     }

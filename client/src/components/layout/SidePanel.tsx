@@ -39,7 +39,11 @@ function SidePanel() {
       <div className="side-panel-left">
         <div className="side-panel-header">
           <a href="#" title="Toggle Compact Mode" onClick={toggleCompactMode}>
-            <img className="header-image" src="images/photo.jpg" />
+            <img
+              className="logo-image"
+              src={require("../../images/logo.jpg")}
+              alt="logo"
+            />
           </a>
         </div>
         <ul>
