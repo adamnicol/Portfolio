@@ -21,13 +21,15 @@ const menuLinkActiveStyle = {
   borderColor: "teal",
 };
 
-let compactMenu: boolean = false;
+let isCompactMode: boolean = false;
 
-function toggleCompactMenu() {
+function toggleCompactMode(e: React.MouseEvent<HTMLElement>) {
+  e.preventDefault();
+
   const menu = document.getElementById("menu");
   if (menu !== null) {
-    menu.style.width = compactMenu ? "180px" : "0";
-    compactMenu = !compactMenu;
+    menu.style.width = isCompactMode ? "180px" : "0";
+    isCompactMode = !isCompactMode;
   }
 }
 
@@ -36,11 +38,7 @@ function SidePanel() {
     <div className="side-panel">
       <div className="side-panel-left">
         <div className="side-panel-header">
-          <a
-            href="javascript:void(0)"
-            title="Toggle Compact Menu"
-            onClick={toggleCompactMenu}
-          >
+          <a href="#" title="Toggle Compact Mode" onClick={toggleCompactMode}>
             <img className="header-image" src="images/photo.jpg" />
           </a>
         </div>
