@@ -5,8 +5,8 @@ import Footer from "./components/layout/Footer";
 import SidePanel from "./components/layout/SidePanel";
 import Home from "./components/Home";
 
-import "./css/generated/bootstrap.min.css";
-import "./css/generated/styles.min.css";
+import "./css/bootstrap.scss";
+import "./css/styles.scss";
 
 function App() {
   return (
