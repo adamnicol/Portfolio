@@ -5,14 +5,14 @@ import Footer from "./components/layout/Footer";
 import SidePanel from "./components/layout/SidePanel";
 import Home from "./components/Home";
 
-import "bootstrap/dist/css/bootstrap.css";
-import "./css/style.css";
+import "./css/bootstrap.css";
+import "./css/styles.css";
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
       <SidePanel />
+      <Header />
       <div className="container-fluid">
         <Routes>
           <Route path="/" element={<Home />} />

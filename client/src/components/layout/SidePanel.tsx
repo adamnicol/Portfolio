@@ -71,7 +71,7 @@ function SidePanel() {
                     isActive ? menuLinkActiveStyle : {}
                   }
                 >
-                  {link.text}
+                  {link.text.toUpperCase()}
                 </NavLink>
               </li>
             );

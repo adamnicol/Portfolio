@@ -38,6 +38,7 @@ body {
   background-color: white;
   font-family: Rajdhani;
 }
+
 .side-panel {
   float: left;
   display: flex;
@@ -45,7 +46,7 @@ body {
   height: 100vh;
 }
 .side-panel .side-panel-left {
-  background-color: #001919;
+  background-color: rgb(0, 25, 25);
   text-align: center;
 }
 .side-panel .side-panel-left .fa-icon {
@@ -56,7 +57,7 @@ body {
 }
 .side-panel .side-panel-right {
   width: 180px;
-  background-color: #003232;
+  background-color: rgb(0, 50, 50);
   transition: 0.2s;
   overflow-x: hidden;
 }
@@ -93,3 +94,7 @@ body {
 .side-panel li {
   line-height: 50px;
 }
+
+a:focus {
+  outline: 0;
+}/*# sourceMappingURL=styles.css.map */
