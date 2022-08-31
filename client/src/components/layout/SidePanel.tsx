@@ -21,31 +21,10 @@ const menuLinkActiveStyle = {
   borderColor: "teal",
 };
 
-let isCompactMode: boolean = false;
-
-function toggleCompactMode(e: React.MouseEvent<HTMLElement>) {
-  e.preventDefault();
-
-  const menu = document.getElementById("menu");
-  if (menu !== null) {
-    menu.style.width = isCompactMode ? "180px" : "0";
-    isCompactMode = !isCompactMode;
-  }
-}
-
 function SidePanel() {
   return (
-    <div className="side-panel">
+    <nav className="side-panel">
       <div className="side-panel-left">
-        <div className="side-panel-header">
-          <a href="#" title="Toggle Compact Mode" onClick={toggleCompactMode}>
-            <img
-              className="logo-image"
-              src={require("../../images/logo.jpg")}
-              alt="logo"
-            />
-          </a>
-        </div>
         <ul>
           {menuLinks.map((link, index) => {
             return (
@@ -58,10 +37,7 @@ function SidePanel() {
           })}
         </ul>
       </div>
-      <div className="side-panel-right" id="menu">
-        <div className="side-panel-header">
-          <span className="header-text">Adam Nicol</span>
-        </div>
+      <div className="side-panel-right">
         <ul>
           {menuLinks.map((link, index) => {
             return (
@@ -80,7 +56,7 @@ function SidePanel() {
           })}
         </ul>
       </div>
-    </div>
+    </nav>
   );
 }
 

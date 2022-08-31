@@ -11,9 +11,9 @@ import "./css/styles.scss";
 function App() {
   return (
     <BrowserRouter>
-      <SidePanel />
       <Header />
-      <div className="container-fluid">
+      <SidePanel />
+      <main className="container-fluid main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" />
@@ -21,7 +21,7 @@ function App() {
           <Route path="/contact" />
           <Route path="/login" />
         </Routes>
-      </div>
+      </main>
       <Footer />
     </BrowserRouter>
   );
