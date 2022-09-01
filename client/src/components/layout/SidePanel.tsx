@@ -25,12 +25,12 @@ function SidePanel() {
   return (
     <nav className="side-panel">
       <div className="side-panel-left">
-        <ul>
+        <ul className="list-unstyled">
           {menuLinks.map((link, index) => {
             return (
               <li key={index}>
                 <NavLink to={link.path} title={link.text}>
-                  <FontAwesomeIcon className="fa-icon" icon={link.icon} />
+                  <FontAwesomeIcon className="nav-icon" icon={link.icon} />
                 </NavLink>
               </li>
             );
@@ -38,13 +38,13 @@ function SidePanel() {
         </ul>
       </div>
       <div className="side-panel-right">
-        <ul>
+        <ul className="list-unstyled">
           {menuLinks.map((link, index) => {
             return (
               <li key={index}>
                 <NavLink
                   to={link.path}
-                  className="menu-link"
+                  className="nav-link"
                   style={({ isActive }) =>
                     isActive ? menuLinkActiveStyle : {}
                   }

@@ -43,13 +43,13 @@ header {
     width: $nav-compact;
     background-color: $theme-primary;
     text-align: center;
-    padding-top: 20px;
+    padding-top: 30px;
 
-    .fa-icon {
+    .nav-icon {
       color: gray;
     }
 
-    .fa-icon:hover {
+    .nav-icon:hover {
       color: white;
     }
   }
@@ -57,9 +57,9 @@ header {
   .side-panel-right {
     width: $nav-full;
     background-color: $theme-secondary;
-    padding-top: 20px;
+    padding-top: 30px;
 
-    .menu-link {
+    .nav-link {
       text-decoration: none;
       font-size: 18px;
       font-weight: 600;
@@ -68,46 +68,52 @@ header {
       margin-left: 10px;
     }
 
-    .menu-link:hover {
+    .nav-link:hover {
       color: white;
     }
   }
 
-  ul {
-    list-style-type: none;
-    padding: 0px;
-
-    li {
-      line-height: 50px;
-    }
+  li {
+    line-height: 50px;
   }
 }
 
 @media (max-width: 768px) {
-  .main {
+  .container-fluid {
     padding: 20px;
     padding-left: $nav-compact + 20px;
   }
   .side-panel-right {
-    visibility: collapse;
+    display: none;
   }
 }
 
 @media (min-width: 768px) {
-  .main {
+  .container-fluid {
     padding: 20px;
     padding-left: $nav-compact + $nav-full + 20px;
+  }
+}
+
+@media (max-width: 1200px) {
+  aside {
+    display: none;
   }
 }
 
 .callout {
   padding: 15px;
   margin: 15px 0;
+  margin-bottom: 30px;
   border: 1px solid;
   background-color: rgb(245, 245, 245);
   border-color: lightgray;
   border-left-width: 5px;
   border-left-color: $theme-accent;
+}
+
+a {
+  text-decoration: none;
 }
 
 a:focus {
