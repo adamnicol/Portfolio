@@ -39,43 +39,43 @@ header {
   top: $nav-compact;
   left: 0;
 
-  .side-panel-left {
-    width: $nav-compact;
-    background-color: $theme-primary;
-    text-align: center;
-    padding-top: 30px;
-
-    .nav-icon {
-      color: gray;
-    }
-
-    .nav-icon:hover {
-      color: white;
-    }
-  }
-
-  .side-panel-right {
-    width: $nav-full;
-    background-color: $theme-secondary;
-    padding-top: 30px;
-
-    .nav-link {
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 600;
-      color: $theme-secondary-text;
-      line-height: 0px;
-      margin-left: 10px;
-    }
-
-    .nav-link:hover {
-      color: white;
-    }
-  }
-
   li {
     line-height: 50px;
   }
+}
+
+.side-panel-left {
+  width: $nav-compact;
+  background-color: $theme-primary;
+  text-align: center;
+  padding-top: 30px;
+}
+
+.side-panel-right {
+  width: $nav-full;
+  background-color: $theme-secondary;
+  padding-top: 30px;
+}
+
+.nav-icon {
+  color: gray;
+}
+
+.nav-icon:hover {
+  color: white;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  color: $theme-secondary-text;
+  line-height: 0px;
+  margin-left: 10px;
+}
+
+.nav-link:hover {
+  color: white;
 }
 
 @media (max-width: 768px) {
@@ -110,6 +110,14 @@ header {
   border-color: lightgray;
   border-left-width: 5px;
   border-left-color: $theme-accent;
+}
+
+.login-link {
+  color: $theme-primary-text;
+}
+
+.login-link:hover {
+  color: white;
 }
 
 a {
