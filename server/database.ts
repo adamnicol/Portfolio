@@ -7,7 +7,7 @@ dotenv.config();
 // Connection string set in .env file.
 const connectionString = process.env.MONGO_CONNECTION_STRING;
 
-export function connect() {
+export default function connect() {
   if (connectionString) {
     mongoose
       .connect(connectionString)

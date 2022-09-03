@@ -1,24 +1,23 @@
 import express, { Request, Response } from "express";
-import Status from "./utils/statusCodes";
-import logger from "./utils/logger";
+import logger, { requestLogger } from "./utils/logger";
+import connect from "./database";
+import status from "./utils/statusCodes";
 import cors from "cors";
 
 const app = express();
-const database = require("./database");
-const pino = require("express-pino-logger");
 
 app.use(express.json());
 app.use(cors());
-//app.use(pino({ logger }));
+app.use(requestLogger);
 
 app.use("/api/users", require("./routes/users"));
 app.use("/api/news", require("./routes/news"));
 
-app.get("/api/status", (request: Request, response: Response) =>
-  response.sendStatus(Status.OK)
+app.get("/api/status", (req: Request, res: Response) =>
+  res.sendStatus(status.OK)
 );
 
 app.listen(3001, () => {
   logger.info("Server started");
-  database.connect();
+  connect();
 });
