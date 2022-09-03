@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import logger from "./utils/logger";
 
 dotenv.config();
 
@@ -11,14 +12,14 @@ export function connect() {
     mongoose
       .connect(connectionString)
       .then(() => {
-        console.log("Connected to MongoDB");
+        logger.info("Connected to MongoDB");
       })
       .catch((e: Error) => {
-        console.error(e.message);
+        logger.fatal(e.message);
         process.exit(1);
       });
   } else {
-    console.error("Connection string not set");
+    logger.fatal("Connection string not set");
     process.exit(1);
   }
 }

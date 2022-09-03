@@ -6,7 +6,8 @@
       "request": "launch",
       "cwd": "${workspaceRoot}/server/",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["start"]
+      "runtimeArgs": ["start"],
+      "outputCapture": "std"
     },
     {
       "name": "Client",
