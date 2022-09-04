@@ -1,21 +1,24 @@
 import { Request, Response } from "express";
-import model from "../models/news.model";
+import model, { News } from "../models/news.model";
 import Status from "../utils/statusCodes";
+import logger from "../utils/logger";
 
-export async function getAll(request: Request, response: Response) {
+export async function get(req: Request, res: Response) {
   try {
-    response.send(await model.find());
+    const news = await model.find();
+    res.send(news);
   } catch (e: any) {
-    console.error(e);
-    return response.status(Status.Error).send(e.message);
+    logger.error(e);
+    res.status(Status.Error).send(e.message);
   }
 }
 
-export async function create(request: Request, response: Response) {
+export async function create(req: Request<{}, {}, News>, res: Response) {
   try {
-    response.send(await model.create(request.body));
+    const news = await model.create(req.body);
+    res.send(news);
   } catch (e: any) {
-    console.error(e);
-    return response.status(Status.Error).send(e.message);
+    logger.error(e);
+    res.status(Status.Error).send(e.message);
   }
 }

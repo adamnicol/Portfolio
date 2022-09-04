@@ -5,6 +5,6 @@ import schema from "../schemas/user.schema";
 
 const router = express.Router();
 
-router.post("/create", validate(schema), controller.create);
+router.post("/register", validate(schema), controller.register);
 
 module.exports = router;

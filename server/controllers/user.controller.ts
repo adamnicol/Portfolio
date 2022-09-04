@@ -1,12 +1,17 @@
 import { Request, Response } from "express";
-import model from "../models/user.model";
+import UserModel, { User } from "../models/user.model";
 import Status from "../utils/statusCodes";
+import logger from "../utils/logger";
+import bcrypt from "bcrypt";
 
-export async function create(request: Request, response: Response) {
+export async function register(req: Request<{}, {}, User>, res: Response) {
   try {
-    response.send(await model.create(request.body));
+    const password = req.body.password;
+    const hash = await bcrypt.hash(password, 10);
+    const user = await UserModel.create({ ...req.body, password: hash });
+    res.send(user);
   } catch (e: any) {
-    console.error(e);
-    return response.status(Status.Conflict).send(e.message);
+    logger.error(e);
+    res.status(Status.Conflict).send(e.message);
   }
 }

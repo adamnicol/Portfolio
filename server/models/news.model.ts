@@ -13,7 +13,7 @@ export interface News {
 
 const schema = new mongoose.Schema<News>(
   {
-    title: { type: String, required: true, maxlength: 50, trim: true },
+    title: { type: String, required: true, trim: true },
     content: { type: String, required: true, trim: true },
     author: {
       type: mongoose.Schema.Types.ObjectId,
