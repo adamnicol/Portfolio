@@ -11,7 +11,7 @@ function NewsPost(props: { content: News }) {
       <Link to="/">
         <h2>{post.title}</h2>
       </Link>
-      <p>{post.body}</p>
+      <p>{post.content}</p>
       <hr />
       <div className="d-flex text-secondary">
         <Link to="/">

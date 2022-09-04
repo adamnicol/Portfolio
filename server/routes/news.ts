@@ -1,10 +1,12 @@
 import express from "express";
+import * as controller from "../controllers/news.controller";
+import validate from "../middleware/validateSchema";
+import schema from "../schemas/news.schema";
 
-const controller = require("../controllers/news.controller");
 const router = express.Router();
 
 router.get("/", controller.getAll);
 
-router.post("/create", controller.create);
+router.post("/create", validate(schema), controller.create);
 
 module.exports = router;

@@ -5,6 +5,8 @@ enum Status {
   BadRequest = 400,
   Forbidden = 403,
   NotFound = 404,
+  Conflict = 409,
+  Error = 500,
 }
 
 export default Status;

@@ -6,7 +6,7 @@ export interface User {
 
 export interface News {
   title: string;
-  body: string;
+  content: string;
   author: string;
   likes?: number;
   comments?: string[];

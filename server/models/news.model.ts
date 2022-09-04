@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export interface News {
   title: string;
-  body: string;
+  content: string;
   author: mongoose.Types.ObjectId;
   likes?: number;
   comments?: string[];
@@ -14,7 +14,7 @@ export interface News {
 const schema = new mongoose.Schema<News>(
   {
     title: { type: String, required: true, maxlength: 50, trim: true },
-    body: { type: String, required: true, trim: true },
+    content: { type: String, required: true, trim: true },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
