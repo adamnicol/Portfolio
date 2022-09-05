@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import logger, { requestLogger } from "./utils/logger";
 import connect from "./database";
 import status from "./utils/statusCodes";
+import config from "./utils/config";
 import cors from "cors";
 
 const app = express();
@@ -17,7 +18,7 @@ app.get("/api/status", (req: Request, res: Response) =>
   res.sendStatus(status.OK)
 );
 
-app.listen(3001, () => {
+app.listen(config.server.port, () => {
   logger.info("Server started");
   connect();
 });

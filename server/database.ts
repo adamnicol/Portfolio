@@ -1,25 +1,20 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-import logger from "./utils/logger";
-
-dotenv.config();
-
-// Connection string set in .env file.
-const connectionString = process.env.MONGO_CONNECTION_STRING;
+import config from "./utils/config";
+import log from "./utils/logger";
 
 export default function connect() {
-  if (connectionString) {
+  if (config.database.connectionString) {
     mongoose
-      .connect(connectionString)
+      .connect(config.database.connectionString)
       .then(() => {
-        logger.info("Connected to MongoDB");
+        log.info("Connected to MongoDB");
       })
       .catch((e: Error) => {
-        logger.fatal(e.message);
+        log.fatal(e.message);
         process.exit(1);
       });
   } else {
-    logger.fatal("Connection string not set");
+    log.fatal("Connection string not set");
     process.exit(1);
   }
 }
