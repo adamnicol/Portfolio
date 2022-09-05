@@ -10,10 +10,23 @@ const schema = new mongoose.Schema<User>(
   {
     username: { type: String, required: true, unique: true, trim: true },
     password: { type: String, required: true },
-    email: { type: String, required: true, uniqe: true, trim: true },
+    email: {
+      type: String,
+      required: true,
+      uniqe: true,
+      lowercase: true,
+      trim: true,
+    },
   },
   { timestamps: true }
 );
+
+schema.method("toJSON", function () {
+  let user = this.toObject();
+  delete user.password;
+  delete user.__v;
+  return user;
+});
 
 const UserModel = mongoose.model<User>("User", schema);
 
