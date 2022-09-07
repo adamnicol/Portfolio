@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
 import { News } from "../interfaces";
 import NewsPost from "./NewsPost";
+import Pagination from "./Pagination";
 import axios from "axios";
 
 function Home() {
   const [news, setNews] = useState<News[]>();
+  const [newsCount, setNewsCount] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  useEffect(() => getNews(), []);
+  const postsPerPage = 5;
+  const totalPages = Math.ceil(newsCount / postsPerPage);
+  const offset = (currentPage - 1) * postsPerPage;
+
+  useEffect(() => getNewsCount(), []);
+  useEffect(() => getNews(), [currentPage]);
+
+  function getNewsCount() {
+    axios.get("/news/count").then((response) => setNewsCount(response.data));
+  }
 
   function getNews() {
-    axios.get("/api/news").then((res) => setNews(res.data));
+    axios
+      .get(`/news?limit=${postsPerPage}&offset=${offset}`)
+      .then((response) => setNews(response.data))
+      .finally(() => window.scrollTo(0, 0));
   }
 
   return (
@@ -26,6 +41,15 @@ function Home() {
       {news?.map((post, index) => {
         return <NewsPost key={index} content={post} />;
       })}
+
+      {news && totalPages > 1 && (
+        <Pagination
+          className="pagination-sm justify-content-end mt-4"
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChanged={setCurrentPage}
+        />
+      )}
     </div>
   );
 }

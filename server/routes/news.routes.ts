@@ -6,7 +6,8 @@ import schema from "../schemas/news.schema";
 const router = express.Router();
 
 router.get("/", controller.get);
+router.get("/count", controller.count);
 
-router.post("/create", validate(schema), controller.create);
+router.post("/post", validate(schema), controller.post);
 
 module.exports = router;

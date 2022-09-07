@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+import { Schema, Types, Document, PopulatedDoc, model } from "mongoose";
+import { User } from "./user.model";
 
 export interface News {
   title: string;
   content: string;
-  author: mongoose.Types.ObjectId;
+  author: PopulatedDoc<Types.ObjectId & User>;
   likes?: number;
   comments?: string[];
   tags?: string[];
@@ -11,12 +12,12 @@ export interface News {
   updatedAt: Date;
 }
 
-const schema = new mongoose.Schema<News>(
+const schema = new Schema<News>(
   {
     title: { type: String, required: true, trim: true },
     content: { type: String, required: true, trim: true },
     author: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: "User",
       required: true,
     },
@@ -27,6 +28,6 @@ const schema = new mongoose.Schema<News>(
   { timestamps: true }
 );
 
-const NewsModel = mongoose.model<News>("News", schema);
+const NewsModel = model<News>("News", schema);
 
 export default NewsModel;
