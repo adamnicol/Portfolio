@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { News } from "../interfaces";
+import { formatDate } from "../utils/dateFormatter";
 
 function NewsPost(props: { content: News }) {
   const post = props.content;
@@ -20,9 +21,7 @@ function NewsPost(props: { content: News }) {
         <span className="ms-2">
           <FontAwesomeIcon icon={faHeart} size="sm" /> {post.likes}
         </span>
-        <span className="ms-auto">
-          {new Date(post.createdAt).toLocaleDateString()}
-        </span>
+        <span className="ms-auto">Posted {formatDate(post.createdAt)}</span>
       </div>
     </article>
   );
