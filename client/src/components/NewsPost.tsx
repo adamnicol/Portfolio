@@ -1,26 +1,39 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faHeart } from "@fortawesome/free-regular-svg-icons";
-import { News } from "../interfaces";
 import { formatDate } from "../utils/dateFormatter";
+import { News } from "../interfaces";
 
 function NewsPost(props: { content: News }) {
   const post = props.content;
+  const maxLength = 300;
+  const url = `/news/${post._id}`;
+  const content =
+    post.content.length > maxLength
+      ? post.content.substring(0, Math.min(post.content.length, maxLength))
+      : post.content;
 
   return (
     <article className="mt-3">
-      <Link to="/">
+      <Link to={url}>
         <h2>{post.title}</h2>
       </Link>
-      <p>{post.content}</p>
+      <p>
+        {content}
+        {post.content.length > maxLength && (
+          <Link to={url} className="ms-2">
+            Read more
+          </Link>
+        )}
+      </p>
       <hr />
-      <div className="d-flex text-secondary">
-        <Link to="/">
+      <div className="d-flex text-primary">
+        <Link to={url}>
           <FontAwesomeIcon icon={faMessage} size="sm" /> {post.comments?.length}
         </Link>
-        <span className="ms-2">
+        <Link to="#" className="ms-2">
           <FontAwesomeIcon icon={faHeart} size="sm" /> {post.likes}
-        </span>
+        </Link>
         <span className="ms-auto">Posted {formatDate(post.createdAt)}</span>
       </div>
     </article>

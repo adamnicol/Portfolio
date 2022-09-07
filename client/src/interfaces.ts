@@ -5,9 +5,10 @@ export interface User {
 }
 
 export interface News {
+  _id: string;
   title: string;
   content: string;
-  author: string;
+  author: User;
   likes?: number;
   comments?: string[];
   tags?: string[];

@@ -10,7 +10,6 @@ export default function Pagination(props: {
 
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
-
   const items: JSX.Element[] = [];
 
   for (let page = 1; page <= totalPages; page++) {

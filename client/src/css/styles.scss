@@ -101,6 +101,12 @@ header {
   }
 }
 
+aside {
+  position: sticky;
+  top: $nav-compact + 20px;
+  margin-top: 70px;
+}
+
 .callout {
   padding: 15px;
   margin: 15px 0;

@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get("/", controller.get);
 router.get("/count", controller.count);
+router.get("/:id", controller.getById);
 
 router.post("/post", validate(schema), controller.post);
 

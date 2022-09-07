@@ -15,6 +15,10 @@ export async function getCount(): Promise<number> {
   return await NewsModel.count();
 }
 
+export async function getNewById(id: string): Promise<News | null> {
+  return await NewsModel.findById(id).populate("author", "username");
+}
+
 export async function postNews(newsPost: News): Promise<News> {
   return await NewsModel.create(newsPost);
 }
