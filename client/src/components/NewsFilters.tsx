@@ -22,7 +22,7 @@ function NewsFilters() {
     <div>
       <h2>Tags</h2>
       <section className="d-flex flex-wrap">
-        <Link to="/news/all" className="tag">
+        <Link to="/news" className="tag">
           all
         </Link>
 
