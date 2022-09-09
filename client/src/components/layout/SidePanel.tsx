@@ -16,10 +16,12 @@ const menuLinks = [
   { text: "Contact", path: "/contact", icon: faEnvelope },
 ];
 
-const menuLinkActiveStyle = {
-  borderBottom: "3px solid",
-  borderColor: "teal",
-};
+function isHomePage(): boolean {
+  return (
+    window.location.pathname === "/" ||
+    window.location.pathname.toLowerCase().startsWith("/news")
+  );
+}
 
 function SidePanel() {
   return (
@@ -44,9 +46,10 @@ function SidePanel() {
               <li key={index}>
                 <NavLink
                   to={link.path}
-                  className="nav-link"
-                  style={({ isActive }) =>
-                    isActive ? menuLinkActiveStyle : {}
+                  className={({ isActive }) =>
+                    isActive || (link.path === "/" && isHomePage())
+                      ? "nav-link-active"
+                      : "nav-link"
                   }
                 >
                   {link.text.toUpperCase()}

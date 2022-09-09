@@ -65,7 +65,8 @@ header {
   color: white;
 }
 
-.nav-link {
+.nav-link,
+.nav-link-active {
   text-decoration: none;
   font-size: 18px;
   font-weight: 600;
@@ -74,7 +75,13 @@ header {
   margin-left: 10px;
 }
 
-.nav-link:hover {
+.nav-link-active {
+  border-bottom: 3px solid;
+  border-color: $theme-accent;
+}
+
+.nav-link:hover,
+.nav-link-active:hover {
   color: white;
 }
 
