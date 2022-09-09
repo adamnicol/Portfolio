@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { News } from "../interfaces";
 import NewsPost from "./NewsPost";
 import Pagination from "./Pagination";
@@ -13,16 +14,21 @@ function Home() {
   const totalPages = Math.ceil(newsCount / postsPerPage);
   const offset = (currentPage - 1) * postsPerPage;
 
-  useEffect(() => getNewsCount(), []);
-  useEffect(() => getNews(), [currentPage]);
+  const { tag = "all" } = useParams();
+
+  useEffect(() => getNews(), [currentPage, tag]);
+  useEffect(() => getNewsCount(), [tag]);
+  useEffect(() => setCurrentPage(1), [tag]);
 
   function getNewsCount() {
-    axios.get("/news/count").then((response) => setNewsCount(response.data));
+    axios
+      .get(`/news/count/${tag}`)
+      .then((response) => setNewsCount(response.data));
   }
 
   function getNews() {
     axios
-      .get(`/news?limit=${postsPerPage}&offset=${offset}`)
+      .get(`/news/${tag}`, { params: { limit: postsPerPage, offset } })
       .then((response) => setNews(response.data))
       .finally(() => window.scrollTo(0, 0));
   }

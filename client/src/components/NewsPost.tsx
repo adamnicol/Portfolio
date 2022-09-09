@@ -7,7 +7,7 @@ import { News } from "../interfaces";
 function NewsPost(props: { content: News }) {
   const post = props.content;
   const maxLength = 300;
-  const url = `/news/${post._id}`;
+  const url = `/news/post/${post._id}`;
   const content =
     post.content.length > maxLength
       ? post.content.substring(0, Math.min(post.content.length, maxLength))
@@ -34,7 +34,9 @@ function NewsPost(props: { content: News }) {
         <Link to="#" className="ms-2">
           <FontAwesomeIcon icon={faHeart} size="sm" /> {post.likes}
         </Link>
-        <span className="ms-auto">Posted {formatDate(post.createdAt)}</span>
+        <span className="ms-auto text-secondary">
+          Posted {formatDate(post.createdAt)}
+        </span>
       </div>
     </article>
   );

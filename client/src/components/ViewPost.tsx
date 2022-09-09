@@ -11,7 +11,7 @@ function ViewPost() {
   useEffect(() => getNewsPost(), []);
 
   function getNewsPost() {
-    axios.get(`/news/${id}`).then((response) => setPost(response.data));
+    axios.get(`/news/post/${id}`).then((response) => setPost(response.data));
   }
 
   return <div>{post && <NewsPost content={post} />}</div>;

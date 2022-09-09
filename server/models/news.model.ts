@@ -22,7 +22,7 @@ const schema = new Schema<News>(
       required: true,
     },
     likes: { type: Number, default: 0 },
-    tags: { type: [String], index: true },
+    tags: { type: [String], index: true, lowercase: true },
     comments: [{ body: String, name: String, date: Date }],
   },
   { timestamps: true }

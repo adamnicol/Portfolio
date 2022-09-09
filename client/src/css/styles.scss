@@ -104,7 +104,9 @@ header {
 aside {
   position: sticky;
   top: $nav-compact + 20px;
-  margin-top: 70px;
+  margin-top: 40px;
+  margin-left: 20px;
+  max-width: 300px;
 }
 
 .callout {
@@ -132,4 +134,24 @@ a {
 
 a:focus {
   outline: 0;
+}
+
+.tag {
+  border-radius: 10px;
+  background-color: $theme-accent;
+  padding: 3px 12px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+}
+
+.tag:hover {
+  color: white;
+}
+
+.bullet {
+  color: $theme-accent;
+  margin-right: 8px;
 }
