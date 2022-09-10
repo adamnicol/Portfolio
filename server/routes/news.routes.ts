@@ -5,14 +5,22 @@ import schema from "../schemas/news.schema";
 
 const router = express.Router();
 
-router.get("/all", controller.getAll);
-router.get("/top/:count?", controller.getTop);
-router.get("/tags", controller.getTags);
-router.get("/:tag", controller.getByTag);
-router.get("/post/:id", controller.getById);
-router.get("/count/all", controller.count);
-router.get("/count/:tag", controller.countByTag);
+// Returns all news posts in the database.
+router.get("/", controller.get);
 
+// Returns the top X news posts ordered by most likes.
+router.get("/top/:count?", controller.getTop);
+
+// Returns the news post with the specified ID.
+router.get("/post/:id", controller.getById);
+
+// Returns a list of tags that have been used on news posts.
+router.get("/tags", controller.getTags);
+
+// Returns a count of news posts in the database.
+router.get("/count/:tag?", controller.count);
+
+// Adds a news post to the database.
 router.post("/post", validate(schema), controller.post);
 
 module.exports = router;

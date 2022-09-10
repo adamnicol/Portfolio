@@ -4,13 +4,16 @@ import * as service from "../services/news.service";
 import Status from "../utils/statusCodes";
 import log from "../utils/logger";
 
-export async function getAll(
-  req: Request<{}, {}, {}, { limit?: number; offset?: number }>,
+export async function get(
+  req: Request<{}, {}, {}, { limit?: number; offset?: number; tag?: string }>,
   res: Response<News[]>
 ) {
   try {
-    const { limit, offset } = req.query;
-    const result = await service.getAll(limit, offset);
+    const { limit, offset, tag } = req.query;
+    const result = tag
+      ? await service.get(limit, offset, { tags: tag.toLowerCase() })
+      : await service.get(limit, offset);
+
     res.send(result);
   } catch (e: any) {
     log.error(e);
@@ -31,36 +34,15 @@ export async function getTop(
   }
 }
 
-export async function getByTag(
-  req: Request<{ tag: string }, {}, {}, { limit?: number; offset?: number }>,
-  res: Response<News[]>
-) {
-  try {
-    const { limit, offset } = req.query;
-    const result = await service.getByTag(limit, offset, req.params.tag);
-    res.send(result);
-  } catch (e: any) {
-    log.error(e);
-    res.status(Status.Error).send(e.message);
-  }
-}
-
-export async function count(req: Request, res: Response<string>) {
-  try {
-    const count = await service.getCount();
-    res.send(count.toString());
-  } catch (e: any) {
-    log.error(e);
-    res.status(Status.Error).send(e.message);
-  }
-}
-
-export async function countByTag(
-  req: Request<{ tag: string }>,
+export async function count(
+  req: Request<{}, {}, {}, { tag?: string }>,
   res: Response<string>
 ) {
   try {
-    const count = await service.getCountByTag(req.params.tag);
+    const count = req.query.tag
+      ? await service.count({ tags: req.query.tag.toLowerCase() })
+      : await service.count();
+
     res.send(count.toString());
   } catch (e: any) {
     log.error(e);
@@ -73,7 +55,7 @@ export async function getById(
   res: Response<News>
 ) {
   try {
-    const result = await service.getNewById(req.params.id);
+    const result = await service.getById(req.params.id);
     if (result === null) {
       res.status(Status.NotFound);
     } else {
@@ -100,7 +82,7 @@ export async function getTags(
 
 export async function post(req: Request<{}, {}, News>, res: Response<News>) {
   try {
-    const news = await service.postNews(req.body);
+    const news = await service.post(req.body);
     res.send(news);
   } catch (e: any) {
     log.error(e);

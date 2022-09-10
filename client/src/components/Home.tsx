@@ -14,7 +14,7 @@ function Home() {
   const totalPages = Math.ceil(newsCount / postsPerPage);
   const offset = (currentPage - 1) * postsPerPage;
 
-  const { tag = "all" } = useParams();
+  const { tag } = useParams();
 
   useEffect(() => getNews(), [currentPage, tag]);
   useEffect(() => getNewsCount(), [tag]);
@@ -22,13 +22,13 @@ function Home() {
 
   function getNewsCount() {
     axios
-      .get(`/news/count/${tag}`)
+      .get("/news/count", { params: { tag } })
       .then((response) => setNewsCount(response.data));
   }
 
   function getNews() {
     axios
-      .get(`/news/${tag}`, { params: { limit: postsPerPage, offset } })
+      .get("/news", { params: { limit: postsPerPage, offset, tag } })
       .then((response) => setNews(response.data))
       .finally(() => window.scrollTo(0, 0));
   }
