@@ -1,10 +1,10 @@
 import { FilterQuery } from "mongoose";
-import NewsModel, { News } from "../models/news.model";
+import NewsModel, { News, NewsInput } from "../models/news.model";
 
 export async function get(
   limit: number = 100,
   offset: number = 0,
-  filter: FilterQuery<News> = {}
+  filter: FilterQuery<NewsInput> = {}
 ): Promise<News[]> {
   return await NewsModel.find(filter)
     .limit(limit)
@@ -21,7 +21,9 @@ export async function getById(id: string): Promise<News | null> {
   return await NewsModel.findById(id).populate("author", "username");
 }
 
-export async function count(filter: FilterQuery<News> = {}): Promise<number> {
+export async function count(
+  filter: FilterQuery<NewsInput> = {}
+): Promise<number> {
   return await NewsModel.count(filter);
 }
 
@@ -36,6 +38,6 @@ export async function getTags(limit: number): Promise<string[]> {
   return result.map((x) => x._id);
 }
 
-export async function post(newsPost: News): Promise<News> {
-  return await NewsModel.create(newsPost);
+export async function post(news: NewsInput): Promise<News> {
+  return await NewsModel.create(news);
 }

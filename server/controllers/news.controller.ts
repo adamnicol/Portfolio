@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { News } from "../models/news.model";
+import { NewsSchema } from "../schemas/news.schema";
 import * as service from "../services/news.service";
 import Status from "../utils/statusCodes";
 import log from "../utils/logger";
@@ -80,9 +81,13 @@ export async function getTags(
   }
 }
 
-export async function post(req: Request<{}, {}, News>, res: Response<News>) {
+export async function post(
+  req: Request<{}, {}, NewsSchema>,
+  res: Response<News>
+) {
   try {
-    const news = await service.post(req.body);
+    const author = res.locals.token.payLoad.userId;
+    const news = await service.post({ ...req.body, author });
     res.send(news);
   } catch (e: any) {
     log.error(e);

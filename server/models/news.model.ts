@@ -1,33 +1,58 @@
-import { Schema, Types, Document, PopulatedDoc, model } from "mongoose";
+import mongoose from "mongoose";
 import { User } from "./user.model";
 
-export interface News {
+export interface NewsInput {
   title: string;
   content: string;
-  author: PopulatedDoc<Types.ObjectId & User>;
+  author: mongoose.Types.ObjectId | User;
   likes?: number;
   comments?: string[];
   tags?: string[];
+}
+
+export interface News extends NewsInput {
+  _id: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const schema = new Schema<News>(
+const schema = new mongoose.Schema<News>(
   {
-    title: { type: String, required: true, trim: true },
-    content: { type: String, required: true, trim: true },
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    content: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     author: {
-      type: Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    likes: { type: Number, default: 0 },
-    tags: { type: [String], index: true, lowercase: true },
-    comments: [{ body: String, name: String, date: Date }],
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    tags: {
+      type: [String],
+      index: true,
+      lowercase: true,
+    },
+    comments: [
+      {
+        name: String,
+        comment: String,
+        date: Date,
+      },
+    ],
   },
   { timestamps: true }
 );
 
-const NewsModel = model<News>("News", schema);
+const NewsModel = mongoose.model<News>("News", schema);
 
 export default NewsModel;

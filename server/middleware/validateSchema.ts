@@ -11,10 +11,10 @@ const validate =
         query: req.query,
         params: req.params,
       });
-      return next();
+      next();
     } catch (e: any) {
       const error = e as ZodError;
-      return res.status(Status.BadRequest).json(error.issues);
+      res.status(Status.BadRequest).json(error.issues);
     }
   };
 

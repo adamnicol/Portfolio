@@ -1,8 +1,8 @@
 import express from "express";
 import * as controller from "../controllers/news.controller";
-import validateSchema from "../middleware/validateSchema";
-import schema from "../schemas/news.schema";
 import requireToken from "../middleware/requireToken";
+import validateSchema from "../middleware/validateSchema";
+import { schema } from "../schemas/news.schema";
 import { Role } from "../models/user.model";
 
 const router = express.Router();

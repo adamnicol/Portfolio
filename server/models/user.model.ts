@@ -5,11 +5,14 @@ export enum Role {
   Admin,
 }
 
-export interface User {
-  _id: mongoose.Schema.Types.ObjectId;
+export interface UserInput {
   username: string;
   email: string;
   password: string;
+}
+
+export interface User extends UserInput {
+  _id: mongoose.Schema.Types.ObjectId;
   role: Role;
   createdAt: Date;
   updatedAt: Date;

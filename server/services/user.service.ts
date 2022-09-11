@@ -1,8 +1,8 @@
-import UserModel, { User } from "../models/user.model";
+import UserModel, { User, UserInput } from "../models/user.model";
 import bcrypt from "bcrypt";
 import config from "../utils/config";
 
-export async function createUser(input: User): Promise<User> {
+export async function createUser(input: UserInput): Promise<User> {
   const salt = await bcrypt.genSalt(config.auth.saltRounds);
   const hash = await bcrypt.hash(input.password, salt);
   return await UserModel.create({
