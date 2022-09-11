@@ -1,7 +1,9 @@
 import express from "express";
 import * as controller from "../controllers/news.controller";
-import validate from "../middleware/validateSchema";
+import validateSchema from "../middleware/validateSchema";
 import schema from "../schemas/news.schema";
+import requireToken from "../middleware/requireToken";
+import { Role } from "../models/user.model";
 
 const router = express.Router();
 
@@ -18,9 +20,14 @@ router.get("/post/:id", controller.getById);
 router.get("/tags", controller.getTags);
 
 // Returns a count of news posts in the database.
-router.get("/count/:tag?", controller.count);
+router.get("/count", controller.count);
 
 // Adds a news post to the database.
-router.post("/post", validate(schema), controller.post);
+router.post(
+  "/post",
+  requireToken(Role.Admin),
+  validateSchema(schema),
+  controller.post
+);
 
 module.exports = router;

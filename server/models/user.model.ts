@@ -1,15 +1,28 @@
 import mongoose from "mongoose";
 
+export enum Role {
+  User,
+  Admin,
+}
+
 export interface User {
+  _id: mongoose.Schema.Types.ObjectId;
   username: string;
-  password: string;
   email: string;
+  password: string;
+  role: Role;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const schema = new mongoose.Schema<User>(
   {
-    username: { type: String, required: true, unique: true, trim: true },
-    password: { type: String, required: true },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
     email: {
       type: String,
       required: true,
@@ -17,14 +30,25 @@ const schema = new mongoose.Schema<User>(
       lowercase: true,
       trim: true,
     },
+    password: {
+      type: String,
+      required: true,
+      select: false,
+    },
+    role: {
+      type: Number,
+      required: true,
+      enum: Role,
+      default: Role.User,
+    },
   },
   { timestamps: true }
 );
 
+// Removes the password from any JSON responses.
 schema.method("toJSON", function () {
-  let user = this.toObject();
+  let user: any = this.toObject();
   delete user.password;
-  delete user.__v;
   return user;
 });
 

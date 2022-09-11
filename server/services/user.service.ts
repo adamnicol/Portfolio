@@ -1,19 +1,25 @@
 import UserModel, { User } from "../models/user.model";
 import bcrypt from "bcrypt";
+import config from "../utils/config";
 
 export async function createUser(input: User): Promise<User> {
-  const hash = await bcrypt.hash(input.password, 10);
-  return await UserModel.create({ ...input, password: hash });
+  const salt = await bcrypt.genSalt(config.auth.saltRounds);
+  const hash = await bcrypt.hash(input.password, salt);
+  return await UserModel.create({
+    ...input,
+    password: hash,
+  });
 }
 
-export async function validatePassword(
-  email: string,
+export async function findUser(email: string): Promise<User | null> {
+  const user = await UserModel.findOne({ email }).select("+password");
+  return user;
+}
+
+export async function checkPassword(
+  user: User,
   password: string
 ): Promise<boolean> {
-  const user = await UserModel.findOne({ email });
-  if (user) {
-    return await bcrypt.compare(password, user.password);
-  } else {
-    return false;
-  }
+  const match = await bcrypt.compare(password, user.password);
+  return match;
 }

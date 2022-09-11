@@ -1,6 +1,6 @@
 import { object, string } from "zod";
 
-const schema = object({
+export const createUserSchema = object({
   body: object({
     username: string({
       required_error: "Username is required",
@@ -19,4 +19,13 @@ const schema = object({
   }),
 });
 
-export default schema;
+export const loginSchema = object({
+  body: object({
+    email: string({
+      required_error: "Email is required",
+    }),
+    password: string({
+      required_error: "Password is required",
+    }),
+  }),
+});
