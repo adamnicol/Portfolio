@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export enum Role {
   User,
+  Moderator,
   Admin,
 }
 
@@ -14,6 +15,7 @@ export interface UserInput {
 export interface User extends UserInput {
   _id: mongoose.Schema.Types.ObjectId;
   role: Role;
+  active: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -43,6 +45,11 @@ const schema = new mongoose.Schema<User>(
       required: true,
       enum: Role,
       default: Role.User,
+    },
+    active: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   { timestamps: true }

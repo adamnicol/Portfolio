@@ -82,11 +82,11 @@ export async function getTags(
 }
 
 export async function post(
-  req: Request<{}, {}, NewsSchema>,
+  req: Request<{}, {}, NewsSchema["body"]>,
   res: Response<News>
 ) {
   try {
-    const author = res.locals.token.payLoad.userId;
+    const author = res.locals.token.userId;
     const news = await service.post({ ...req.body, author });
     res.send(news);
   } catch (e: any) {

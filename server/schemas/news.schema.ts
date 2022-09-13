@@ -12,7 +12,8 @@ export const schema = z.object({
     content: z.string({
       required_error: "Content is required",
     }),
+    tags: z.string().array().optional(),
   }),
 });
 
-export type NewsSchema = z.infer<typeof schema>["body"];
+export type NewsSchema = z.infer<typeof schema>;

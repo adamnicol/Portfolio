@@ -5,27 +5,22 @@ import Status from "../utils/statusCodes";
 
 const requireToken =
   (role: Role) => (req: Request, res: Response, next: NextFunction) => {
-    let token = req.headers.authorization;
-    if (!token) {
-      return res.status(Status.Forbidden).send("Authentication required");
+    const { accessToken } = req.cookies;
+
+    if (!accessToken) {
+      return res.status(Status.Forbidden).send("Forbidden");
     }
 
-    if (token.toLowerCase().startsWith("bearer")) {
-      token = token.slice(6, token.length).trim();
-    }
+    const decoded = verifyToken(accessToken);
 
-    const decoded = verifyToken(token);
-
-    if (decoded.expired) {
-      return res.status(Status.Forbidden).send("Token expired");
-    } else if (!decoded.valid) {
-      return res.status(Status.Forbidden).send("Token invalid");
+    if (!decoded.valid || decoded.expired) {
+      return res.status(Status.Forbidden).send("Forbidden");
     } else if (decoded.payLoad && decoded.payLoad.role < role) {
-      return res.status(Status.Forbidden).send("Insufficient Permission");
+      return res.status(Status.Forbidden).send("Forbidden");
+    } else {
+      res.locals.token = decoded.payLoad;
+      return next();
     }
-
-    res.locals.token = decoded;
-    next();
   };
 
 export default requireToken;

@@ -1,21 +1,24 @@
-import jwt from "jsonwebtoken";
-import config from "../utils/config";
+import jwt, { SignOptions } from "jsonwebtoken";
 import { User, Role } from "../models/user.model";
+import config from "../utils/config";
 
 export interface TokenPayload {
   userId: string;
   role: Role;
-  expires: number;
 }
 
-export function signToken(user: User): string {
+export function createAccessToken(user: User): string {
   const privateKey = config.auth.privateKey;
   const payLoad = {
     userId: user._id,
     role: user.role,
-    expires: config.auth.tokenExpires,
   };
-  return jwt.sign(payLoad, privateKey, { algorithm: "RS256" });
+  const options: SignOptions = {
+    algorithm: "RS256",
+    expiresIn: "15m",
+  };
+
+  return jwt.sign(payLoad, privateKey, options);
 }
 
 export function verifyToken(token: string): {
@@ -31,7 +34,7 @@ export function verifyToken(token: string): {
     const error = e as Error;
     return {
       valid: false,
-      expired: error.message === "jwt expired",
+      expired: error.message.includes("jwt expired"),
       payLoad: null,
     };
   }
