@@ -1,3 +1,4 @@
+import { useMatch } from "react-router";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,14 +17,9 @@ const menuLinks = [
   { text: "Contact", path: "/contact", icon: faEnvelope },
 ];
 
-function isHomePage(): boolean {
-  return (
-    window.location.pathname === "/" ||
-    window.location.pathname.toLowerCase().startsWith("/news")
-  );
-}
-
 function SidePanel() {
+  const isNewsPage = useMatch("/news/*");
+
   return (
     <nav className="side-panel">
       <div className="side-panel-left">
@@ -47,7 +43,7 @@ function SidePanel() {
                 <NavLink
                   to={link.path}
                   className={({ isActive }) =>
-                    isActive || (link.path === "/" && isHomePage())
+                    isActive || (link.path === "/" && isNewsPage)
                       ? "nav-link-active"
                       : "nav-link"
                   }
