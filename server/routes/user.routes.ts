@@ -1,5 +1,6 @@
 import express from "express";
 import * as controller from "../controllers/user.controller";
+import requireUser from "../middleware/requireUser";
 import validate from "../middleware/validateSchema";
 import { createUserSchema, loginSchema } from "../schemas/user.schema";
 
@@ -12,6 +13,6 @@ router.post("/register", validate(createUserSchema), controller.register);
 router.post("/login", validate(loginSchema), controller.login);
 
 // Logs the user out and clears the JWT token.
-router.post("/logout", controller.logout);
+router.post("/logout", requireUser(), controller.logout);
 
 module.exports = router;

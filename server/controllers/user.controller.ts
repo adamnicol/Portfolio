@@ -1,10 +1,12 @@
-import { Request, Response } from "express";
+import { Request, Response, CookieOptions } from "express";
 import { UserSchema, UserLoginSchema } from "../schemas/user.schema";
-import { findUser, checkPassword } from "../services/user.service";
-import { createAccessToken } from "../utils/auth";
+import { findUserByEmail, checkPassword } from "../services/user.service";
+import { createToken } from "../utils/auth";
+import { User } from "../models/user.model";
 import * as service from "../services/user.service";
 import log from "../utils/logger";
 import Status from "../utils/statusCodes";
+import config from "../utils/config";
 
 export async function register(
   req: Request<{}, {}, UserSchema["body"]>,
@@ -28,7 +30,7 @@ export async function login(
     const { email, password } = req.body;
 
     // Check for an active user account.
-    const user = await findUser(email);
+    const user = await findUserByEmail(email);
     if (!user?.active) {
       return res.status(Status.Unauthorized).send("Login failed");
     }
@@ -39,12 +41,8 @@ export async function login(
       return res.status(Status.Unauthorized).send("Login failed");
     }
 
-    // Create access tokens and cookies.
-    const accessToken = createAccessToken(user);
-    res.cookie("accessToken", accessToken, {
-      maxAge: 15 * 60 * 1000, // 15 mins
-      httpOnly: true,
-    });
+    // Send access and refresh tokens.
+    sendAccessTokens(user, res);
 
     res.status(Status.Accepted).send("Login Successful");
   } catch (e: any) {
@@ -55,14 +53,23 @@ export async function login(
 
 export async function logout(req: Request, res: Response) {
   try {
-    res.cookie("accessToken", null, {
-      maxAge: 0,
-      httpOnly: true,
-    });
-
+    revokeAccessTokens(res);
     res.send("Logout successful");
   } catch (e: any) {
     log.error(e);
     res.status(Status.Error).send(e.message);
   }
+}
+
+function sendAccessTokens(user: User, res: Response) {
+  const accessToken = createToken(user, config.auth.accessTokenTTL);
+  const refreshToken = createToken(user, config.auth.refreshTokenTTL);
+  const options = config.cookieOptions as CookieOptions;
+  res.cookie("accessToken", accessToken, options);
+  res.cookie("refreshToken", refreshToken, options);
+}
+
+function revokeAccessTokens(res: Response) {
+  res.cookie("accessToken", null, { maxAge: 0 });
+  res.cookie("refreshToken", null, { maxAge: 0 });
 }

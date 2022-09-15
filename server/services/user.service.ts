@@ -11,15 +11,17 @@ export async function createUser(input: UserInput): Promise<User> {
   });
 }
 
-export async function findUser(email: string): Promise<User | null> {
-  const user = await UserModel.findOne({ email }).select("+password");
-  return user;
+export async function findUserById(id: string): Promise<User | null> {
+  return await UserModel.findById(id);
+}
+
+export async function findUserByEmail(email: string): Promise<User | null> {
+  return await UserModel.findOne({ email }).populate("+password");
 }
 
 export async function checkPassword(
   user: User,
   password: string
 ): Promise<boolean> {
-  const match = await bcrypt.compare(password, user.password);
-  return match;
+  return await bcrypt.compare(password, user.password);
 }

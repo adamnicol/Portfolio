@@ -86,7 +86,7 @@ export async function post(
   res: Response<News>
 ) {
   try {
-    const author = res.locals.token.userId;
+    const author = req.token.userId;
     const news = await service.post({ ...req.body, author });
     res.send(news);
   } catch (e: any) {

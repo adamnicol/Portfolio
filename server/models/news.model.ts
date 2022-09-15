@@ -4,7 +4,7 @@ import { User } from "./user.model";
 export interface NewsInput {
   title: string;
   content: string;
-  author: mongoose.Types.ObjectId | User;
+  author: mongoose.Types.ObjectId | User | string;
   likes?: number;
   comments?: string[];
   tags?: string[];

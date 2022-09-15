@@ -1,24 +1,25 @@
-import jwt, { SignOptions } from "jsonwebtoken";
-import { User, Role } from "../models/user.model";
-import config from "../utils/config";
+import jwt from "jsonwebtoken";
+import config from "./config";
+import { Role, User } from "../models/user.model";
 
 export interface TokenPayload {
   userId: string;
   role: Role;
 }
 
-export function createAccessToken(user: User): string {
-  const privateKey = config.auth.privateKey;
+export function createToken(user: User, expires: string | number) {
   const payLoad = {
-    userId: user._id,
+    userId: user._id.toString(),
     role: user.role,
   };
-  const options: SignOptions = {
-    algorithm: "RS256",
-    expiresIn: "15m",
-  };
+  return signToken(payLoad, expires);
+}
 
-  return jwt.sign(payLoad, privateKey, options);
+export function signToken(payLoad: TokenPayload, expires: string | number) {
+  return jwt.sign(payLoad, config.auth.privateKey, {
+    algorithm: "RS256",
+    expiresIn: expires,
+  });
 }
 
 export function verifyToken(token: string): {
@@ -27,8 +28,7 @@ export function verifyToken(token: string): {
   payLoad: TokenPayload | null;
 } {
   try {
-    const publicKey = config.auth.publicKey;
-    const payLoad = jwt.verify(token, publicKey) as TokenPayload;
+    const payLoad = jwt.verify(token, config.auth.publicKey) as TokenPayload;
     return { valid: true, expired: false, payLoad };
   } catch (e: any) {
     const error = e as Error;

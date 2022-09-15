@@ -1,6 +1,6 @@
 import express from "express";
 import * as controller from "../controllers/news.controller";
-import requireToken from "../middleware/requireToken";
+import requireUser from "../middleware/requireUser";
 import validateSchema from "../middleware/validateSchema";
 import { schema } from "../schemas/news.schema";
 import { Role } from "../models/user.model";
@@ -25,7 +25,7 @@ router.get("/count", controller.count);
 // Adds a news post to the database.
 router.post(
   "/post",
-  requireToken(Role.Admin),
+  requireUser(Role.Admin),
   validateSchema(schema),
   controller.post
 );

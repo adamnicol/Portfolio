@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import logger, { requestLogger } from "./utils/logger";
+import checkAccessToken from "./middleware/checkAccessToken";
 import cookies from "cookie-parser";
 import connect from "./database";
 import Status from "./utils/statusCodes";
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(cookies());
+app.use(checkAccessToken);
 app.use(requestLogger);
 
 app.use("/api/users", require("./routes/user.routes"));
