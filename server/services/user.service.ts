@@ -16,7 +16,7 @@ export async function findUserById(id: string): Promise<User | null> {
 }
 
 export async function findUserByEmail(email: string): Promise<User | null> {
-  return await UserModel.findOne({ email }).populate("+password");
+  return await UserModel.findOne({ email }).select("+password");
 }
 
 export async function checkPassword(
