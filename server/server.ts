@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
-import logger, { requestLogger } from "./utils/logger";
+import logger from "./utils/logger";
+import requestLogger from "./middleware/requestLogger";
 import checkAccessToken from "./middleware/checkAccessToken";
 import cookies from "cookie-parser";
 import connect from "./database";
