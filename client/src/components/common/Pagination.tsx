@@ -1,11 +1,13 @@
 import BPagination from "react-bootstrap/pagination";
 
-export default function Pagination(props: {
+export type PaginationProps = {
   className?: string;
   currentPage: number;
   totalPages: number;
   onPageChanged: (page: number) => void;
-}) {
+};
+
+function Pagination(props: PaginationProps) {
   const { className, currentPage, totalPages, onPageChanged } = props;
 
   const isFirstPage = currentPage === 1;
@@ -44,3 +46,5 @@ export default function Pagination(props: {
     </BPagination>
   );
 }
+
+export default Pagination;

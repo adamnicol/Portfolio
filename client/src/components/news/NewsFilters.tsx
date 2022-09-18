@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { INews } from "../../interfaces";
 import { Link } from "react-router-dom";
-import { News } from "../interfaces";
 import axios from "axios";
 
 function NewsFilters() {
   const [tags, setTags] = useState<string[]>([]);
-  const [topPosts, setTopPosts] = useState<News[]>([]);
+  const [topPosts, setTopPosts] = useState<INews[]>([]);
 
-  useEffect(() => loadContent(), []);
+  useEffect(() => getContent(), []);
 
-  function loadContent() {
-    axios.get("/news/top/10").then((response) => setTopPosts(response.data));
+  function getContent() {
+    axios.get("/news/top").then((response) => setTopPosts(response.data));
     axios
       .get("/news/tags", { params: { limit: 10 } })
       .then((response) => setTags(response.data));

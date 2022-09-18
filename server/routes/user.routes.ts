@@ -9,10 +9,10 @@ const router = express.Router();
 // Registers a new user account.
 router.post("/register", validate(createUserSchema), controller.register);
 
-// Authenticates a user and generates a JWT token if successful.
+// Authenticates a user and returns access tokens if successful.
 router.post("/login", validate(loginSchema), controller.login);
 
-// Logs the user out and clears the JWT token.
+// Logs the user out and revokes access tokens.
 router.post("/logout", requireUser(), controller.logout);
 
 module.exports = router;

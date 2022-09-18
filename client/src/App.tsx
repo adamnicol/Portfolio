@@ -1,5 +1,5 @@
-import { BrowserRouter } from "react-router-dom";
-import { main, aside } from "./routes";
+import { MainRoutes, AsideRoutes } from "./routes";
+import { ModalProvider } from "./components/common/ModalProvider";
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -10,21 +10,23 @@ import "./css/styles.scss";
 
 function App() {
   return (
-    <BrowserRouter>
+    <ModalProvider>
       <Header />
       <SidePanel />
       <div className="container-fluid">
         <div className="row">
-          <div className="col-xl-6">
-            <main>{main}</main>
-          </div>
+          <main className="col-xl-6">
+            <MainRoutes />
+          </main>
           <div className="col">
-            <aside>{aside}</aside>
+            <aside>
+              <AsideRoutes />
+            </aside>
           </div>
         </div>
       </div>
       <Footer />
-    </BrowserRouter>
+    </ModalProvider>
   );
 }
 

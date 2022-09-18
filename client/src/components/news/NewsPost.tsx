@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faHeart } from "@fortawesome/free-regular-svg-icons";
-import { formatDate } from "../utils/dateFormatter";
-import { News } from "../interfaces";
+import { formatDate } from "../../utils/dateFormatter";
+import { INews } from "../../interfaces";
 
-function NewsPost(props: { content: News }) {
+function NewsPost(props: { content: INews }) {
   const post = props.content;
   const maxLength = 300;
   const url = `/news/post/${post._id}`;

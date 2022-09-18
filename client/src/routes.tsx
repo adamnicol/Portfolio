@@ -1,23 +1,22 @@
-import { Route, Routes } from "react-router-dom";
+import { useRoutes, Navigate } from "react-router-dom";
 
 import Home from "./components/Home";
-import ViewPost from "./components/ViewPost";
-import NewsFilters from "./components/NewsFilters";
+import News from "./components/news/News";
+import NewsFilters from "./components/news/NewsFilters";
+import ViewPost from "./components/news/ViewPost";
 
-export const main = (
-  <Routes>
-    <Route index element={<Home />} />
-    <Route path="/news" element={<Home />} />
-    <Route path="/news/:tag" element={<Home />} />
-    <Route path="/news/post/:id" element={<ViewPost />} />
-  </Routes>
-);
+export function MainRoutes() {
+  return useRoutes([
+    { path: "/", element: <Home /> },
+    { path: "/news", element: <News /> },
+    { path: "/news/:tag", element: <News /> },
+    { path: "/news/post/:id", element: <ViewPost /> },
+  ]);
+}
 
-export const aside = (
-  <Routes>
-    <Route index element={<NewsFilters />} />
-    <Route path="/news" element={<NewsFilters />} />
-    <Route path="/news/:tag" element={<NewsFilters />} />
-    <Route path="/news/post/:id" element={<NewsFilters />} />
-  </Routes>
-);
+export function AsideRoutes() {
+  return useRoutes([
+    { path: "/", element: <NewsFilters /> },
+    { path: "/news/*", element: <NewsFilters /> },
+  ]);
+}

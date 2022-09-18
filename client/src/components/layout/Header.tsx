@@ -1,21 +1,8 @@
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGithub,
-  faLinkedin,
-  faSteam,
-} from "@fortawesome/free-brands-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-
-const socials = [
-  { name: "GitHub", url: "https://github.com/adamnicol", icon: faGithub },
-  { name: "LinkedIn", url: "https://www.linkedin.com", icon: faLinkedin },
-  {
-    name: "Steam",
-    url: "https://steamcommunity.com/id/Kobrakai85",
-    icon: faSteam,
-  },
-];
+import { useModal } from "../common/ModalProvider";
+import socials from "../content/socials";
+import Login from "../Login";
 
 function Header() {
   return (
@@ -39,6 +26,8 @@ function HeaderLeft() {
 }
 
 function HeaderRight() {
+  const modal = useModal();
+
   return (
     <div className="hstack gap-3 me-4">
       {socials.map((item, index) => {
@@ -56,9 +45,9 @@ function HeaderRight() {
       })}
 
       <div className="vr nav-link" />
-      <Link to="#" className="login-link">
+      <a className="login-link" onClick={() => modal.show(<Login />)}>
         Login
-      </Link>
+      </a>
     </div>
   );
 }

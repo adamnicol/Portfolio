@@ -27,7 +27,7 @@ export async function getTop(
   res: Response<News[]>
 ) {
   try {
-    const result = await service.getTop(req.params.count);
+    const result = await service.getTop(req.params.count || 10);
     res.send(result);
   } catch (e: any) {
     log.error(e);

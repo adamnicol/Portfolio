@@ -1,14 +1,15 @@
-export interface User {
+export interface IUser {
+  _id: string;
   username: string;
   password: string;
   email: string;
 }
 
-export interface News {
+export interface INews {
   _id: string;
   title: string;
   content: string;
-  author: User;
+  author: IUser;
   likes?: number;
   comments?: string[];
   tags?: string[];

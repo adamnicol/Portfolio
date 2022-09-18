@@ -48,13 +48,13 @@ header {
   width: $nav-compact;
   background-color: $theme-primary;
   text-align: center;
-  padding-top: 30px;
+  padding-top: 40px;
 }
 
 .side-panel-right {
   width: $nav-full;
   background-color: $theme-secondary;
-  padding-top: 30px;
+  padding-top: 40px;
 }
 
 .nav-icon {
@@ -137,6 +137,7 @@ aside {
 
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:focus {
@@ -161,4 +162,51 @@ a:focus {
 .bullet {
   color: $theme-accent;
   margin-right: 8px;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+  background-color: $theme-background;
+  border-radius: 10px;
+  padding: 30px;
+  max-height: 100vh;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    left: 15px;
+    top: 15px;
+    right: 15px;
+    transform: translate(0, 0);
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 99999;
+  background-color: black;
+  opacity: 0.7;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 12px;
+  font-size: 30px;
+  color: black;
+  text-decoration: none;
+}
+
+.login-form {
+  @media (min-width: 768px) {
+    width: 350px;
+  }
 }

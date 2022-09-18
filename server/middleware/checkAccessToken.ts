@@ -3,19 +3,19 @@ import { verifyToken, signToken } from "../utils/auth";
 import { findUserById } from "../services/user.service";
 import config from "../utils/config";
 
-const validateAccessToken = async (
+async function validateAccessToken(
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+) {
   const { accessToken, refreshToken } = req.cookies;
 
   // Check for a valid access token.
   if (accessToken) {
-    const decoded = verifyToken(accessToken);
+    const access = verifyToken(accessToken);
 
-    if (decoded.valid && decoded.payLoad) {
-      req.token = decoded.payLoad;
+    if (access.valid && access.payLoad) {
+      req.token = access.payLoad;
       return next();
     }
 
@@ -30,19 +30,22 @@ const validateAccessToken = async (
     }
   }
   next();
-};
+}
 
 async function renewAccessToken(req: Request, res: Response, userId: string) {
   const user = await findUserById(userId);
 
   if (user?.active) {
+    // Generate a new access token.
     const newPayLoad = { userId, role: user.role };
+    const newAccessToken = signToken(newPayLoad, config.auth.accessTokenTTL);
     req.token = newPayLoad;
 
-    // Generate a new access token.
-    const newAccessToken = signToken(newPayLoad, config.auth.accessTokenTTL);
-    const options = config.cookieOptions as CookieOptions;
-    res.cookie("accessToken", newAccessToken, options);
+    res.cookie(
+      "accessToken",
+      newAccessToken,
+      config.cookieOptions as CookieOptions
+    );
   }
 }
 
