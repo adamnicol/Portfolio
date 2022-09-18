@@ -2,13 +2,16 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || "localhost";
 const SERVER_PORT = process.env.SERVER_PORT || 3001;
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING;
-const PRIVATE_KEY = process.env.JWT_PRIVATE_KEY || "";
-const PUBLIC_KEY = process.env.JWT_PUBLIC_KEY || "";
+const JWT_PUBLIC_KEY = process.env.JWT_PUBLIC_KEY || "";
+const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY || "";
+const JWT_ISSUER = process.env.JWT_ISSUER || "";
 
 const config = {
   server: {
+    hostName: SERVER_HOSTNAME,
     port: Number(SERVER_PORT),
   },
   database: {
@@ -16,8 +19,9 @@ const config = {
   },
   auth: {
     saltRounds: 10,
-    publicKey: PUBLIC_KEY,
-    privateKey: PRIVATE_KEY,
+    publicKey: JWT_PUBLIC_KEY,
+    privateKey: JWT_PRIVATE_KEY,
+    issuer: JWT_ISSUER,
     accessTokenTTL: "15m",
     refreshTokenTTL: "24h",
   },

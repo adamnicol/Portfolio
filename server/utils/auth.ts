@@ -19,6 +19,7 @@ export function signToken(payLoad: TokenPayload, expires: string | number) {
   return jwt.sign(payLoad, config.auth.privateKey, {
     algorithm: "RS256",
     expiresIn: expires,
+    issuer: config.auth.issuer,
   });
 }
 
@@ -28,7 +29,10 @@ export function verifyToken(token: string): {
   payLoad: TokenPayload | null;
 } {
   try {
-    const payLoad = jwt.verify(token, config.auth.publicKey) as TokenPayload;
+    const payLoad = jwt.verify(token, config.auth.publicKey, {
+      issuer: config.auth.issuer,
+    }) as TokenPayload;
+
     return { valid: true, expired: false, payLoad };
   } catch (e: any) {
     const error = e as Error;
