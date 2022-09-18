@@ -4,6 +4,7 @@ dotenv.config();
 
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || "localhost";
 const SERVER_PORT = process.env.SERVER_PORT || 3001;
+const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:3000";
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING;
 const JWT_PUBLIC_KEY = process.env.JWT_PUBLIC_KEY || "";
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY || "";
@@ -13,6 +14,10 @@ const config = {
   server: {
     hostName: SERVER_HOSTNAME,
     port: Number(SERVER_PORT),
+  },
+  cors: {
+    credentials: true,
+    origin: CORS_ORIGIN,
   },
   database: {
     connectionString: CONNECTION_STRING,
@@ -27,6 +32,7 @@ const config = {
   },
   cookieOptions: {
     httpOnly: true,
+    secure: true,
     sameSite: "strict",
   },
 };

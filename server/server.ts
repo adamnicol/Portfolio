@@ -11,7 +11,8 @@ import cors from "cors";
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(config.cors));
+
 app.use(cookies());
 app.use(checkAccessToken);
 app.use(requestLogger);

@@ -7,6 +7,7 @@ import App from "./App";
 import NotFound from "./components/NotFound";
 
 axios.defaults.baseURL = "http://localhost:3001/api";
+axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
