@@ -3,7 +3,7 @@ import { verifyToken, signToken } from "../utils/auth";
 import { findUserById } from "../services/user.service";
 import config from "../utils/config";
 
-async function validateAccessToken(
+async function checkAccessToken(
   req: Request,
   res: Response,
   next: NextFunction
@@ -49,4 +49,4 @@ async function renewAccessToken(req: Request, res: Response, userId: string) {
   }
 }
 
-export default validateAccessToken;
+export default checkAccessToken;
