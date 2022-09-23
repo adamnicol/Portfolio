@@ -5,14 +5,21 @@ export interface IUser {
   email: string;
 }
 
-export interface INews {
+export interface INewsPost {
   _id: string;
   title: string;
   content: string;
   author: IUser;
   likes?: number;
-  comments?: string[];
   tags?: string[];
+  comments: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IComment {
+  author: IUser;
+  content: string;
   createdAt: Date;
   updatedAt: Date;
 }

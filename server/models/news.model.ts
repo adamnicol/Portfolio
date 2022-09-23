@@ -4,10 +4,10 @@ import { User } from "./user.model";
 export interface NewsInput {
   title: string;
   content: string;
-  author: mongoose.Types.ObjectId | User | string;
-  likes?: number;
-  comments?: string[];
+  author: User | string;
   tags?: string[];
+  likes?: User[];
+  comments: number;
 }
 
 export interface News extends NewsInput {
@@ -23,32 +23,29 @@ const schema = new mongoose.Schema<News>(
       required: true,
       trim: true,
     },
-    content: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     author: {
       type: mongoose.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    likes: {
-      type: Number,
-      default: 0,
+    content: {
+      type: String,
+      required: true,
+      trim: true,
     },
     tags: {
       type: [String],
       index: true,
       lowercase: true,
     },
-    comments: [
-      {
-        name: String,
-        comment: String,
-        date: Date,
-      },
-    ],
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    comments: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

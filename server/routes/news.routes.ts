@@ -24,7 +24,7 @@ router.get("/tags", asyncHandler(controller.getTags));
 router.get("/:id", asyncHandler(controller.getById));
 
 // Returns comments for the news post with the specified ID.
-router.get("/:id/comments", asyncHandler(controller.getById));
+router.get("/:id/comments", asyncHandler(controller.getComments));
 
 // Adds a news post to the database.
 router.post(
@@ -32,6 +32,13 @@ router.post(
   requireUser(Role.Admin),
   validateSchema(schema),
   asyncHandler(controller.post)
+);
+
+// Adds a comment to a news post.
+router.post(
+  "/:id/comments",
+  requireUser(Role.User),
+  asyncHandler(controller.postComment)
 );
 
 module.exports = router;

@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { formatDate } from "../../utils/dateFormatter";
-import { INews } from "../../interfaces";
+import { INewsPost } from "../../interfaces";
 
-function NewsPost(props: { content: INews }) {
+function NewsPost(props: { content: INewsPost }) {
   const post = props.content;
   const maxLength = 300;
   const url = `/news/post/${post._id}`;
@@ -16,7 +16,7 @@ function NewsPost(props: { content: INews }) {
   return (
     <article className="mt-3">
       <Link to={url}>
-        <h2>{post.title}</h2>
+        <h3>{post.title}</h3>
       </Link>
       <p>
         {content}
@@ -26,10 +26,10 @@ function NewsPost(props: { content: INews }) {
           </Link>
         )}
       </p>
-      <hr />
+      <hr className="mb-2" />
       <div className="d-flex text-primary">
         <Link to={url}>
-          <FontAwesomeIcon icon={faMessage} size="sm" /> {post.comments?.length}
+          <FontAwesomeIcon icon={faMessage} size="sm" /> {post.comments}
         </Link>
         <Link to="#" className="ms-2">
           <FontAwesomeIcon icon={faHeart} size="sm" /> {post.likes}

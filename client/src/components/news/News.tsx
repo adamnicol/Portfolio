@@ -1,36 +1,31 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { INews } from "../../interfaces";
+import { INewsPost } from "../../interfaces";
 import NewsPost from "./NewsPost";
 import Pagination from "../common/Pagination";
 import axios from "axios";
 
-function News() {
-  const [news, setNews] = useState<INews[]>();
-  const [newsCount, setNewsCount] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+const postsPerPage = 5;
 
-  const postsPerPage = 5;
-  const totalPages = Math.ceil(newsCount / postsPerPage);
-  const offset = (currentPage - 1) * postsPerPage;
+function News() {
+  const [news, setNews] = useState<INewsPost[]>();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   const { tag } = useParams();
 
   useEffect(() => getNews(), [currentPage, tag]);
-  useEffect(() => getNewsCount(), [tag]);
   useEffect(() => setCurrentPage(1), [tag]);
 
   function getNews() {
-    axios
-      .get("/news", { params: { limit: postsPerPage, offset, tag } })
-      .then((response) => setNews(response.data))
-      .finally(() => window.scrollTo(0, 0));
-  }
+    const offset = (currentPage - 1) * postsPerPage;
+    const params = { limit: postsPerPage, offset, tag };
 
-  function getNewsCount() {
-    axios
-      .get("/news/count", { params: { tag } })
-      .then((response) => setNewsCount(response.data));
+    axios.get("/news", { params }).then((response) => {
+      setNews(response.data.posts);
+      setTotalPages(Math.ceil(response.data.total / postsPerPage));
+      window.scrollTo(0, 0);
+    });
   }
 
   return (

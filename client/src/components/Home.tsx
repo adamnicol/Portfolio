@@ -1,4 +1,4 @@
-import News from "./news/News";
+import NewsFeed from "./news/News";
 
 function Home() {
   return (
@@ -11,7 +11,7 @@ function Home() {
           nemo, similique eaque ratione quo inventore eos error soluta. Eius?
         </p>
       </div>
-      <News />
+      <NewsFeed />
     </div>
   );
 }
