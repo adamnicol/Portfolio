@@ -20,7 +20,7 @@ async function checkAccessToken(
     }
 
     // Check for a valid refresh token.
-    if (refreshToken) {
+    if (access.expired && refreshToken) {
       const refresh = verifyToken(refreshToken);
 
       if (refresh.valid && refresh.payLoad) {
