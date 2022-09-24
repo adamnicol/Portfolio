@@ -10,7 +10,7 @@ import {
 
 interface IAuthContext {
   user: IUser | null;
-  setUser: (user: IUser) => void;
+  setCurrentUser: (user: IUser) => void;
   logout: () => void;
 }
 
@@ -21,19 +21,36 @@ export function AuthProvider(props: { children: ReactElement }) {
 
   useEffect(() => refresh(), []);
 
+  function setCurrentUser(user: IUser) {
+    setUser(user);
+    localStorage.setItem("username", user.username);
+  }
+
   function refresh() {
-    axios
-      .get("/users/refresh")
-      .then((response) => setUser(response.data))
-      .catch(() => setUser(null));
+    // Has user logged in previously?
+    if (localStorage.getItem("username")) {
+      axios
+        // Are access tokens still valid?
+        .get("/users/refresh")
+        .then((response) => {
+          setCurrentUser(response.data);
+        })
+        .catch(() => {
+          setUser(null);
+          localStorage.removeItem("username");
+        });
+    }
   }
 
   function logout() {
-    axios.get("/users/logout").then(() => setUser(null));
+    axios.post("/users/logout").finally(() => {
+      setUser(null);
+      localStorage.removeItem("username");
+    });
   }
 
   return (
-    <AuthContext.Provider value={{ user, setUser, logout }}>
+    <AuthContext.Provider value={{ user, setCurrentUser, logout }}>
       {props.children}
     </AuthContext.Provider>
   );

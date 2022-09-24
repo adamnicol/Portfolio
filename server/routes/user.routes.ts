@@ -18,7 +18,7 @@ router.post(
 router.post("/login", validate(loginSchema), asyncHandler(controller.login));
 
 // Logs the user out and revokes access tokens.
-router.get("/logout", requireUser(), asyncHandler(controller.logout));
+router.post("/logout", requireUser(), asyncHandler(controller.logout));
 
 // Re-checks the access token and returns an updated user object.
 router.get("/refresh", requireUser(), asyncHandler(controller.refresh));

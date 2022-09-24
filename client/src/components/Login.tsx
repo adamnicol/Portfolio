@@ -15,7 +15,7 @@ function Login() {
   function login(e: FormEvent) {
     e.preventDefault();
     axios.post("/users/login", { email, password }).then((response) => {
-      auth.setUser(response.data);
+      auth.setCurrentUser(response.data);
       modal.close();
     });
   }
