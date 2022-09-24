@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { useModal } from "../common/ModalProvider";
+import { useAuth } from "../providers/AuthProvider";
+import { useModal } from "../providers/ModalProvider";
 import socials from "../content/socials";
 import Login from "../Login";
 
@@ -26,6 +27,7 @@ function HeaderLeft() {
 }
 
 function HeaderRight() {
+  const auth = useAuth();
   const modal = useModal();
 
   return (
@@ -45,9 +47,15 @@ function HeaderRight() {
       })}
 
       <div className="vr nav-link" />
-      <a className="login-link" onClick={() => modal.show(<Login />)}>
-        Login
-      </a>
+      {auth.user ? (
+        <a className="login-link" onClick={() => auth.logout()}>
+          Logout
+        </a>
+      ) : (
+        <a className="login-link" onClick={() => modal.show(<Login />)}>
+          Login
+        </a>
+      )}
     </div>
   );
 }

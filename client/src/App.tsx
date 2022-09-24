@@ -1,5 +1,4 @@
 import { MainRoutes, AsideRoutes } from "./routes";
-import { ModalProvider } from "./components/common/ModalProvider";
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -10,7 +9,7 @@ import "./css/styles.scss";
 
 function App() {
   return (
-    <ModalProvider>
+    <div>
       <Header />
       <SidePanel />
       <div className="container-fluid">
@@ -26,7 +25,7 @@ function App() {
         </div>
       </div>
       <Footer />
-    </ModalProvider>
+    </div>
   );
 }
 

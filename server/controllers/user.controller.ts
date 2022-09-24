@@ -2,7 +2,7 @@ import { Request, Response, CookieOptions, NextFunction } from "express";
 import { UserSchema, UserLoginSchema } from "../schemas/user.schema";
 import { findUserByEmail, checkPassword } from "../services/user.service";
 import { createToken } from "../utils/auth";
-import { User } from "../models/user.model";
+import UserModel, { User } from "../models/user.model";
 import { ApiError } from "../middleware/errorHandler";
 import * as service from "../services/user.service";
 import Status from "../utils/statusCodes";
@@ -46,6 +46,10 @@ export async function login(
 
   // Password removed in user model.
   res.status(Status.Accepted).send(user);
+}
+
+export function refresh(req: Request, res: Response) {
+  UserModel.findById(req.token.userId).then((user) => res.send(user));
 }
 
 export async function logout(req: Request, res: Response) {

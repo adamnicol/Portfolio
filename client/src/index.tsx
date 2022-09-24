@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 import App from "./App";
+import AppContextProvider from "./components/providers/AppContextProvider";
 import NotFound from "./components/NotFound";
 
 axios.defaults.baseURL = "http://localhost:3001/api";
@@ -15,12 +16,14 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/404" element={<NotFound />} />
-        <Route path="/*" element={<App />} />
-      </Routes>
-    </BrowserRouter>
+    <AppContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/404" element={<NotFound />} />
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+    </AppContextProvider>
   </React.StrictMode>
 );
 
