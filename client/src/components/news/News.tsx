@@ -1,31 +1,36 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { INewsPost } from "../../interfaces";
+import axios from "axios";
 import NewsPost from "./NewsPost";
 import Pagination from "../common/Pagination";
-import axios from "axios";
+import { INewsPost } from "../../interfaces";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const postsPerPage = 5;
 
 function News() {
   const [news, setNews] = useState<INewsPost[]>();
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const { tag } = useParams();
+  const tag = searchParams.get("tag");
+  const page = Number(searchParams.get("page")) || 1;
+  const offset = (page - 1) * postsPerPage;
 
-  useEffect(() => getNews(), [currentPage, tag]);
-  useEffect(() => setCurrentPage(1), [tag]);
+  useEffect(() => getNews(), [searchParams]);
 
   function getNews() {
-    const offset = (currentPage - 1) * postsPerPage;
-    const params = { limit: postsPerPage, offset, tag };
+    axios
+      .get("/news", { params: { tag, limit: postsPerPage, offset } })
+      .then((response) => {
+        setNews(response.data.posts);
+        setTotalPages(Math.ceil(response.data.total / postsPerPage));
+      });
+  }
 
-    axios.get("/news", { params }).then((response) => {
-      setNews(response.data.posts);
-      setTotalPages(Math.ceil(response.data.total / postsPerPage));
-      window.scrollTo(0, 0);
-    });
+  function handlePageChanged(page: number) {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    setSearchParams(params);
   }
 
   return (
@@ -37,9 +42,9 @@ function News() {
       {news && totalPages > 1 && (
         <Pagination
           className="pagination-sm justify-content-end mt-4"
-          currentPage={currentPage}
+          currentPage={page}
           totalPages={totalPages}
-          onPageChanged={setCurrentPage}
+          onPageChanged={handlePageChanged}
         />
       )}
     </div>

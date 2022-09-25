@@ -1,4 +1,4 @@
-import { useRoutes, Navigate } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 
 import Home from "./components/Home";
 import News from "./components/news/News";
@@ -9,7 +9,6 @@ export function MainRoutes() {
   return useRoutes([
     { path: "/", element: <Home /> },
     { path: "/news", element: <News /> },
-    { path: "/news/:tag", element: <News /> },
     { path: "/news/post/:id", element: <ViewPost /> },
   ]);
 }

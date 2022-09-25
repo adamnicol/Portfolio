@@ -26,8 +26,12 @@ function NewsFilters() {
           all
         </Link>
 
-        {tags.map((tag, i) => (
-          <Link key={i} className="tag" to={"/news/" + encodeURIComponent(tag)}>
+        {tags.map((tag, index) => (
+          <Link
+            key={index}
+            className="tag"
+            to={"/news/?tag=" + encodeURIComponent(tag)}
+          >
             {tag}
           </Link>
         ))}
@@ -36,8 +40,8 @@ function NewsFilters() {
       <section className="mt-5">
         <h2>Top Posts</h2>
         <ul className="list-unstyled">
-          {topPosts.map((post, i) => (
-            <li key={i}>
+          {topPosts.map((post, index) => (
+            <li key={index}>
               <FontAwesomeIcon icon={faArrowRight} className="bullet" />
               <Link to={"/news/post/" + post._id} className="fw-bold">
                 {post.title}
