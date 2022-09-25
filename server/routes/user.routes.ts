@@ -1,8 +1,10 @@
-import express from "express";
 import * as controller from "../controllers/user.controller";
+import asyncHandler from "express-async-handler";
+import config from "./../utils/config";
+import express from "express";
+import rateLimit from "express-rate-limit";
 import requireUser from "../middleware/requireUser";
 import validate from "../middleware/validateSchema";
-import asyncHandler from "express-async-handler";
 import { createUserSchema, loginSchema } from "../schemas/user.schema";
 
 const router = express.Router();
@@ -10,12 +12,18 @@ const router = express.Router();
 // Registers a new user account.
 router.post(
   "/register",
+  rateLimit(config.registrationLimit),
   validate(createUserSchema),
   asyncHandler(controller.register)
 );
 
-// Authenticates a user and returns access tokens if successful.
-router.post("/login", validate(loginSchema), asyncHandler(controller.login));
+// Authenticates a user and returns access tokens.
+router.post(
+  "/login",
+  rateLimit(config.loginLimit),
+  validate(loginSchema),
+  asyncHandler(controller.login)
+);
 
 // Logs the user out and revokes access tokens.
 router.post("/logout", requireUser(), asyncHandler(controller.logout));

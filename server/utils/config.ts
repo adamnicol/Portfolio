@@ -35,6 +35,14 @@ const config = {
     secure: true,
     sameSite: "strict",
   },
+  loginLimit: {
+    max: 5,
+    windowMs: 20 * 60 * 1000,
+  },
+  registrationLimit: {
+    max: 2,
+    windowMs: 60 * 60 * 1000,
+  },
 };
 
 export default config;

@@ -35,7 +35,7 @@ function Login() {
     if (error.response?.status === Status.Unauthorized) {
       setError("Invalid username or password");
     } else if (error.response?.status === Status.TooManyRequests) {
-      setError("Too many login attempts");
+      setError("Too many login requests, please wait a while");
     } else if (error.response?.status) {
       setError("Server returned error " + error.response.status);
     } else {
