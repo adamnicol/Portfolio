@@ -1,13 +1,10 @@
+import Comment from "./Comment";
+import NewsPost from "./NewsPost";
+import Pagination from "../common/Pagination";
+import useAxios from "../hooks/useAxios";
+import { IComment, INewsPost } from "../../interfaces";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IComment, INewsPost } from "../../interfaces";
-import { useAuth } from "../providers/AuthProvider";
-import { useModal } from "../providers/ModalProvider";
-import NewsPost from "./NewsPost";
-import Comment from "./Comment";
-import Pagination from "../common/Pagination";
-import Login from "../Login";
-import axios from "axios";
 
 const commentsPerPage = 5;
 
@@ -19,8 +16,7 @@ function ViewPost() {
   const [comment, setComment] = useState<string>("");
 
   const { id } = useParams();
-  const auth = useAuth();
-  const modal = useModal();
+  const axios = useAxios();
 
   useEffect(() => getNewsPost(), [id]);
   useEffect(() => getComments(), [currentPage, id]);
@@ -43,17 +39,13 @@ function ViewPost() {
   }
 
   function postComment() {
-    if (auth.user) {
-      axios.post(`/news/${id}/comments`, { comment }).then((response) => {
-        setComment("");
-        setComments((prev) => [response.data, ...prev]);
-        if (post) {
-          setPost({ ...post, comments: post.comments + 1 });
-        }
-      });
-    } else {
-      modal.show(<Login />);
-    }
+    axios.post(`/news/${id}/comments`, { comment }).then((response) => {
+      setComment("");
+      setComments((prev) => [response.data, ...prev]);
+      if (post) {
+        setPost({ ...post, comments: post.comments + 1 });
+      }
+    });
   }
 
   return (
