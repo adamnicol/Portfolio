@@ -1,5 +1,5 @@
 import axios from "axios";
-import NewsPost from "./NewsPost";
+import NewsPost from "./Post";
 import Pagination from "../common/Pagination";
 import { INewsPost } from "../../interfaces";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ const postsPerPage = 5;
 function NewsFeed() {
   const [news, setNews] = useState<INewsPost[]>();
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const tag = searchParams.get("tag");
   const page = Number(searchParams.get("page")) || 1;
@@ -27,26 +27,18 @@ function NewsFeed() {
       });
   }
 
-  function handlePageChanged(page: number) {
-    if (page <= totalPages) {
-      const params = new URLSearchParams(searchParams);
-      params.set("page", page.toString());
-      setSearchParams(params);
-    }
-  }
-
   return (
     <div>
       {news?.map((post, index) => {
         return <NewsPost key={index} content={post} />;
       })}
 
-      {news && totalPages > 1 && (
+      {news && news.length > 0 && totalPages > 1 && (
         <Pagination
           className="pagination-sm justify-content-end mt-4"
           currentPage={page}
           totalPages={totalPages}
-          onPageChanged={handlePageChanged}
+          onPageChanged={() => setNews([])}
         />
       )}
     </div>

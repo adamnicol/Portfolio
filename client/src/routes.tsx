@@ -3,7 +3,7 @@ import { useRoutes } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import NewsFeed from "./components/news/NewsFeed";
-import NewsFilters from "./components/news/NewsFilters";
+import NewsFilters from "./components/news/Filters";
 import ViewPost from "./components/news/ViewPost";
 
 export function MainRoutes() {

@@ -1,41 +1,42 @@
 import Comment from "./Comment";
-import NewsPost from "./NewsPost";
+import NewsPost from "./Post";
 import Pagination from "../common/Pagination";
 import useAxios from "../hooks/useAxios";
 import { IComment, INewsPost } from "../../interfaces";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const commentsPerPage = 5;
 
 function ViewPost() {
   const [post, setPost] = useState<INewsPost>();
   const [comments, setComments] = useState<IComment[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [comment, setComment] = useState<string>("");
+  const [searchParams] = useSearchParams();
 
-  const axios = useAxios();
   const { slug } = useParams();
+  const axios = useAxios();
+  const page = Number(searchParams.get("page")) || 1;
+  const offset = (page - 1) * commentsPerPage;
 
   useEffect(() => getNewsPost(), [slug]);
-  useEffect(() => getComments(), [currentPage, post]);
+  useEffect(() => getComments(), [page, post]);
 
   function getNewsPost() {
     axios.get(`/news/${slug}`).then((response) => setPost(response.data));
   }
 
   function getComments() {
-    const params = {
-      limit: commentsPerPage,
-      offset: (currentPage - 1) * commentsPerPage,
-    };
-
     if (post) {
-      axios.get(`/news/${post._id}/comments`, { params }).then((response) => {
-        setComments(response.data.comments);
-        setTotalPages(Math.ceil(response.data.total / commentsPerPage));
-      });
+      axios
+        .get(`/news/${post._id}/comments`, {
+          params: { limit: commentsPerPage, offset },
+        })
+        .then((response) => {
+          setComments(response.data.comments);
+          setTotalPages(Math.ceil(response.data.total / commentsPerPage));
+        });
     }
   }
 
@@ -71,7 +72,7 @@ function ViewPost() {
             className="btn btn-primary btn-sm px-4 mt-2"
             value="Post"
             onClick={postComment}
-            disabled={comment.length < 5}
+            disabled={comment.trim().length < 5}
           />
         </div>
       </div>
@@ -82,12 +83,12 @@ function ViewPost() {
             return <Comment key={index} content={comment} />;
           })}
 
-          {totalPages > 1 && (
+          {comments.length > 0 && totalPages > 1 && (
             <Pagination
               className="pagination-sm justify-content-end mt-4"
-              currentPage={currentPage}
+              currentPage={page}
               totalPages={totalPages}
-              onPageChanged={setCurrentPage}
+              onPageChanged={() => setComments([])}
             />
           )}
         </section>

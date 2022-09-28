@@ -1,4 +1,5 @@
-import BPagination from "react-bootstrap/pagination";
+import BSPagination from "react-bootstrap/pagination";
+import { useSearchParams } from "react-router-dom";
 
 export type PaginationProps = {
   className?: string;
@@ -8,42 +9,53 @@ export type PaginationProps = {
 };
 
 function Pagination(props: PaginationProps) {
-  const { className, currentPage, totalPages, onPageChanged } = props;
+  const { className, currentPage, totalPages } = props;
 
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
   const items: JSX.Element[] = [];
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  function handlePageChanged(page: number) {
+    if (page != currentPage) {
+      const params = new URLSearchParams(searchParams);
+      params.set("page", page.toString());
+      setSearchParams(params);
+      props.onPageChanged(page);
+    }
+  }
+
   for (let page = 1; page <= totalPages; page++) {
     items.push(
-      <BPagination.Item
+      <BSPagination.Item
         key={page}
         active={page === currentPage}
-        onClick={() => onPageChanged(page)}
+        onClick={() => handlePageChanged(page)}
       >
         {page}
-      </BPagination.Item>
+      </BSPagination.Item>
     );
   }
 
   return (
-    <BPagination className={className}>
-      <BPagination.Prev
+    <BSPagination className={className}>
+      <BSPagination.Prev
         disabled={isFirstPage}
-        onClick={() => onPageChanged(currentPage - 1)}
+        onClick={() => handlePageChanged(currentPage - 1)}
       >
         Prev
-      </BPagination.Prev>
+      </BSPagination.Prev>
 
       {items}
 
-      <BPagination.Next
+      <BSPagination.Next
         disabled={isLastPage}
-        onClick={() => onPageChanged(currentPage + 1)}
+        onClick={() => handlePageChanged(currentPage + 1)}
       >
         Next
-      </BPagination.Next>
-    </BPagination>
+      </BSPagination.Next>
+    </BSPagination>
   );
 }
 
