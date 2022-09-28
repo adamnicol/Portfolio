@@ -40,7 +40,7 @@ function ViewPost() {
   }
 
   function postComment() {
-    if (post) {
+    if (post && comment.trim().length > 5) {
       axios.post(`/news/${post._id}/comments`, { comment }).then((response) => {
         setComment("");
         setComments((prev) => [response.data, ...prev]);
@@ -71,6 +71,7 @@ function ViewPost() {
             className="btn btn-primary btn-sm px-4 mt-2"
             value="Post"
             onClick={postComment}
+            disabled={comment.length < 5}
           />
         </div>
       </div>
