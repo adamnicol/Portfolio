@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 
 const postsPerPage = 5;
 
-function News() {
+function NewsFeed() {
   const [news, setNews] = useState<INewsPost[]>();
   const [totalPages, setTotalPages] = useState<number>(1);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,9 +28,11 @@ function News() {
   }
 
   function handlePageChanged(page: number) {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", page.toString());
-    setSearchParams(params);
+    if (page <= totalPages) {
+      const params = new URLSearchParams(searchParams);
+      params.set("page", page.toString());
+      setSearchParams(params);
+    }
   }
 
   return (
@@ -51,4 +53,4 @@ function News() {
   );
 }
 
-export default News;
+export default NewsFeed;

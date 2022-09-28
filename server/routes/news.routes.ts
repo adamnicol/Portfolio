@@ -20,8 +20,8 @@ router.get("/count", asyncHandler(controller.count));
 // Returns the tags that have been used on news posts.
 router.get("/tags", asyncHandler(controller.getTags));
 
-// Returns the news post with the specified ID.
-router.get("/:id", asyncHandler(controller.getById));
+// Returns the news post with the specified slug.
+router.get("/:slug", asyncHandler(controller.getBySlug));
 
 // Returns comments for the news post with the specified ID.
 router.get("/:id/comments", asyncHandler(controller.getComments));

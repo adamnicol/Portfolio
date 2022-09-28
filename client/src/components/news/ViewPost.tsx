@@ -15,14 +15,14 @@ function ViewPost() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [comment, setComment] = useState<string>("");
 
-  const { id } = useParams();
   const axios = useAxios();
+  const { slug } = useParams();
 
-  useEffect(() => getNewsPost(), [id]);
-  useEffect(() => getComments(), [currentPage, id]);
+  useEffect(() => getNewsPost(), [slug]);
+  useEffect(() => getComments(), [currentPage, post]);
 
   function getNewsPost() {
-    axios.get(`/news/${id}`).then((response) => setPost(response.data));
+    axios.get(`/news/${slug}`).then((response) => setPost(response.data));
   }
 
   function getComments() {
@@ -31,28 +31,29 @@ function ViewPost() {
       offset: (currentPage - 1) * commentsPerPage,
     };
 
-    axios.get(`/news/${id}/comments`, { params }).then((response) => {
-      setComments(response.data.comments);
-      setTotalPages(Math.ceil(response.data.total / commentsPerPage));
-      window.scrollTo(0, 0);
-    });
+    if (post) {
+      axios.get(`/news/${post._id}/comments`, { params }).then((response) => {
+        setComments(response.data.comments);
+        setTotalPages(Math.ceil(response.data.total / commentsPerPage));
+      });
+    }
   }
 
   function postComment() {
-    axios.post(`/news/${id}/comments`, { comment }).then((response) => {
-      setComment("");
-      setComments((prev) => [response.data, ...prev]);
-      if (post) {
+    if (post) {
+      axios.post(`/news/${post._id}/comments`, { comment }).then((response) => {
+        setComment("");
+        setComments((prev) => [response.data, ...prev]);
         setPost({ ...post, comments: post.comments + 1 });
-      }
-    });
+      });
+    }
   }
 
   return (
     <div>
       {post && <NewsPost content={post} />}
 
-      <section className="row mt-4 gx-3">
+      <div className="row mt-4 gx-3">
         <h5>Comments</h5>
         <div className="col col-auto">
           <img src={require("../../images/avatar.jpg")} alt="avatar" />
@@ -72,22 +73,24 @@ function ViewPost() {
             onClick={postComment}
           />
         </div>
-      </section>
+      </div>
 
-      <section className="mt-4">
-        {comments?.map((comment, index) => {
-          return <Comment key={index} content={comment} />;
-        })}
+      {comments && (
+        <section className="mt-4">
+          {comments.map((comment, index) => {
+            return <Comment key={index} content={comment} />;
+          })}
 
-        {comments && totalPages > 1 && (
-          <Pagination
-            className="pagination-sm justify-content-end mt-4"
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChanged={setCurrentPage}
-          />
-        )}
-      </section>
+          {totalPages > 1 && (
+            <Pagination
+              className="pagination-sm justify-content-end mt-4"
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChanged={setCurrentPage}
+            />
+          )}
+        </section>
+      )}
     </div>
   );
 }

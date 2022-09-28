@@ -43,7 +43,7 @@ function NewsFilters() {
           {topPosts.map((post, index) => (
             <li key={index}>
               <FontAwesomeIcon icon={faArrowRight} className="bullet" />
-              <Link to={"/news/post/" + post._id} className="fw-bold">
+              <Link to={"/news/" + post.slug} className="fw-bold">
                 {post.title}
               </Link>
             </li>

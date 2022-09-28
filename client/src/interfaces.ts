@@ -15,6 +15,7 @@ export interface INewsPost {
   comments: number;
   createdAt: Date;
   updatedAt: Date;
+  slug: string;
 }
 
 export interface IComment {

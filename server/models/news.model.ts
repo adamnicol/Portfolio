@@ -12,6 +12,7 @@ export interface NewsInput {
 
 export interface News extends NewsInput {
   _id: mongoose.Schema.Types.ObjectId;
+  slug: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -46,9 +47,17 @@ const schema = new mongoose.Schema<News>(
       type: Number,
       default: 0,
     },
+    slug: {
+      type: String,
+      slug: "title",
+      unique: true,
+      slug_padding_size: 1,
+    },
   },
   { timestamps: true }
 );
+
+mongoose.plugin(require("mongoose-slug-generator"));
 
 const NewsModel = mongoose.model<News>("News", schema);
 

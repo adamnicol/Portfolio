@@ -51,18 +51,18 @@ export function count(
   });
 }
 
-export function getById(
-  req: Request<{ id: string }>,
+export function getBySlug(
+  req: Request<{ slug: string }>,
   res: Response,
   next: NextFunction
 ) {
-  NewsModel.findById(req.params.id)
+  NewsModel.findOne({ slug: req.params.slug })
     .populate("author", "username")
     .lean()
     .then((result) => {
       res.send(result);
     })
-    .catch(() => next(new ApiError(Status.NotFound, "Invalid id")));
+    .catch(() => next(new ApiError(Status.NotFound, "Not found")));
 }
 
 export async function getTags(

@@ -7,7 +7,7 @@ import { INewsPost } from "../../interfaces";
 function NewsPost(props: { content: INewsPost }) {
   const post = props.content;
   const maxLength = 300;
-  const url = `/news/post/${post._id}`;
+  const url = `/news/${post.slug}`;
   const content =
     post.content.length > maxLength
       ? post.content.substring(0, Math.min(post.content.length, maxLength))
