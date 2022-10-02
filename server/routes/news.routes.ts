@@ -1,10 +1,10 @@
-import express from "express";
 import * as controller from "../controllers/news.controller";
+import asyncHandler from "express-async-handler";
+import express from "express";
 import requireUser from "../middleware/requireUser";
 import validateSchema from "../middleware/validateSchema";
-import asyncHandler from "express-async-handler";
+import { Role } from "@prisma/client";
 import { schema } from "../schemas/news.schema";
-import { Role } from "../models/user.model";
 
 const router = express.Router();
 

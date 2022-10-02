@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
-import { Role } from "../models/user.model";
-import { ApiError } from "./errorHandler";
 import Status from "../utils/statusCodes";
+import { ApiError } from "./errorHandler";
+import { NextFunction, Request, Response } from "express";
+import { Role } from "@prisma/client";
 
 const requireUser =
   (requiredRole: Role = Role.User) =>
@@ -11,7 +11,10 @@ const requireUser =
     if (!accessToken) {
       return next(new ApiError(Status.Unauthorized, "Authentication required"));
     }
-    if (accessToken.role < requiredRole) {
+
+    const roles = [Role.User, Role.Moderator, Role.Admin];
+
+    if (roles.indexOf(accessToken.role) < roles.indexOf(requiredRole)) {
       return next(new ApiError(Status.Forbidden, "Forbidden"));
     }
 

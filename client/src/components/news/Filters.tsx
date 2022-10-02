@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { INewsPost } from "../../interfaces";
+import { INewsPost, ITag } from "../../interfaces";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 function NewsFilters() {
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<ITag[]>([]);
   const [topPosts, setTopPosts] = useState<INewsPost[]>([]);
 
   useEffect(() => getContent(), []);
@@ -30,9 +30,9 @@ function NewsFilters() {
           <Link
             key={index}
             className="tag"
-            to={"/news/?tag=" + encodeURIComponent(tag)}
+            to={"/news/?tag=" + encodeURIComponent(tag.name)}
           >
-            {tag}
+            {tag.name}
           </Link>
         ))}
       </section>

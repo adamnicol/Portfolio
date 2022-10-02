@@ -1,22 +1,29 @@
-import UserModel, { User, UserInput } from "../models/user.model";
-import config from "../utils/config";
 import bcrypt from "bcrypt";
+import config from "../utils/config";
+import db from "../database";
+import { Prisma, User } from "@prisma/client";
 
-export async function createUser(input: UserInput): Promise<User> {
+export async function findById(id: number): Promise<User | null> {
+  return await db.user.findFirst({ where: { id } });
+}
+
+export async function findByEmail(email: string): Promise<User | null> {
+  return await db.user.findFirst({ where: { email } });
+}
+
+export async function create(data: Prisma.UserCreateInput): Promise<User> {
+  data.password = await hashPassword(data.password);
+  return await db.user.create({ data });
+}
+
+export async function hashPassword(password: string): Promise<string> {
   const salt = await bcrypt.genSalt(config.auth.saltRounds);
-  const hash = await bcrypt.hash(input.password, salt);
-
-  return await UserModel.create({ ...input, password: hash });
+  return await bcrypt.hash(password, salt);
 }
 
-export async function findUserById(id: string): Promise<User | null> {
-  return await UserModel.findById(id);
-}
-
-export async function findUserByEmail(email: string): Promise<User | null> {
-  return await UserModel.findOne({ email }).select("+password");
-}
-
-export async function checkPassword(user: User, password: string) {
+export async function checkPassword(
+  user: User,
+  password: string
+): Promise<boolean> {
   return await bcrypt.compare(password, user.password);
 }

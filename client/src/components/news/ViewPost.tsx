@@ -30,7 +30,7 @@ function ViewPost() {
   function getComments() {
     if (post) {
       axios
-        .get(`/news/${post._id}/comments`, {
+        .get(`/news/${post.id}/comments`, {
           params: { limit: commentsPerPage, offset },
         })
         .then((response) => {
@@ -41,8 +41,8 @@ function ViewPost() {
   }
 
   function postComment() {
-    if (post && comment.trim().length > 5) {
-      axios.post(`/news/${post._id}/comments`, { comment }).then((response) => {
+    if (post && comment.trim().length >= 5) {
+      axios.post(`/news/${post.id}/comments`, { comment }).then((response) => {
         setComment("");
         setComments((prev) => [response.data, ...prev]);
         setPost({ ...post, comments: post.comments + 1 });

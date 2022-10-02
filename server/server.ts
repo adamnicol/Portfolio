@@ -1,15 +1,14 @@
-import express, { Request, Response } from "express";
-import requestLogger from "./middleware/requestLogger";
-import checkAccessToken from "./middleware/checkAccessToken";
-import errorHandler from "./middleware/errorHandler";
 import asyncHandler from "express-async-handler";
-import responseTime from "response-time";
-import logger from "./utils/logger";
-import Status from "./utils/statusCodes";
+import checkAccessToken from "./middleware/checkAccessToken";
 import config from "./utils/config";
-import cors from "cors";
 import cookies from "cookie-parser";
-import connect from "./database";
+import cors from "cors";
+import errorHandler from "./middleware/errorHandler";
+import express, { Request, Response } from "express";
+import logger from "./utils/logger";
+import requestLogger from "./middleware/requestLogger";
+import responseTime from "response-time";
+import Status from "./utils/statusCodes";
 
 const app = express();
 
@@ -31,5 +30,4 @@ app.use(errorHandler);
 
 app.listen(config.server.port, () => {
   logger.info(`Server started on port ${config.server.port}`);
-  connect();
 });

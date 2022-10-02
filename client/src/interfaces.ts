@@ -1,25 +1,30 @@
 export interface IUser {
-  _id: string;
+  id: string;
   username: string;
   password: string;
   email: string;
 }
 
 export interface INewsPost {
-  _id: string;
+  id: string;
   title: string;
   content: string;
   author: IUser;
-  likes?: number;
-  tags?: string[];
+  likes: number;
+  tags?: ITag[];
   comments: number;
   createdAt: Date;
   updatedAt: Date;
   slug: string;
 }
 
+export interface ITag {
+  id: number;
+  name: string;
+}
+
 export interface IComment {
-  author: IUser;
+  user: IUser;
   content: string;
   createdAt: Date;
   updatedAt: Date;

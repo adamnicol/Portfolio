@@ -1,15 +1,15 @@
 import jwt from "jsonwebtoken";
 import config from "./config";
-import { Role, User } from "../models/user.model";
+import { User, Role } from "@prisma/client";
 
 export interface TokenPayload {
-  userId: string;
+  userId: number;
   role: Role;
 }
 
 export function createToken(user: User, expires: string | number) {
   const payLoad = {
-    userId: user._id.toString(),
+    userId: user.id,
     role: user.role,
   };
   return signToken(payLoad, expires);

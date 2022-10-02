@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction, CookieOptions } from "express";
-import { verifyToken, signToken } from "../utils/auth";
-import { findUserById } from "../services/user.service";
 import config from "../utils/config";
+import { CookieOptions, NextFunction, Request, Response } from "express";
+import { findById } from "../services/user.service";
+import { signToken, verifyToken } from "../utils/auth";
 
 async function checkAccessToken(
   req: Request,
@@ -32,8 +32,8 @@ async function checkAccessToken(
   next();
 }
 
-async function renewAccessToken(req: Request, res: Response, userId: string) {
-  const user = await findUserById(userId);
+async function renewAccessToken(req: Request, res: Response, userId: number) {
+  const user = await findById(userId);
 
   if (user?.active) {
     // Generate a new access token.

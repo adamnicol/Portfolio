@@ -5,5 +5,8 @@
   "editor.renderFinalNewline": false,
   "files.exclude": {
     "**/node_modules": true
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
   }
 }
