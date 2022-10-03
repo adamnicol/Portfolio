@@ -1,8 +1,12 @@
 import db from "../database";
 import slugify from "slugify";
 import { Comment, Post, Prisma } from "@prisma/client";
+import { WithCounts } from "../types";
 
-export async function getAll(limit: number, offset: number): Promise<Post[]> {
+export async function getAll(
+  limit: number,
+  offset: number
+): Promise<WithCounts<Post>[]> {
   return await db.post.findMany({
     skip: Number(offset),
     take: Number(limit),
@@ -43,7 +47,7 @@ export async function getTags(limit: number) {
 
 export async function find(
   search: Prisma.PostWhereInput
-): Promise<Post | null> {
+): Promise<WithCounts<Post> | null> {
   return await db.post.findFirst({
     where: { ...search },
     include: {
@@ -71,8 +75,7 @@ export async function create(
   return await db.post.create({
     data: {
       ...post,
-      slug: await generateSlug(post.title),
-      author: { connect: { id: authorId } },
+      author_id: authorId,
       tags: {
         connectOrCreate: tags.map((tag: string) => ({
           where: { name: tag },
@@ -91,6 +94,7 @@ export async function generateSlug(input: string): Promise<string> {
     if ((await db.post.count({ where: { slug } })) === 0) {
       return slug;
     }
+
     slug = `${slugify(input, options)}-${i}`;
   }
 }
