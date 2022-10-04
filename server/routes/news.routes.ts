@@ -4,12 +4,17 @@ import express from "express";
 import requireUser from "../middleware/requireUser";
 import validateSchema from "../middleware/validateSchema";
 import { Role } from "@prisma/client";
-import { schema } from "../schemas/news.schema";
+import {
+  postNews,
+  postComment,
+  getNews,
+  getComments,
+} from "../schemas/news.schema";
 
 const router = express.Router();
 
 // Returns all news posts in the database.
-router.get("/", asyncHandler(controller.get));
+router.get("/", validateSchema(getNews), asyncHandler(controller.get));
 
 // Returns the top rated news posts.
 router.get("/top", asyncHandler(controller.getTop));
@@ -24,13 +29,17 @@ router.get("/tags", asyncHandler(controller.getTags));
 router.get("/:slug", asyncHandler(controller.getBySlug));
 
 // Returns comments for the news post with the specified ID.
-router.get("/:id/comments", asyncHandler(controller.getComments));
+router.get(
+  "/:id/comments",
+  validateSchema(getComments),
+  asyncHandler(controller.getComments)
+);
 
 // Adds a news post to the database.
 router.post(
   "/",
   requireUser(Role.Admin),
-  validateSchema(schema),
+  validateSchema(postNews),
   asyncHandler(controller.post)
 );
 
@@ -38,6 +47,7 @@ router.post(
 router.post(
   "/:id/comments",
   requireUser(Role.User),
+  validateSchema(postComment),
   asyncHandler(controller.postComment)
 );
 

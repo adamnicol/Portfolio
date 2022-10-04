@@ -1,23 +1,25 @@
 import * as NewsService from "../services/news.service";
 import Status from "../utils/statusCodes";
 import { ApiError } from "../middleware/errorHandler";
-import { NewsSchema } from "../schemas/news.schema";
 import { NextFunction, Request, Response } from "express";
 import { WithCounts } from "../types";
+import {
+  PostNewsSchema,
+  PostCommentSchema,
+  GetNewsSchema,
+  GetCommentsSchema,
+} from "../schemas/news.schema";
 
-export async function get(
-  req: Request<{}, {}, {}, { limit?: number; offset?: number; tag?: string }>,
+export function get(
+  req: Request<{}, {}, {}, GetNewsSchema["query"]>,
   res: Response
 ) {
   const { limit = 100, offset = 0, tag } = req.query;
 
+  const count = tag ? NewsService.countByTag(tag) : NewsService.count();
   const posts = tag
-    ? await NewsService.getByTag(tag, limit, offset)
-    : await NewsService.getAll(limit, offset);
-
-  const count = tag
-    ? await NewsService.countByTag(tag)
-    : await NewsService.count();
+    ? NewsService.getByTag(tag, limit, offset)
+    : NewsService.getAll(limit, offset);
 
   Promise.all([posts, count]).then((values) => {
     res.send({
@@ -67,7 +69,7 @@ export function getTags(
 }
 
 export async function post(
-  req: Request<{}, {}, NewsSchema["body"]>,
+  req: Request<{}, {}, PostNewsSchema["body"]>,
   res: Response
 ) {
   const author = req.token.userId;
@@ -84,7 +86,7 @@ export async function post(
 }
 
 export function getComments(
-  req: Request<{ id: number }, {}, {}, { limit?: number; offset?: number }>,
+  req: Request<GetCommentsSchema["params"], {}, {}, GetCommentsSchema["query"]>,
   res: Response
 ) {
   const { limit = 100, offset = 0 } = req.query;
@@ -103,7 +105,7 @@ export function getComments(
 }
 
 export async function postComment(
-  req: Request<{ id: string }, {}, { comment: string }>,
+  req: Request<PostCommentSchema["params"], {}, PostCommentSchema["body"]>,
   res: Response
 ) {
   const user = req.token.userId;
@@ -115,6 +117,6 @@ export async function postComment(
   );
 }
 
-function flatten<T>(obj: WithCounts<T>) {
-  return { ...obj, ...obj._count, _count: undefined };
+function flatten<T>(input: WithCounts<T>) {
+  return { ...input, ...input._count, _count: undefined };
 }
