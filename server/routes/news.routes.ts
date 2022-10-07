@@ -51,4 +51,11 @@ router.post(
   asyncHandler(controller.postComment)
 );
 
+// Increments the number of likes.
+router.post(
+  "/:id/like",
+  requireUser(Role.User),
+  asyncHandler(controller.likePost)
+);
+
 module.exports = router;

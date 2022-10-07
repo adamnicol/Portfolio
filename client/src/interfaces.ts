@@ -8,14 +8,15 @@ export interface IUser {
 export interface INewsPost {
   id: string;
   title: string;
+  slug: string;
   content: string;
-  author: IUser;
+  author: string;
   likes: number;
-  tags?: ITag[];
+  liked: boolean;
   comments: number;
+  tags?: ITag[];
   createdAt: Date;
   updatedAt: Date;
-  slug: string;
 }
 
 export interface ITag {

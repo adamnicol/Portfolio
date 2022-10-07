@@ -15,32 +15,32 @@ enum Role {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  username  String    @unique @db.VarChar(20)
-  email     String    @unique @db.VarChar(100)
-  password  String    @db.VarChar(100)
-  role      Role      @default(User)
-  active    Boolean   @default(true)
-  createdAt DateTime  @default(now()) @map(name: "created_at")
-  updatedAt DateTime  @updatedAt @map(name: "updated_at")
-  posts     Post[]    @relation(name: "UserPosts")
-  likes     Post[]
+  id        Int         @id @default(autoincrement())
+  username  String      @unique @db.VarChar(20)
+  email     String      @unique @db.VarChar(100)
+  password  String      @db.VarChar(100)
+  role      Role        @default(User)
+  active    Boolean     @default(true)
+  createdAt DateTime    @default(now()) @map(name: "created_at")
+  updatedAt DateTime    @updatedAt @map(name: "updated_at")
+  posts     Post[]      @relation(name: "UserPosts")
+  likes     PostLikes[]
   comments  Comment[]
 
   @@index([email])
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())
-  title     String    @db.VarChar(100)
-  slug      String    @db.VarChar(100)
-  author    User      @relation(name: "UserPosts", fields: [author_id], references: [id])
+  id        Int         @id @default(autoincrement())
+  title     String      @db.VarChar(100)
+  slug      String      @unique @db.VarChar(100)
+  author    User        @relation(name: "UserPosts", fields: [author_id], references: [id])
   author_id Int
-  content   String    @db.VarChar(500)
-  createdAt DateTime  @default(now()) @map(name: "created_at")
-  updatedAt DateTime  @updatedAt @map(name: "updated_at")
+  content   String      @db.VarChar(500)
+  createdAt DateTime    @default(now()) @map(name: "created_at")
+  updatedAt DateTime    @updatedAt @map(name: "updated_at")
   tags      Tag[]
-  likes     User[]
+  likes     PostLikes[]
   comments  Comment[]
 
   @@index([slug])
@@ -67,4 +67,14 @@ model Tag {
   posts Post[]
 
   @@index([name])
+}
+
+model PostLikes {
+  post_id Int
+  post    Post @relation(fields: [post_id], references: [id])
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  @@id([post_id, user_id])
+  @@map("post_likes")
 }

@@ -1,18 +1,20 @@
 import db from "../database";
 import slugify from "slugify";
 import { Comment, Post, Prisma } from "@prisma/client";
-import { WithCounts } from "../types";
+import { PopulatedPost } from "../types";
 
 export async function getAll(
   limit: number,
-  offset: number
-): Promise<WithCounts<Post>[]> {
+  offset: number,
+  userId: number | undefined
+): Promise<PopulatedPost[]> {
   return await db.post.findMany({
     skip: Number(offset),
     take: Number(limit),
     orderBy: { createdAt: "desc" },
     include: {
       author: { select: { username: true } },
+      likes: { select: { user_id: true }, where: { user_id: userId ?? -1 } },
       _count: { select: { comments: true, likes: true } },
     },
   });
@@ -25,7 +27,12 @@ export async function getByMostLikes(limit: number): Promise<Post[]> {
   });
 }
 
-export async function getByTag(tag: string, limit: number, offset: number) {
+export async function getByTag(
+  tag: string,
+  limit: number,
+  offset: number,
+  userId: number | undefined
+) {
   return await db.post.findMany({
     skip: Number(offset),
     take: Number(limit),
@@ -33,6 +40,7 @@ export async function getByTag(tag: string, limit: number, offset: number) {
     orderBy: { createdAt: "desc" },
     include: {
       author: { select: { username: true } },
+      likes: { select: { user_id: true }, where: { user_id: userId ?? -1 } },
       _count: { select: { comments: true, likes: true } },
     },
   });
@@ -46,12 +54,14 @@ export async function getTags(limit: number) {
 }
 
 export async function find(
-  search: Prisma.PostWhereInput
-): Promise<WithCounts<Post> | null> {
+  search: Prisma.PostWhereInput,
+  userId: number | undefined
+): Promise<PopulatedPost | null> {
   return await db.post.findFirst({
     where: { ...search },
     include: {
       author: { select: { username: true } },
+      likes: { select: { user_id: true }, where: { user_id: userId ?? -1 } },
       _count: { select: { comments: true, likes: true } },
     },
   });
@@ -133,5 +143,14 @@ export async function createComment(
       post: { connect: { id: post_id } },
     },
     include: { user: { select: { id: true, username: true } } },
+  });
+}
+
+export async function likePost(userId: number, postId: number) {
+  return await db.postLikes.create({
+    data: {
+      user_id: userId,
+      post_id: postId,
+    },
   });
 }

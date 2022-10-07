@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import useAxios from "../hooks/useAxios";
+import { faHeart, faMessage } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { formatDate } from "../../utils/dateFormatter";
 import { INewsPost } from "../../interfaces";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function NewsPost(props: { content: INewsPost }) {
   const post = props.content;
@@ -12,6 +15,23 @@ function NewsPost(props: { content: INewsPost }) {
     post.content.length > maxLength
       ? post.content.substring(0, Math.min(post.content.length, maxLength))
       : post.content;
+
+  const [likedPost, setLikedPost] = useState<boolean>(post.liked);
+
+  const axios = useAxios();
+
+  function handleLikePost() {
+    if (!post.liked) {
+      axios
+        .post(`/news/${post.id}/like`, { params: { value: true } })
+        .then(() => {
+          // TODO: Set this properly.
+          post.likes++;
+          post.liked = true;
+          setLikedPost(true);
+        });
+    }
+  }
 
   return (
     <article className="mt-3">
@@ -28,12 +48,19 @@ function NewsPost(props: { content: INewsPost }) {
       </p>
       <hr className="mb-2" />
       <div className="d-flex text-primary">
-        <Link to={url}>
+        <Link to={url} title="Comments">
           <FontAwesomeIcon icon={faMessage} size="sm" /> {post.comments}
         </Link>
-        <Link to="#" className="ms-2">
-          <FontAwesomeIcon icon={faHeart} size="sm" /> {post.likes}
-        </Link>
+        <a className="ms-2" onClick={handleLikePost}>
+          <FontAwesomeIcon
+            icon={likedPost ? faHeartSolid : faHeart}
+            size="sm"
+            title="Like Post"
+            onMouseOver={() => setLikedPost(true)}
+            onMouseOut={() => setLikedPost(post.liked)}
+          />{" "}
+          {post.likes}
+        </a>
         <span className="ms-auto text-secondary">
           Posted {formatDate(post.createdAt)}
         </span>
