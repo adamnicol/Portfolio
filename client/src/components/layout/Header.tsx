@@ -1,9 +1,9 @@
+import Login from "../Login";
+import socials from "../content/socials";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { useAuth } from "../providers/AuthProvider";
-import { useModal } from "../providers/ModalProvider";
-import socials from "../content/socials";
-import Login from "../Login";
+import { useAuth } from "../../providers/AuthProvider";
+import { useModal } from "../../providers/ModalProvider";
 
 function Header() {
   return (

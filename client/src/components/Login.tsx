@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useModal } from "./providers/ModalProvider";
-import { useAuth } from "./providers/AuthProvider";
+import { useModal } from "../providers/ModalProvider";
+import { useAuth } from "../providers/AuthProvider";
 import axios, { AxiosError } from "axios";
 import Status from "./../utils/statusCodes";
 
@@ -35,7 +35,7 @@ function Login() {
     if (error.response?.status === Status.Unauthorized) {
       setError("Invalid username or password");
     } else if (error.response?.status === Status.TooManyRequests) {
-      setError("Too many login requests, please wait a while");
+      setError("Too many login attempts, please wait a while");
     } else if (error.response?.status) {
       setError("Server returned error " + error.response.status);
     } else {

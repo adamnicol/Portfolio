@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { INewsPost, ITag } from "../../interfaces";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useGetTopTags, useGetTopPosts } from "../../api/queries/news.queries";
 
 function NewsFilters() {
-  const [tags, setTags] = useState<ITag[]>([]);
-  const [topPosts, setTopPosts] = useState<INewsPost[]>([]);
-
-  useEffect(() => getContent(), []);
-
-  function getContent() {
-    axios.get("/news/top").then((response) => setTopPosts(response.data));
-    axios
-      .get("/news/tags", { params: { limit: 10 } })
-      .then((response) => setTags(response.data));
-  }
+  const tags = useGetTopTags(10);
+  const posts = useGetTopPosts(10);
 
   return (
     <div>
@@ -26,7 +15,7 @@ function NewsFilters() {
           all
         </Link>
 
-        {tags.map((tag, index) => (
+        {tags.data?.map((tag, index) => (
           <Link
             key={index}
             className="tag"
@@ -40,7 +29,7 @@ function NewsFilters() {
       <section className="mt-5">
         <h2>Top Posts</h2>
         <ul className="list-unstyled">
-          {topPosts.map((post, index) => (
+          {posts.data?.map((post, index) => (
             <li key={index}>
               <FontAwesomeIcon icon={faArrowRight} className="bullet" />
               <Link to={"/news/" + post.slug} className="fw-bold">

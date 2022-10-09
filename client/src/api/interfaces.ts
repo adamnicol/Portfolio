@@ -19,6 +19,12 @@ export interface INewsPost {
   updatedAt: Date;
 }
 
+export interface INewsPayload {
+  posts: INewsPost[];
+  total: number;
+  returned: number;
+}
+
 export interface ITag {
   id: number;
   name: string;
@@ -29,4 +35,10 @@ export interface IComment {
   content: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ICommentPayload {
+  comments: IComment[];
+  total: number;
+  returned: number;
 }

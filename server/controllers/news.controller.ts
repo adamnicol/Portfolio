@@ -45,7 +45,7 @@ export async function count(
     ? await service.countByTag(req.query.tag)
     : await service.count();
 
-  res.send(count);
+  res.send(count.toString());
 }
 
 export async function getBySlug(

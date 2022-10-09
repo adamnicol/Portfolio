@@ -1,11 +1,10 @@
-import useAxios from "../hooks/useAxios";
 import { faHeart, faMessage } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatDate } from "../../utils/dateFormatter";
-import { INewsPost } from "../../interfaces";
+import { INewsPost } from "../../api/interfaces";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useLikePost } from "../../api/queries/news.queries";
 
 function NewsPost(props: { content: INewsPost }) {
   const post = props.content;
@@ -16,21 +15,11 @@ function NewsPost(props: { content: INewsPost }) {
       ? post.content.substring(0, Math.min(post.content.length, maxLength))
       : post.content;
 
-  const [likedPost, setLikedPost] = useState<boolean>(post.liked);
-
-  const axios = useAxios();
+  const likePost = useLikePost(post);
 
   function handleLikePost() {
-    if (!post.liked) {
-      axios
-        .post(`/news/${post.id}/like`, { params: { value: true } })
-        .then(() => {
-          // TODO: Set this properly.
-          post.likes++;
-          post.liked = true;
-          setLikedPost(true);
-        });
-    }
+    // TODO: Check user logged in.
+    likePost.mutate();
   }
 
   return (
@@ -53,11 +42,9 @@ function NewsPost(props: { content: INewsPost }) {
         </Link>
         <a className="ms-2" onClick={handleLikePost}>
           <FontAwesomeIcon
-            icon={likedPost ? faHeartSolid : faHeart}
+            icon={post.liked ? faHeartSolid : faHeart}
             size="sm"
             title="Like Post"
-            onMouseOver={() => setLikedPost(true)}
-            onMouseOut={() => setLikedPost(post.liked)}
           />{" "}
           {post.likes}
         </a>

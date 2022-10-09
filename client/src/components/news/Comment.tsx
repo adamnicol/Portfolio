@@ -1,5 +1,5 @@
-import { IComment } from "../../interfaces";
 import { formatDate } from "../../utils/dateFormatter";
+import { IComment } from "../../api/interfaces";
 
 function Comment(props: { content: IComment }) {
   const { createdAt, user, content } = props.content;
