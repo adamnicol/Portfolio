@@ -1,5 +1,5 @@
 import * as routes from "../routes/news.routes";
-import { INewsPost } from "../interfaces";
+import { ICommentFilters, INewsFilters, INewsPost } from "../interfaces";
 import { useMutationWithAuth } from "../../hooks/useMutationWithAuth";
 import { useQuery, useQueryClient } from "react-query";
 
@@ -11,24 +11,28 @@ export function useGetTopTags(limit: number) {
   return useQuery("tags", () => routes.getTopTags(limit));
 }
 
-export function useGetNews(limit: number, offset: number, tag?: string | null) {
+export function useGetNews(filters: INewsFilters) {
   const queryClient = useQueryClient();
 
-  return useQuery(
-    ["news", tag, limit, offset],
-    () => routes.getNews(limit, offset, tag),
-    {
-      onSuccess: (news) => {
-        news.posts.forEach((post) => {
-          queryClient.setQueryData(["post", post.slug], post);
-        });
-      },
-    }
-  );
-}
+  return useQuery(["news", filters], () => routes.getNews(filters), {
+    onSuccess: (news) => {
+      news.posts.forEach((post) => {
+        queryClient.setQueryData(["post", post.slug], post);
+      });
 
-export function useGetNewsCount(tag?: string | null) {
-  return useQuery(["news-count", tag], () => routes.getNewsCount(tag));
+      const newFilters = {
+        ...filters,
+        offset: filters.offset + filters.limit,
+      };
+
+      if (newFilters.offset < news.total) {
+        // Preload the next page.
+        queryClient.prefetchQuery(["news", newFilters], () =>
+          routes.getNews(newFilters)
+        );
+      }
+    },
+  });
 }
 
 export function useGetPost(slug?: string) {
@@ -37,27 +41,32 @@ export function useGetPost(slug?: string) {
   });
 }
 
-export function useGetComments(
-  limit: number,
-  offset: number,
-  post?: INewsPost
-) {
+export function useGetComments(filters: ICommentFilters, post?: INewsPost) {
+  const queryClient = useQueryClient();
+
   return useQuery(
-    ["comments", post?.id, limit, offset],
-    () => routes.getComments(limit, offset, post),
-    { enabled: Boolean(post) }
+    ["comments", post?.id, filters],
+    () => routes.getComments(filters, post),
+    {
+      onSuccess: (comments) => {
+        const newFilters = {
+          ...filters,
+          offset: filters.offset + filters.limit,
+        };
+
+        if (newFilters.offset < comments.total) {
+          // Preload the next page.
+          queryClient.prefetchQuery(["comments", post?.id, newFilters], () =>
+            routes.getComments(newFilters, post)
+          );
+        }
+      },
+      enabled: Boolean(post),
+    }
   );
 }
 
-export function useGetCommentCount(post?: INewsPost) {
-  return useQuery(
-    ["comment-count", post?.id],
-    () => routes.getCommentCount(post),
-    { enabled: Boolean(post) }
-  );
-}
-
-export function usePostComment(slug?: string) {
+export function usePostComment(post?: INewsPost) {
   const queryClient = useQueryClient();
 
   return useMutationWithAuth(
@@ -65,7 +74,12 @@ export function usePostComment(slug?: string) {
       routes.postComment(params.post, params.comment),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["post", slug]);
+        if (post) {
+          queryClient.setQueryData(["post", post.slug], {
+            ...post,
+            comments: post.comments + 1,
+          });
+        }
       },
     }
   );

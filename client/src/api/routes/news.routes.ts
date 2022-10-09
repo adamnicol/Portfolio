@@ -1,7 +1,9 @@
 import axios from "../axios";
 import {
   IComment,
+  ICommentFilters,
   ICommentPayload,
+  INewsFilters,
   INewsPayload,
   INewsPost,
   ITag,
@@ -19,9 +21,9 @@ export function getTopTags(limit: number) {
     .then((res) => res.data);
 }
 
-export function getNews(limit: number, offset: number, tag?: string | null) {
+export function getNews(filters: INewsFilters) {
   return axios
-    .get<INewsPayload>("/news", { params: { tag, limit, offset } })
+    .get<INewsPayload>("/news", { params: filters })
     .then((res) => res.data);
 }
 
@@ -35,10 +37,10 @@ export function getNewsCount(tag?: string | null) {
     .then((res) => res.data);
 }
 
-export function getComments(limit: number, offset: number, post?: INewsPost) {
+export function getComments(filters: ICommentFilters, post?: INewsPost) {
   return axios
     .get<ICommentPayload>(`/news/${post?.id}/comments`, {
-      params: { limit, offset },
+      params: filters,
     })
     .then((res) => res.data);
 }

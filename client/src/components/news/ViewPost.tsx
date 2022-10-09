@@ -20,8 +20,8 @@ function ViewPost() {
   const offset = (Number(page) - 1) * commentsPerPage;
 
   const { data: post } = useGetPost(slug);
-  const comments = useGetComments(commentsPerPage, offset, post);
-  const postComment = usePostComment(slug);
+  const comments = useGetComments({ limit: commentsPerPage, offset }, post);
+  const postComment = usePostComment(post);
 
   function handlePostComment() {
     if (post && comment.trim().length >= 5) {

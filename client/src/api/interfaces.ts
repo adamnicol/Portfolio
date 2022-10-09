@@ -25,6 +25,12 @@ export interface INewsPayload {
   returned: number;
 }
 
+export interface INewsFilters {
+  tag?: string | null;
+  limit: number;
+  offset: number;
+}
+
 export interface ITag {
   id: number;
   name: string;
@@ -41,4 +47,9 @@ export interface ICommentPayload {
   comments: IComment[];
   total: number;
   returned: number;
+}
+
+export interface ICommentFilters {
+  limit: number;
+  offset: number;
 }

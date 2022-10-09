@@ -12,7 +12,7 @@ function NewsFeed() {
   const page = searchParams.get("page") || 1;
   const offset = (Number(page) - 1) * postsPerPage;
 
-  const news = useGetNews(postsPerPage, offset, tag);
+  const news = useGetNews({ limit: postsPerPage, offset, tag });
 
   if (news.isLoading) {
     return <p>Loading news...</p>;
