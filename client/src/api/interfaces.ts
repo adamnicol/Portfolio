@@ -1,8 +1,13 @@
 export interface IUser {
   id: string;
   username: string;
-  password: string;
   email: string;
+  active: boolean;
+}
+
+export interface ICredentials {
+  email: string;
+  password: string;
 }
 
 export interface INewsPost {

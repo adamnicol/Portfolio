@@ -1,20 +1,20 @@
-import * as routes from "../routes/news.routes";
+import * as api from "../routes/news.routes";
 import { ICommentFilters, INewsFilters, INewsPost } from "../interfaces";
 import { useMutationWithAuth } from "../../hooks/useMutationWithAuth";
 import { useQuery, useQueryClient } from "react-query";
 
 export function useGetTopPosts(limit: number) {
-  return useQuery("top-posts", () => routes.getTopPosts(limit));
+  return useQuery("top-posts", () => api.getTopPosts(limit));
 }
 
 export function useGetTopTags(limit: number) {
-  return useQuery("tags", () => routes.getTopTags(limit));
+  return useQuery("tags", () => api.getTopTags(limit));
 }
 
 export function useGetNews(filters: INewsFilters) {
   const queryClient = useQueryClient();
 
-  return useQuery(["news", filters], () => routes.getNews(filters), {
+  return useQuery(["news", filters], () => api.getNews(filters), {
     onSuccess: (news) => {
       news.posts.forEach((post) => {
         queryClient.setQueryData(["post", post.slug], post);
@@ -26,9 +26,9 @@ export function useGetNews(filters: INewsFilters) {
       };
 
       if (newFilters.offset < news.total) {
-        // Preload the next page.
+        // Prefetch the next page.
         queryClient.prefetchQuery(["news", newFilters], () =>
-          routes.getNews(newFilters)
+          api.getNews(newFilters)
         );
       }
     },
@@ -36,7 +36,7 @@ export function useGetNews(filters: INewsFilters) {
 }
 
 export function useGetPost(slug?: string) {
-  return useQuery(["post", slug], () => routes.getPost(slug), {
+  return useQuery(["post", slug], () => api.getPost(slug), {
     enabled: Boolean(slug),
   });
 }
@@ -46,7 +46,7 @@ export function useGetComments(filters: ICommentFilters, post?: INewsPost) {
 
   return useQuery(
     ["comments", post?.id, filters],
-    () => routes.getComments(filters, post),
+    () => api.getComments(filters, post),
     {
       onSuccess: (comments) => {
         const newFilters = {
@@ -55,9 +55,9 @@ export function useGetComments(filters: ICommentFilters, post?: INewsPost) {
         };
 
         if (newFilters.offset < comments.total) {
-          // Preload the next page.
+          // Prefetch the next page.
           queryClient.prefetchQuery(["comments", post?.id, newFilters], () =>
-            routes.getComments(newFilters, post)
+            api.getComments(newFilters, post)
           );
         }
       },
@@ -71,7 +71,7 @@ export function usePostComment(post?: INewsPost) {
 
   return useMutationWithAuth(
     (params: { post: INewsPost; comment: string }) =>
-      routes.postComment(params.post, params.comment),
+      api.postComment(params.post, params.comment),
     {
       onSuccess: () => {
         if (post) {
@@ -88,7 +88,7 @@ export function usePostComment(post?: INewsPost) {
 export function useLikePost(post: INewsPost) {
   const queryClient = useQueryClient();
 
-  return useMutationWithAuth(() => routes.likePost(post), {
+  return useMutationWithAuth(() => api.likePost(post), {
     onSuccess: () => {
       queryClient.invalidateQueries("news");
       queryClient.invalidateQueries("top-posts");

@@ -1,17 +1,13 @@
-import axios from "axios";
+import * as api from "../api/routes/user.routes";
+import { createContext, ReactElement } from "react";
 import { IUser } from "../api/interfaces";
-import {
-  createContext,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { useContext, useEffect, useState } from "react";
 
 interface IAuthContext {
   user: IUser | null;
   setCurrentUser: (user: IUser) => void;
   logout: () => void;
+  invalidate: () => void;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
@@ -19,7 +15,7 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 export function AuthProvider(props: { children: ReactElement }) {
   const [user, setUser] = useState<IUser | null>(null);
 
-  useEffect(() => refresh(), []);
+  useEffect(refresh, []);
 
   function setCurrentUser(user: IUser) {
     setUser(user);
@@ -27,30 +23,27 @@ export function AuthProvider(props: { children: ReactElement }) {
   }
 
   function refresh() {
-    // Has user logged in previously?
+    // Is there an active login?
     if (localStorage.getItem("username")) {
-      axios
-        // Are access tokens still valid?
-        .get("/users/refresh")
-        .then((response) => {
-          setCurrentUser(response.data);
-        })
-        .catch(() => {
-          setUser(null);
-          localStorage.removeItem("username");
-        });
+      api
+        // Recheck access token.
+        .refreshLogin()
+        .then((user) => setCurrentUser(user))
+        .catch(invalidate);
     }
   }
 
   function logout() {
-    axios.post("/users/logout").finally(() => {
-      setUser(null);
-      localStorage.removeItem("username");
-    });
+    api.logout().finally(invalidate);
+  }
+
+  function invalidate() {
+    setUser(null);
+    localStorage.removeItem("username");
   }
 
   return (
-    <AuthContext.Provider value={{ user, setCurrentUser, logout }}>
+    <AuthContext.Provider value={{ user, setCurrentUser, logout, invalidate }}>
       {props.children}
     </AuthContext.Provider>
   );

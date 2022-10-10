@@ -21,10 +21,8 @@ export function getTopTags(limit: number) {
     .then((res) => res.data);
 }
 
-export function getNews(filters: INewsFilters) {
-  return axios
-    .get<INewsPayload>("/news", { params: filters })
-    .then((res) => res.data);
+export function getNews(params: INewsFilters) {
+  return axios.get<INewsPayload>("/news", { params }).then((res) => res.data);
 }
 
 export function getPost(slug?: string) {
@@ -37,11 +35,9 @@ export function getNewsCount(tag?: string | null) {
     .then((res) => res.data);
 }
 
-export function getComments(filters: ICommentFilters, post?: INewsPost) {
+export function getComments(params: ICommentFilters, post?: INewsPost) {
   return axios
-    .get<ICommentPayload>(`/news/${post?.id}/comments`, {
-      params: filters,
-    })
+    .get<ICommentPayload>(`/news/${post?.id}/comments`, { params })
     .then((res) => res.data);
 }
 

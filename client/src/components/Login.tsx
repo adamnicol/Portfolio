@@ -1,45 +1,53 @@
-import { FormEvent, useState } from "react";
-import { Form, Button } from "react-bootstrap";
-import { useModal } from "../providers/ModalProvider";
-import { useAuth } from "../providers/AuthProvider";
-import axios, { AxiosError } from "axios";
 import Status from "./../utils/statusCodes";
+import { AxiosError } from "axios";
+import { Button, Form } from "react-bootstrap";
+import { FormEvent, useEffect, useState } from "react";
+import { IUser } from "../api/interfaces";
+import { useAuth } from "../providers/AuthProvider";
+import { useLogin } from "../api/queries/user.queries";
+import { useModal } from "../providers/ModalProvider";
 
 function Login() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [error, setError] = useState<string | null>(null);
-  const [waiting, setWaiting] = useState<boolean>(false);
 
+  const login = useLogin();
   const modal = useModal();
   const auth = useAuth();
 
-  function login(e: FormEvent) {
+  useEffect(() => handleSuccess(login.data), [login.isSuccess]);
+  useEffect(() => handleError(login.error), [login.isError]);
+
+  function handleLogin(e: FormEvent) {
     e.preventDefault();
     setError(null);
-    setWaiting(true);
 
-    axios
-      .post("/users/login", { email, password })
-      .then((response) => {
-        auth.setCurrentUser(response.data);
-        modal.close();
-      })
-      .catch((error: AxiosError) => {
-        setWaiting(false);
-        handleError(error);
-      });
+    if (email && password) {
+      login.mutate({ email, password });
+    }
   }
 
-  function handleError(error: AxiosError) {
-    if (error.response?.status === Status.Unauthorized) {
-      setError("Invalid username or password");
-    } else if (error.response?.status === Status.TooManyRequests) {
-      setError("Too many login attempts, please wait a while");
-    } else if (error.response?.status) {
-      setError("Server returned error " + error.response.status);
-    } else {
-      setError("Server is not responding");
+  function handleSuccess(user?: IUser) {
+    if (user) {
+      auth.setCurrentUser(user);
+      modal.close();
+    }
+  }
+
+  function handleError(error: unknown) {
+    if (error instanceof AxiosError) {
+      const status = error.response?.status;
+
+      if (status === Status.Unauthorized) {
+        setError("Invalid username or password");
+      } else if (status === Status.TooManyRequests) {
+        setError("Too many login attempts, please wait a while");
+      } else if (status) {
+        setError("Server returned error " + status);
+      } else {
+        setError("Server is not responding");
+      }
     }
   }
 
@@ -47,7 +55,7 @@ function Login() {
     <div className="login-form">
       <h2>Login</h2>
 
-      <Form onSubmit={login}>
+      <Form onSubmit={handleLogin}>
         <Form.Group controlId="email" className="mb-3">
           <Form.Control
             type="email"
@@ -75,7 +83,9 @@ function Login() {
         </Form.Group>
 
         <Button type="submit" value="Login" className="w-100">
-          {waiting && <span className="spinner-border spinner-border-sm" />}{" "}
+          {login.isLoading && (
+            <span className="spinner-border spinner-border-sm" />
+          )}{" "}
           Login
         </Button>
       </Form>
