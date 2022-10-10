@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import checkAccessToken from "./middleware/checkAccessToken";
+import compression from "compression";
 import config from "./utils/config";
 import cookies from "cookie-parser";
 import cors from "cors";
@@ -15,6 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(cors(config.cors));
 app.use(cookies());
+app.use(compression());
 app.use(responseTime());
 app.use(requestLogger);
 app.use(asyncHandler(checkAccessToken));
