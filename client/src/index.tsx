@@ -1,34 +1,25 @@
 import App from "./App";
-import AppContextProvider from "./providers/AppContextProvider";
-import axios from "axios";
+import AppContextProvider from "./context/AppContext";
 import NotFound from "./components/NotFound";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-
-axios.defaults.baseURL = "http://localhost:3001/api";
-axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const queryClient = new QueryClient();
-
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AppContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/404" element={<NotFound />} />
-            <Route path="/*" element={<App />} />
-          </Routes>
-        </BrowserRouter>
-      </AppContextProvider>
-    </QueryClientProvider>
+    <AppContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/404" element={<NotFound />} />
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+    </AppContextProvider>
   </React.StrictMode>
 );
 

@@ -8,6 +8,10 @@ interface IModalContext {
 
 const ModalContext = createContext<IModalContext>({} as IModalContext);
 
+export function useModal() {
+  return useContext(ModalContext);
+}
+
 export function ModalProvider(props: {
   children: ReactElement | ReactElement[];
 }) {
@@ -38,8 +42,4 @@ export function ModalProvider(props: {
       {props.children}
     </ModalContext.Provider>
   );
-}
-
-export function useModal() {
-  return useContext(ModalContext);
 }

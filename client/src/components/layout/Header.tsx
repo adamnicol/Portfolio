@@ -2,8 +2,8 @@ import Login from "../Login";
 import socials from "../content/socials";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { useAuth } from "../../providers/AuthProvider";
-import { useModal } from "../../providers/ModalProvider";
+import { useAuth } from "../../context/AuthContext";
+import { useModal } from "../../context/ModalContext";
 
 function Header() {
   return (

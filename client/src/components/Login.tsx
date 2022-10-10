@@ -3,9 +3,9 @@ import { AxiosError } from "axios";
 import { Button, Form } from "react-bootstrap";
 import { FormEvent, useEffect, useState } from "react";
 import { IUser } from "../api/interfaces";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../context/AuthContext";
 import { useLogin } from "../api/queries/user.queries";
-import { useModal } from "../providers/ModalProvider";
+import { useModal } from "../context/ModalContext";
 
 function Login() {
   const [email, setEmail] = useState<string>();
