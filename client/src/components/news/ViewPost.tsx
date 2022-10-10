@@ -36,7 +36,7 @@ function ViewPost() {
       <div className="row mt-4 gx-3">
         <h5>Comments</h5>
         <div className="col col-auto">
-          <img src={require("../../images/avatar.jpg")} alt="avatar" />
+          <img src={require("../../assets/avatar.jpg")} alt="avatar" />
         </div>
         <div className="col">
           <textarea

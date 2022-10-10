@@ -6,7 +6,7 @@ function Comment(props: { content: IComment }) {
   return (
     <article className="row gx-3 mt-3">
       <div className="col col-auto pt-1">
-        <img src={require("../../images/avatar.jpg")} alt="avatar" />
+        <img src={require("../../assets/avatar.jpg")} alt="avatar" />
       </div>
       <div className="col">
         <a className="link-primary fw-bold">{user.username}</a>

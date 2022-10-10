@@ -19,7 +19,7 @@ function HeaderLeft() {
   return (
     <>
       <span className="logo">
-        <img src={require("../../images/logo.jpg")} alt="logo" />
+        <img src={require("../../assets/logo.jpg")} alt="logo" />
       </span>
       <span className="title">Adam Nicol</span>
     </>
