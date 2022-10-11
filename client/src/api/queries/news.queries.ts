@@ -1,7 +1,12 @@
 import * as api from "../routes/news.routes";
-import { ICommentFilters, INewsFilters, INewsPost } from "../interfaces";
 import { useMutationWithAuth } from "../../hooks/useMutationWithAuth";
 import { useQuery, useQueryClient } from "react-query";
+import {
+  ICommentFilters,
+  ICommentPayload,
+  INewsFilters,
+  INewsPost,
+} from "../interfaces";
 
 export function useGetTopPosts(limit: number) {
   return useQuery("top-posts", () => api.getTopPosts(limit));
@@ -16,6 +21,7 @@ export function useGetNews(filters: INewsFilters) {
 
   return useQuery(["news", filters], () => api.getNews(filters), {
     onSuccess: (news) => {
+      // Add individual posts to the cache.
       news.posts.forEach((post) => {
         queryClient.setQueryData(["post", post.slug], post);
       });
@@ -66,19 +72,29 @@ export function useGetComments(filters: ICommentFilters, post?: INewsPost) {
   );
 }
 
-export function usePostComment(post?: INewsPost) {
+export function usePostComment(filters: ICommentFilters, post?: INewsPost) {
   const queryClient = useQueryClient();
 
   return useMutationWithAuth(
     (params: { post: INewsPost; comment: string }) =>
       api.postComment(params.post, params.comment),
     {
-      onSuccess: () => {
+      onSuccess: (comment) => {
         if (post) {
+          // Increment the like counter.
           queryClient.setQueryData(["post", post.slug], {
             ...post,
             comments: post.comments + 1,
           });
+        }
+
+        const key = ["comments", post?.id, filters];
+        const payLoad = queryClient.getQueryData<ICommentPayload>(key);
+
+        if (payLoad) {
+          // Add to the top of the current page.
+          payLoad.comments.unshift(comment);
+          queryClient.setQueryData(key, payLoad);
         }
       },
     }

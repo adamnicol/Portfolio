@@ -18,14 +18,16 @@ function ViewPost() {
 
   const page = searchParams.get("page") || 1;
   const offset = (Number(page) - 1) * commentsPerPage;
+  const filters = { limit: commentsPerPage, offset };
 
   const { data: post } = useGetPost(slug);
-  const comments = useGetComments({ limit: commentsPerPage, offset }, post);
-  const postComment = usePostComment(post);
+  const comments = useGetComments(filters, post);
+  const postComment = usePostComment(filters, post);
 
   function handlePostComment() {
     if (post && comment.trim().length >= 5) {
       postComment.mutate({ post, comment });
+      setComment("");
     }
   }
 
