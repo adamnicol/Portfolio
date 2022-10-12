@@ -1,10 +1,13 @@
+import Login from "../Login";
 import { faHeart, faMessage } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatDate } from "../../utils/dateFormatter";
 import { INewsPost } from "../../api/interfaces";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import { useLikePost } from "../../api/queries/news.queries";
+import { useModal } from "../../context/ModalContext";
 
 function NewsPost(props: { content: INewsPost }) {
   const post = props.content;
@@ -15,11 +18,16 @@ function NewsPost(props: { content: INewsPost }) {
       ? post.content.substring(0, Math.min(post.content.length, maxLength))
       : post.content;
 
+  const auth = useAuth();
+  const modal = useModal();
   const likePost = useLikePost(post);
 
   function handleLikePost() {
-    // TODO: Check user logged in.
-    likePost.mutate();
+    if (auth.user) {
+      likePost.mutate(!post.liked);
+    } else {
+      modal.show(<Login />);
+    }
   }
 
   return (
@@ -40,14 +48,22 @@ function NewsPost(props: { content: INewsPost }) {
         <Link to={url} title="Comments">
           <FontAwesomeIcon icon={faMessage} size="sm" /> {post.comments}
         </Link>
-        <a className="ms-2" onClick={handleLikePost}>
-          <FontAwesomeIcon
-            icon={post.liked ? faHeartSolid : faHeart}
-            size="sm"
-            title="Like Post"
-          />{" "}
-          {post.likes}
-        </a>
+
+        <span className="me-1">
+          {likePost.isLoading ? (
+            <span className="spinner-border spinner-border-sm ms-2" />
+          ) : (
+            <a className="ms-2" onClick={handleLikePost}>
+              <FontAwesomeIcon
+                icon={post.liked ? faHeartSolid : faHeart}
+                size="sm"
+                title="Like Post"
+              />
+            </a>
+          )}
+        </span>
+        {post.likes}
+
         <span className="ms-auto text-secondary">
           Posted {formatDate(post.createdAt)}
         </span>

@@ -18,8 +18,9 @@ export function useGetTopTags(limit: number) {
 
 export function useGetNews(filters: INewsFilters) {
   const queryClient = useQueryClient();
+  const queryKey = ["news", filters];
 
-  return useQuery(["news", filters], () => api.getNews(filters), {
+  return useQuery(queryKey, () => api.getNews(filters), {
     onSuccess: (news) => {
       // Add individual posts to the cache.
       news.posts.forEach((post) => {
@@ -49,27 +50,24 @@ export function useGetPost(slug?: string) {
 
 export function useGetComments(filters: ICommentFilters, post?: INewsPost) {
   const queryClient = useQueryClient();
+  const queryKey = ["comments", post?.id, filters];
 
-  return useQuery(
-    ["comments", post?.id, filters],
-    () => api.getComments(filters, post),
-    {
-      onSuccess: (comments) => {
-        const newFilters = {
-          ...filters,
-          offset: filters.offset + filters.limit,
-        };
+  return useQuery(queryKey, () => api.getComments(filters, post), {
+    onSuccess: (comments) => {
+      const newFilters = {
+        ...filters,
+        offset: filters.offset + filters.limit,
+      };
 
-        if (newFilters.offset < comments.total) {
-          // Prefetch the next page.
-          queryClient.prefetchQuery(["comments", post?.id, newFilters], () =>
-            api.getComments(newFilters, post)
-          );
-        }
-      },
-      enabled: Boolean(post),
-    }
-  );
+      if (newFilters.offset < comments.total) {
+        // Prefetch the next page.
+        queryClient.prefetchQuery(["comments", post?.id, newFilters], () =>
+          api.getComments(newFilters, post)
+        );
+      }
+    },
+    enabled: Boolean(post),
+  });
 }
 
 export function usePostComment(filters: ICommentFilters, post?: INewsPost) {
@@ -104,7 +102,7 @@ export function usePostComment(filters: ICommentFilters, post?: INewsPost) {
 export function useLikePost(post: INewsPost) {
   const queryClient = useQueryClient();
 
-  return useMutationWithAuth(() => api.likePost(post), {
+  return useMutationWithAuth((like: boolean) => api.likePost(post), {
     onSuccess: () => {
       queryClient.invalidateQueries("news");
       queryClient.invalidateQueries("top-posts");
