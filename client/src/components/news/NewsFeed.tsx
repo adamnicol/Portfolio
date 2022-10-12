@@ -9,13 +9,18 @@ function NewsFeed() {
   const [searchParams] = useSearchParams();
 
   const tag = searchParams.get("tag");
-  const page = searchParams.get("page") || 1;
-  const offset = (Number(page) - 1) * postsPerPage;
+  const page = Number(searchParams.get("page")) || 1;
+  const offset = (page - 1) * postsPerPage;
 
   const news = useGetNews({ limit: postsPerPage, offset, tag });
 
   if (news.isLoading) {
-    return <p>Loading news...</p>;
+    return (
+      <div>
+        <div className="spinner-border spinner-border-sm text-primary" />
+        <span className="ms-2">Loading</span>
+      </div>
+    );
   }
 
   return (
@@ -27,9 +32,9 @@ function NewsFeed() {
       {news.data && news.data.total > postsPerPage && (
         <Pagination
           className="pagination-sm justify-content-end mt-4"
-          currentPage={Number(page)}
+          currentPage={page}
           totalPages={Math.ceil(news.data.total / postsPerPage)}
-          onPageChanged={() => {}}
+          onPageChanged={() => window.scrollTo(0, 0)}
         />
       )}
     </div>
