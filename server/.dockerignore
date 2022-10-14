@@ -1,4 +1,4 @@
-DockerFile
+Dockerfile
 node_modules
 .git
 .env

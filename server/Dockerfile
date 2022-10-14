@@ -1,5 +1,5 @@
 FROM node:18
-WORKDIR /app/server
+WORKDIR /app
 
 ENV NODE_ENV=production
 
