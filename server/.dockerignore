@@ -1,0 +1,5 @@
+DockerFile
+node_modules
+.git
+.env
+.*ignore

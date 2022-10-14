@@ -1,4 +1,4 @@
-import BSPagination from "react-bootstrap/pagination";
+import { Pagination as BSPagination } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 
 export type PaginationProps = {
