@@ -4,7 +4,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node --files server.ts",
+    "start": "prisma migrate deploy && ts-node --files server.ts",
     "start-dev": "nodemon --files server.ts",
     "build": "tsc"
   },
