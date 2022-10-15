@@ -4,8 +4,6 @@ services:
   database:
     image: "postgres:latest"
     container_name: "postgres"
-    environment:
-      POSTGRES_DB: "portfolio"
     env_file: ./server/.env
     ports:
       - "5432:5432"
@@ -47,3 +45,5 @@ services:
     restart: unless-stopped
     depends_on:
       - database
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
