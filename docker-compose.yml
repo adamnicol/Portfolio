@@ -3,34 +3,33 @@ version: "3.8"
 services:
   database:
     image: "postgres:latest"
-    user: postgres
+    container_name: "postgres"
     environment:
       POSTGRES_DB: "portfolio"
-      POSTGRES_USER: "${POSTGRES_USERNAME}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     env_file: ./server/.env
     ports:
       - "5432:5432"
     restart: unless-stopped
+    volumes:
+      - ./database:/var/lib/postgresql/data
 
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
+    container_name: "server"
     env_file: ./server/.env
     ports:
       - "3001:3001"
     restart: unless-stopped
     depends_on:
       - database
-    volumes:
-      - ./server:/app
-      - /app/node_modules
 
   client:
     build:
       context: ./client
       dockerfile: Dockerfile
+    container_name: "client"
     env_file: ./client/.env
     ports:
       - "3000:3000"
@@ -38,13 +37,13 @@ services:
     depends_on:
       - database
       - server
-    volumes:
-      - ./client:/app
-      - /app/node_modules
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: "pgadmin"
     env_file: ./server/.env
     ports:
       - "5050:80"
     restart: unless-stopped
+    depends_on:
+      - database
