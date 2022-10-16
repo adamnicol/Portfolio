@@ -30,7 +30,7 @@ services:
     container_name: "client"
     env_file: ./client/.env
     ports:
-      - "3000:3000"
+      - "3000:80"
     restart: unless-stopped
     depends_on:
       - database

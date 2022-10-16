@@ -1,5 +1,8 @@
-FROM node:18
+FROM nginx
 WORKDIR /app
+
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
 
 COPY package*.json ./
 RUN npm install
@@ -7,6 +10,5 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+RUN rm -rf /usr/share/nginx/html/*
+RUN cp -a build/. /usr/share/nginx/html
