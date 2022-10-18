@@ -23,12 +23,10 @@ app.use(responseTime());
 app.use(requestLogger);
 app.use(asyncHandler(checkAccessToken));
 
-app.use("/api/users", require("./routes/user.routes"));
-app.use("/api/news", require("./routes/news.routes"));
+app.use("/users", require("./routes/user.routes"));
+app.use("/news", require("./routes/news.routes"));
 
-app.get("/api/status", (req: Request, res: Response) =>
-  res.sendStatus(Status.OK)
-);
+app.get("/status", (req: Request, res: Response) => res.sendStatus(Status.OK));
 
 app.use(errorHandler);
 
