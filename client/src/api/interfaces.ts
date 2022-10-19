@@ -58,3 +58,11 @@ export interface ICommentFilters {
   limit: number;
   offset: number;
 }
+
+export interface IProject {
+  name: string;
+  description: string;
+  website: string;
+  github: string;
+  tags: ITag[];
+}
