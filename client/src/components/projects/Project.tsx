@@ -9,7 +9,7 @@ function Project(props: { project: IProject }) {
       <div className="d-flex">
         <div className="d-flex flex-column text-center text-small">
           <img
-            src={require("../../assets/logo.jpg")}
+            src={require("../../assets/thumbnail.jpg")}
             className="project-image"
             alt="image"
           />
@@ -26,7 +26,7 @@ function Project(props: { project: IProject }) {
             <Link to="/projects">{project.name}</Link>
           </h4>
           <p>{project.description}</p>
-          <div className="mt-auto">
+          <div className="d-flex flex-wrap mt-3">
             {project.tags.map((tag) => (
               <a key={tag.id} className="tag">
                 {tag.name}
