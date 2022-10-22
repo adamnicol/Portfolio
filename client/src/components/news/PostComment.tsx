@@ -30,7 +30,7 @@ function PostComment(props: { post: INewsPost; filters: INewsFilters }) {
       <div className="col">
         <textarea
           name="comment"
-          className="form-control"
+          className="form-control text-small"
           placeholder="Leave a comment..."
           value={comment}
           onChange={(e) => setComment(e.target.value)}

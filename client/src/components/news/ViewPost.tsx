@@ -33,7 +33,7 @@ function ViewPost() {
 
       {comments && (
         <section className="mt-4">
-          <h5>Comments</h5>
+          <h4>Comments</h4>
           {post && <PostComment post={post} filters={filters} />}
 
           <div className="mt-4">

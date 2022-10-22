@@ -33,7 +33,7 @@ function NewsPost(props: { content: INewsPost }) {
   return (
     <article className="mt-3">
       <Link to={url}>
-        <h4>{post.title}</h4>
+        <h3>{post.title}</h3>
       </Link>
       <p>
         {content}
@@ -44,7 +44,7 @@ function NewsPost(props: { content: INewsPost }) {
         )}
       </p>
       <hr className="mb-2" />
-      <div className="d-flex text-primary">
+      <div className="d-flex text-primary text-small">
         <Link to={url} title="Comments">
           <FontAwesomeIcon icon={faMessage} size="sm" /> {post.comments}
         </Link>
@@ -64,7 +64,7 @@ function NewsPost(props: { content: INewsPost }) {
         </span>
         {post.likes}
 
-        <span className="ms-auto text-secondary">
+        <span className="ms-auto text-secondary text-small">
           Posted {formatDate(post.createdAt)}
         </span>
       </div>

@@ -8,8 +8,20 @@ $theme-secondary-text: lightgrey;
 $nav-full: 180px;
 $nav-compact: 40px;
 
+$font-xs: 0.7rem;
+$font-small: 0.85rem;
+$font-regular: 1em;
+$font-large: 1.15rem;
+$font-xl: 1.3rem;
+
 // Bootstrap
+$h1-font-size: 2rem;
+$h2-font-size: 1.75rem;
+$h3-font-size: 1.5rem;
+$h4-font-size: 1.25rem;
+$h5-font-size: 1rem;
+
+$headings-font-weight: 700;
+
 $primary: $theme-accent;
 $secondary: grey;
-
-$headings-font-weight: 600;
