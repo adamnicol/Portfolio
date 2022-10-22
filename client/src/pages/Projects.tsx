@@ -5,8 +5,8 @@ function Projects() {
   return (
     <div>
       <h1>Projects</h1>
-      {list.map((project) => (
-        <Project project={project} />
+      {list.map((project, index) => (
+        <Project key={index} project={project} />
       ))}
     </div>
   );

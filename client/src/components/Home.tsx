@@ -6,9 +6,9 @@ function Home() {
       <h1>Welcome</h1>
       <div className="callout">
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-          hic nobis aliquid iure laborum eum, fugit obcaecati maiores fuga illum
-          nemo, similique eaque ratione quo inventore eos error soluta. Eius?
+          Hi there, thanks for visiting my site. My name is Adam and this is my
+          online portfolio and blog. Please use the menu on the left if you
+          would like to learn more about what I do.
         </p>
       </div>
       <NewsFeed />
