@@ -1,5 +1,5 @@
 import Login from "../Login";
-import socials from "../content/socials";
+import socials from "../../pages/content/socials";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useAuth } from "../../context/AuthContext";

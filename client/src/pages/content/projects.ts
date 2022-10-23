@@ -17,7 +17,7 @@ const projects: IProject[] = [
     name: "NodeJS Rest API",
     description:
       "A rest API written in Node/Express and Typescript that serves as the backend for my site. Featuring authentication using JWT tokens, schema validation using Zod, and connecting to a PostgreSQL database using the Prisma ORM.",
-    website: "https://www.adamnicol.com/api",
+    website: "https://www.adamnicol.dev/api",
     github: "https://github.com/adamnicol/Portfolio",
     tags: [
       { id: 1, name: "node" },

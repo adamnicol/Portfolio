@@ -222,7 +222,7 @@ a:focus {
   font-size: $font-small;
 }
 
-.project {
+.content-box {
   padding: 15px;
   margin: 15px 0;
   margin-bottom: 20px;
@@ -231,21 +231,29 @@ a:focus {
   border-color: lightgray;
   box-shadow: 1px 1px 3px lightgray;
 
-  .project-image {
-    width: 120px;
-    height: 90px;
-    border: 2px solid;
-    border-color: lightgray;
-    margin-bottom: 10px;
-
-    @media (max-width: 768px) {
-      width: 70px;
-      height: 50px;
-    }
-  }
-
   .vr {
     color: darkgray;
+  }
+}
+
+.about-image {
+  width: 120px;
+  height: 120px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  float: left;
+}
+
+.project-image {
+  width: 120px;
+  height: 90px;
+  border: 2px solid;
+  border-color: lightgray;
+  margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    width: 70px;
+    height: 50px;
   }
 }
 

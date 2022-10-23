@@ -1,5 +1,5 @@
 import Project from "../components/projects/Project";
-import list from "../components/content/projects";
+import list from "./content/projects";
 
 function Projects() {
   return (
