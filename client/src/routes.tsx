@@ -1,6 +1,6 @@
 import { useRoutes } from "react-router-dom";
 
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Login from "./components/Login";
 import NewsFeed from "./components/news/NewsFeed";
 import NewsFilters from "./components/news/Filters";

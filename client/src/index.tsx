@@ -1,6 +1,6 @@
 import App from "./App";
 import AppContextProvider from "./context/AppContext";
-import NotFound from "./components/NotFound";
+import NotFound from "./pages/NotFound";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";

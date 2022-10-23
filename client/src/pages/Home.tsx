@@ -1,0 +1,19 @@
+import NewsFeed from "../components/news/NewsFeed";
+
+function Home() {
+  return (
+    <div>
+      <h1>Welcome</h1>
+      <div className="callout">
+        <p>
+          Hi there, thanks for visiting my site. My name is Adam and this is my
+          online portfolio and blog. Please use the menu on the left if you
+          would like to learn more about what I do.
+        </p>
+      </div>
+      <NewsFeed />
+    </div>
+  );
+}
+
+export default Home;
