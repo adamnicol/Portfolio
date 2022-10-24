@@ -5,7 +5,7 @@ function Project(props: { project: IProject }) {
   const { project } = props;
 
   return (
-    <article className="content-box">
+    <article className="callout">
       <div className="d-flex">
         <div className="d-flex flex-column text-center text-small">
           <img

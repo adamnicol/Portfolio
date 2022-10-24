@@ -4,7 +4,7 @@ function About() {
   return (
     <article>
       <h1>About</h1>
-      <div className="content-box">
+      <div className="callout">
         <img src={image} className="about-image" />
         <p>
           I'm a software developer with a passion for writing code, solving
