@@ -257,6 +257,19 @@ a:focus {
   }
 }
 
-// input:invalid {
-//   border: 2px solid red;
-// }
+hr {
+  border: dashed;
+  border-width: 1px;
+}
+
+.mobile-only {
+  @media (min-width: 576px) {
+    display: none;
+  }
+}
+
+.mobile-hidden {
+  @media (max-width: 576px) {
+    display: none;
+  }
+}

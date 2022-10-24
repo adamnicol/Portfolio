@@ -1,0 +1,26 @@
+.menu {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 50vw;
+  height: 100vh;
+  z-index: 1000;
+  background-color: rgb(20, 20, 20);
+  color: lightgray;
+  padding-top: 15px;
+  padding-right: 25px;
+}
+
+.menu-collapsed {
+  display: none;
+}
+
+.menu-toggle {
+  cursor: pointer;
+  float: right;
+}
+
+.menu-links {
+  margin-top: 10px;
+  padding: 35px;
+}

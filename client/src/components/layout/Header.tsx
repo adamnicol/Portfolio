@@ -1,3 +1,4 @@
+import HamburgerMenu from "../hamburger/HamburgerMenu";
 import Login from "../Login";
 import socials from "../../pages/content/socials";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,7 +32,33 @@ function HeaderRight() {
   const modal = useModal();
 
   return (
-    <div className="hstack gap-3 me-4">
+    <div>
+      <div className="nav-icon me-4 mobile-only">
+        <HamburgerMenu />
+      </div>
+
+      <div className="hstack gap-3 me-4 mobile-hidden">
+        <Socials />
+        <div className="vr nav-link" />
+        <a className="login-link" onClick={handleLoginLinkClicked}>
+          {auth.user ? "Logout" : "Login"}
+        </a>
+      </div>
+    </div>
+  );
+
+  function handleLoginLinkClicked() {
+    if (auth.user) {
+      auth.logout();
+    } else {
+      modal.show(<Login />);
+    }
+  }
+}
+
+function Socials() {
+  return (
+    <div className="hstack gap-3">
       {socials.map((item, index) => {
         return (
           <a
@@ -45,17 +72,6 @@ function HeaderRight() {
           </a>
         );
       })}
-
-      <div className="vr nav-link" />
-      {auth.user ? (
-        <a className="login-link" onClick={() => auth.logout()}>
-          Logout
-        </a>
-      ) : (
-        <a className="login-link" onClick={() => modal.show(<Login />)}>
-          Login
-        </a>
-      )}
     </div>
   );
 }
