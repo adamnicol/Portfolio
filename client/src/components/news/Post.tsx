@@ -9,13 +9,13 @@ import { useAuth } from "../../context/AuthContext";
 import { useLikePost } from "../../api/queries/news.queries";
 import { useModal } from "../../context/ModalContext";
 
-function NewsPost(props: { content: INewsPost }) {
-  const post = props.content;
-  const maxLength = 300;
+function NewsPost(props: { content: INewsPost; limit?: number }) {
+  const { content: post, limit } = props;
+
   const url = `/news/${post.slug}`;
   const content =
-    post.content.length > maxLength
-      ? post.content.substring(0, Math.min(post.content.length, maxLength))
+    limit && post.content.length > limit
+      ? post.content.substring(0, Math.min(post.content.length, limit)) + "...."
       : post.content;
 
   const auth = useAuth();
@@ -37,7 +37,7 @@ function NewsPost(props: { content: INewsPost }) {
       </Link>
       <p>
         {content}
-        {post.content.length > maxLength && (
+        {limit && post.content.length > limit && (
           <Link to={url} className="ms-2">
             Read more
           </Link>

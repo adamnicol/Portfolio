@@ -36,7 +36,7 @@ model Post {
   slug      String      @unique @db.VarChar(100)
   author    User        @relation(name: "UserPosts", fields: [author_id], references: [id])
   author_id Int
-  content   String      @db.VarChar(500)
+  content   String      @db.Text
   createdAt DateTime    @default(now()) @map(name: "created_at")
   updatedAt DateTime    @updatedAt @map(name: "updated_at")
   tags      Tag[]
