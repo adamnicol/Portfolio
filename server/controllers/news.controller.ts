@@ -32,8 +32,11 @@ export function get(
   });
 }
 
-export function getTop(req: Request<{ limit?: number }>, res: Response) {
-  const limit = req.params.limit || 10;
+export function getTop(
+  req: Request<{}, {}, {}, { limit?: number }>,
+  res: Response
+) {
+  const limit = req.query.limit || 10;
   service.getByMostLikes(limit).then((result) => res.send(result));
 }
 
