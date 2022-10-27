@@ -26,7 +26,7 @@ const config = {
   },
   cors: {
     credentials: true,
-    origin: CORS_ORIGIN,
+    origin: CORS_ORIGIN.split(","),
   },
   mail: {
     hostname: SMTP_SERVER,
