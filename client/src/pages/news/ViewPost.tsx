@@ -1,6 +1,6 @@
 import Comment from "./Comment";
 import NewsPost from "./Post";
-import Pagination from "../common/Pagination";
+import Pagination from "../../components/Pagination";
 import PostComment from "./PostComment";
 import { useGetComments, useGetPost } from "../../api/queries/news.queries";
 import { useParams, useSearchParams } from "react-router-dom";

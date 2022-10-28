@@ -1,4 +1,4 @@
-import Login from "../components/Login";
+import Login from "../pages/Login";
 import Status from "../utils/statusCodes";
 import { AxiosError } from "axios";
 import { MutationFunction, useMutation, UseMutationOptions } from "react-query";

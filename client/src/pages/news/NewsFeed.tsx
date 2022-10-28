@@ -1,10 +1,10 @@
 import NewsPost from "./Post";
-import Pagination from "../common/Pagination";
+import Pagination from "../../components/Pagination";
 import { useSearchParams } from "react-router-dom";
 import { useGetNews } from "../../api/queries/news.queries";
 
 const postsPerPage = 5;
-const maxLength = 500;
+const maxLength = 300;
 
 function NewsFeed() {
   const [searchParams] = useSearchParams();

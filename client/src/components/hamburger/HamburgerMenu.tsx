@@ -1,4 +1,4 @@
-import Login from "../Login";
+import Login from "../../pages/Login";
 import Portal from "../Portal";
 import socials from "../../pages/content/socials";
 import { faBars, faClose, faLock } from "@fortawesome/free-solid-svg-icons";

@@ -1,5 +1,5 @@
 import { createContext, ReactElement, useContext, useState } from "react";
-import { ModalDialog } from "../components/common/ModalDialog";
+import { ModalDialog } from "../components/modal/ModalDialog";
 
 interface IModalContext {
   show: (content: ReactElement) => void;

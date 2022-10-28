@@ -1,5 +1,5 @@
-import SpinButton from "./button/SpinButton";
-import Status from "./../utils/statusCodes";
+import SpinButton from "../components/button/SpinButton";
+import Status from "../utils/statusCodes";
 import { AxiosError } from "axios";
 import { Form } from "react-bootstrap";
 import { FormEvent, useEffect, useState } from "react";

@@ -1,5 +1,7 @@
 import { ReactElement } from "react";
 
+import "./ModalDialog.scss";
+
 export type ModalProps = {
   visible: boolean;
   children: ReactElement | undefined;

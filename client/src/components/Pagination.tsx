@@ -5,7 +5,7 @@ export type PaginationProps = {
   className?: string;
   currentPage: number;
   totalPages: number;
-  onPageChanged: (page: number) => void;
+  onPageChanged?: (page: number) => void;
 };
 
 function Pagination(props: PaginationProps) {
@@ -22,7 +22,10 @@ function Pagination(props: PaginationProps) {
       const params = new URLSearchParams(searchParams);
       params.set("page", page.toString());
       setSearchParams(params);
-      props.onPageChanged(page);
+
+      if (props.onPageChanged) {
+        props.onPageChanged(page);
+      }
     }
   }
 
