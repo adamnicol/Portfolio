@@ -2,7 +2,7 @@ import SpinButton from "../components/button/SpinButton";
 import { Form } from "react-bootstrap";
 import { IMessage } from "../api/interfaces";
 import { useContact } from "../api/queries/contact.queries";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const MessageDefaults: IMessage = {
   name: "",
@@ -15,6 +15,8 @@ function Contact() {
 
   const contact = useContact();
 
+  useEffect(() => setMessage(MessageDefaults), [contact.isSuccess]);
+
   function handleFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
     setMessage((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
@@ -22,7 +24,6 @@ function Contact() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     contact.mutate(message);
-    setMessage(MessageDefaults);
   }
 
   return (
@@ -72,6 +73,9 @@ function Contact() {
 
         <SpinButton text="Send" loading={contact.isLoading} />
       </Form>
+
+      {contact.isSuccess && <p className="mt-4">Your message has been sent</p>}
+      {contact.isError && <p className="mt-4">An unknown error occurred</p>}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 
 interface ISpinButtonProps {
   text: string;
@@ -11,7 +11,7 @@ function SpinButton(props: ISpinButtonProps) {
 
   return (
     <Button type="submit" className={className} disabled={loading}>
-      {loading && <span className="spinner-border spinner-border-sm" />} {text}
+      {loading && <Spinner as="span" animation="border" size="sm" />} {text}
     </Button>
   );
 }
