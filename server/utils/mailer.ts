@@ -1,14 +1,11 @@
 import config from "./config";
 import mailer from "nodemailer";
+import Mail from "nodemailer/lib/mailer";
 
-function send(to: string, subject: string, text: string, from?: string) {
-  const mail = {
-    to,
-    from: config.mail.from,
-    subject,
-    text,
-    replyTo: from,
-  };
+export default function send(mail: Mail.Options) {
+  if (!mail.from) {
+    mail.from = config.mail.from;
+  }
 
   const transporter = mailer.createTransport({
     host: config.mail.hostname,
@@ -22,5 +19,3 @@ function send(to: string, subject: string, text: string, from?: string) {
 
   return transporter.sendMail(mail);
 }
-
-export default send;

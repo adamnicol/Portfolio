@@ -210,7 +210,7 @@ a:focus {
 
 .login-form {
   @media (min-width: 768px) {
-    width: 350px;
+    width: 370px;
   }
 }
 
@@ -262,4 +262,8 @@ hr {
 
 p {
   white-space: pre-line;
+}
+
+.contact-form {
+  max-width: 500px;
 }

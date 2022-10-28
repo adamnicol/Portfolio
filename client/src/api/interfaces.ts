@@ -66,3 +66,9 @@ export interface IProject {
   github: string;
   tags: ITag[];
 }
+
+export interface IMessage {
+  email: string;
+  name: string;
+  content: string;
+}

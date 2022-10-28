@@ -9,8 +9,14 @@ export default function contact(
   res: Response,
   next: NextFunction
 ) {
-  const { from, content } = req.body;
-  send(config.server.contactEmail, "Contact", content, from)
+  const { name, email, content } = req.body;
+  send({
+    to: config.server.contactEmail,
+    from: `${name} <${config.mail.from}>`,
+    replyTo: `${name} <${email}>`,
+    subject: "Hello",
+    text: content,
+  })
     .then(() => res.sendStatus(Status.OK))
     .catch((e) => next(e));
 }

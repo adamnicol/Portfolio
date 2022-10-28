@@ -1,10 +1,11 @@
 import { useRoutes } from "react-router-dom";
 
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import NewsFeed from "./components/news/NewsFeed";
 import NewsFilters from "./components/news/Filters";
-import About from "./pages/About";
 import Projects from "./pages/Projects";
 import ProjectFilters from "./components/projects/Filters";
 import ViewPost from "./components/news/ViewPost";
@@ -16,6 +17,7 @@ export function MainRoutes() {
     { path: "/news/:slug", element: <ViewPost /> },
     { path: "/about", element: <About /> },
     { path: "/projects", element: <Projects /> },
+    { path: "/contact", element: <Contact /> },
     { path: "/login", element: <Login /> },
   ]);
 }

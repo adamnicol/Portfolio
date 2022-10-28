@@ -1,6 +1,7 @@
+import SpinButton from "./button/SpinButton";
 import Status from "./../utils/statusCodes";
 import { AxiosError } from "axios";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { FormEvent, useEffect, useState } from "react";
 import { IUser } from "../api/interfaces";
 import { useAuth } from "../context/AuthContext";
@@ -8,8 +9,8 @@ import { useLogin } from "../api/queries/user.queries";
 import { useModal } from "../context/ModalContext";
 
 function Login() {
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
   const login = useLogin();
@@ -82,12 +83,7 @@ function Login() {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Button type="submit" value="Login" className="w-100">
-          {login.isLoading && (
-            <span className="spinner-border spinner-border-sm" />
-          )}{" "}
-          Login
-        </Button>
+        <SpinButton text="Login" className="w-100" loading={login.isLoading} />
       </Form>
 
       {error && <div className="alert alert-danger mt-3">{error}</div>}

@@ -2,12 +2,15 @@ import z from "zod";
 
 export const contact = z.object({
   body: z.object({
-    from: z
+    name: z.string({
+      required_error: "Name is required",
+    }),
+    email: z
       .string({
         required_error: "Email address is required",
       })
       .trim()
-      .email("Not a valid email"),
+      .email("Invalid email address"),
     content: z.string({
       required_error: "Email body is required",
     }),

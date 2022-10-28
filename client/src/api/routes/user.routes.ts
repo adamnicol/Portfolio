@@ -1,14 +1,14 @@
-import axios from "../axios";
+import api from "../client";
 import { ICredentials, IUser } from "../interfaces";
 
-export function login(params: ICredentials) {
-  return axios.post<IUser>("/users/login", params).then((res) => res.data);
+export function login(credentials: ICredentials) {
+  return api.post<IUser>("/users/login", credentials);
 }
 
 export function logout() {
-  return axios.post("/users/logout").then((res) => res.data);
+  return api.post("/users/logout");
 }
 
 export function refreshLogin() {
-  return axios.get<IUser>("/users/refresh").then((res) => res.data);
+  return api.get<IUser>("/users/refresh");
 }
