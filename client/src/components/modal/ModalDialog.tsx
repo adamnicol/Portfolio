@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import "./ModalDialog.scss";
+import "./ModalDialog.css";
 
 export type ModalProps = {
   visible: boolean;
