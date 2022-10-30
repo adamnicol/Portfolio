@@ -12,6 +12,7 @@ const MessageDefaults: IMessage = {
 
 function Contact() {
   const [message, setMessage] = useState<IMessage>(MessageDefaults);
+  const [botfield, setBotfield] = useState<string>("");
 
   function handleFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
     setMessage((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -23,7 +24,7 @@ function Contact() {
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    contact.mutate(message);
+    contact.mutate({ message, botfield });
   }
 
   return (
@@ -31,11 +32,13 @@ function Contact() {
       <h2>Contact</h2>
 
       <Form name="contact" method="post" className="mt-3" onSubmit={submit}>
-        {/* Required for Netlify forms */}
-        <input type="hidden" name="form-name" value="contact" />
-
-        <Form.Group className="d-none">
-          <Form.Control name="bot-field" placeholder="Don't fill this out" />
+        <Form.Group className="d-none mb-3">
+          <Form.Control
+            name="bot-field"
+            value={botfield}
+            onChange={(e) => setBotfield(e.target.value)}
+            placeholder="Don't fill this out"
+          />
         </Form.Group>
 
         <Form.Group controlId="name" className="mb-3">
@@ -80,6 +83,8 @@ function Contact() {
 
         <SpinButton text="Send" loading={contact.isLoading} />
       </Form>
+
+      <div data-netlify-recaptcha="true" className="mt-4" />
 
       {contact.isSuccess && <p className="mt-4">Your message has been sent</p>}
       {contact.isError && <p className="mt-4">An unknown error occurred</p>}

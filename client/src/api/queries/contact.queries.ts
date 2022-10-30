@@ -7,17 +7,23 @@ export function useContact() {
 }
 
 export function useNetlifyContact() {
-  return useMutation((message: IMessage) =>
+  return useMutation((params: { message: IMessage; botfield: string }) =>
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ "form-name": "contact", ...message }),
+      body: encode({
+        "form-name": "contact",
+        "bot-field": params.botfield,
+        ...params.message,
+      }),
     })
   );
 }
 
-function encode(body: any) {
-  return Object.keys(body)
-    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(body[key]))
+function encode(message: any) {
+  return Object.keys(message)
+    .map(
+      (key) => encodeURIComponent(key) + "=" + encodeURIComponent(message[key])
+    )
     .join("&");
 }
