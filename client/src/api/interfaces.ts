@@ -68,7 +68,7 @@ export interface IProject {
 }
 
 export interface IMessage {
-  email: string;
   name: string;
-  content: string;
+  email: string;
+  message: string;
 }

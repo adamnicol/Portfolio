@@ -11,8 +11,8 @@ export const contact = z.object({
       })
       .trim()
       .email("Invalid email address"),
-    content: z.string({
-      required_error: "Email body is required",
+    message: z.string({
+      required_error: "Message is required",
     }),
   }),
 });
