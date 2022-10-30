@@ -81,10 +81,10 @@ function Contact() {
           />
         </Form.Group>
 
+        <div data-netlify-recaptcha="true" className="mb-3" />
+
         <SpinButton text="Send" loading={contact.isLoading} />
       </Form>
-
-      <div data-netlify-recaptcha="true" className="mt-4" />
 
       {contact.isSuccess && <p className="mt-4">Your message has been sent</p>}
       {contact.isError && <p className="mt-4">An unknown error occurred</p>}
