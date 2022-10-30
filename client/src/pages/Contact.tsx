@@ -81,8 +81,6 @@ function Contact() {
           />
         </Form.Group>
 
-        <div data-netlify-recaptcha="true" className="mb-3" />
-
         <SpinButton text="Send" loading={contact.isLoading} />
       </Form>
 
