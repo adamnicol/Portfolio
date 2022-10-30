@@ -1,6 +1,8 @@
-import { Button, Form } from "react-bootstrap";
+import SpinButton from "../components/button/SpinButton";
+import { Form } from "react-bootstrap";
 import { IMessage } from "../api/interfaces";
-import { useState } from "react";
+import { useNetlifyContact } from "../api/queries/contact.queries";
+import { useEffect, useState } from "react";
 
 const MessageDefaults: IMessage = {
   name: "",
@@ -15,13 +17,26 @@ function Contact() {
     setMessage((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
+  const contact = useNetlifyContact();
+
+  useEffect(() => setMessage(MessageDefaults), [contact.isSuccess]);
+
+  function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    contact.mutate(message);
+  }
+
   return (
     <div className="contact-form">
       <h2>Contact</h2>
 
-      <Form name="contact" method="post" className="mt-3">
+      <Form name="contact" method="post" className="mt-3" onSubmit={submit}>
         {/* Required for Netlify forms */}
         <input type="hidden" name="form-name" value="contact" />
+
+        <Form.Group className="d-none">
+          <Form.Control name="bot-field" placeholder="Don't fill this out" />
+        </Form.Group>
 
         <Form.Group controlId="name" className="mb-3">
           <Form.Control
@@ -31,6 +46,7 @@ function Contact() {
             placeholder="Your name"
             value={message.name}
             onChange={handleFieldChange}
+            disabled={contact.isLoading}
           />
         </Form.Group>
 
@@ -42,6 +58,7 @@ function Contact() {
             placeholder="Your email address"
             value={message.email}
             onChange={handleFieldChange}
+            disabled={contact.isLoading}
           />
           <Form.Control.Feedback type="invalid">
             Please enter a valid email address
@@ -57,11 +74,15 @@ function Contact() {
             placeholder="Message"
             value={message.message}
             onChange={handleFieldChange}
+            disabled={contact.isLoading}
           />
         </Form.Group>
 
-        <Button type="submit">Send</Button>
+        <SpinButton text="Send" loading={contact.isLoading} />
       </Form>
+
+      {contact.isSuccess && <p className="mt-4">Your message has been sent</p>}
+      {contact.isError && <p className="mt-4">An unknown error occurred</p>}
     </div>
   );
 }
