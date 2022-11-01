@@ -10,6 +10,13 @@ export interface ICredentials {
   password: string;
 }
 
+export interface IRegistration {
+  email: string;
+  username: string;
+  password: string;
+  passwordRetype: string;
+}
+
 export interface INewsPost {
   id: string;
   title: string;

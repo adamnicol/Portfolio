@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 import { Form } from "react-bootstrap";
 import { FormEvent, useEffect, useState } from "react";
 import { IUser } from "../api/interfaces";
+import { Register } from "./Register";
 import { useAuth } from "../context/AuthContext";
 import { useLogin } from "../api/queries/user.queries";
 import { useModal } from "../context/ModalContext";
@@ -89,7 +90,10 @@ function Login() {
       {error && <div className="alert alert-danger mt-3">{error}</div>}
 
       <p className="mt-4">
-        Don't have an account? <a className="link-primary">Register</a>
+        <span className="me-2">Don't have an account?</span>
+        <a className="link-primary" onClick={() => modal.show(<Register />)}>
+          Register
+        </a>
       </p>
     </div>
   );

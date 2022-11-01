@@ -3,7 +3,6 @@ import { useRoutes } from "react-router-dom";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
 import News from "./pages/news/NewsFeed";
 import NewsFilters from "./pages/news/Filters";
 import Projects from "./pages/projects/ProjectList";
@@ -18,7 +17,6 @@ export function MainRoutes() {
     { path: "/about", element: <About /> },
     { path: "/projects", element: <Projects /> },
     { path: "/contact", element: <Contact /> },
-    { path: "/login", element: <Login /> },
   ]);
 }
 
