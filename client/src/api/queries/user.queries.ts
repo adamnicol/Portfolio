@@ -9,3 +9,7 @@ export function useLogin() {
 export function useRegister() {
   return useMutation((details: IRegistration) => api.register(details));
 }
+
+export function useActivate() {
+  return useMutation((token: string) => api.activate(token));
+}

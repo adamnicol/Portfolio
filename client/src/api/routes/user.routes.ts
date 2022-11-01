@@ -16,3 +16,7 @@ export function refreshLogin() {
 export function register(details: IRegistration) {
   return api.post<IUser>("/users/register", details);
 }
+
+export function activate(token: string) {
+  return api.post(`/users/activate/${token}`);
+}
