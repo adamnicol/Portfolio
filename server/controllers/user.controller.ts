@@ -29,7 +29,7 @@ export async function register(
 
   if (user) {
     sendActivationEmail(user);
-    res.status(Status.Accepted).send({
+    res.status(Status.OK).send({
       ...user,
       password: undefined,
     });
@@ -43,9 +43,9 @@ export async function login(
 ) {
   const { email, password } = req.body;
 
-  // Check for an active user account.
+  // Find the user's account
   const user = await service.findByEmail(email);
-  if (!user?.active) {
+  if (!user) {
     return next(new ApiError(Status.Unauthorized, "Login failed"));
   }
 
@@ -55,6 +55,11 @@ export async function login(
     return next(new ApiError(Status.Unauthorized, "Login failed"));
   }
 
+  // Check if the account has been activated.
+  if (!user.active) {
+    return next(new ApiError(Status.Forbidden, "Account not activated"));
+  }
+
   const accessToken = service.createAccessToken(user);
   const refreshToken = service.createRefreshToken(user);
 
@@ -62,7 +67,7 @@ export async function login(
   res.cookie("accessToken", accessToken, config.auth.cookies);
   res.cookie("refreshToken", refreshToken, config.auth.cookies);
 
-  res.status(Status.Accepted).send({
+  res.status(Status.OK).send({
     ...user,
     password: undefined,
   });
@@ -87,10 +92,10 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
 
 function sendActivationEmail(user: User) {
   const token = service.createActivationToken(user);
-  send({
+  return send({
     to: user.email,
-    subject: "Confirm email address",
-    text: `${config.server.baseURL}/activate/${token}`,
+    subject: "Activate your account",
+    text: `${config.server.url}/users/activate/${token}`,
   });
 }
 
@@ -101,21 +106,23 @@ export async function activateAccount(
 ) {
   const token = verifyToken<ActivationToken>(req.params.token);
   if (!token.payLoad) {
-    return next(new ApiError(Status.BadRequest));
+    res.send("Invalid activation link");
+    return next();
   }
 
   const user = await service.findByEmail(token.payLoad.email);
+
   if (!user) {
-    return next(new ApiError(Status.NotFound));
+    res.send("Account not found");
   } else if (user.active) {
-    return next(new ApiError(Status.Conflict));
+    res.send("Account already activated");
   } else if (token.expired) {
-    sendActivationEmail(user);
-    return next(new ApiError(Status.Unauthorized));
+    await sendActivationEmail(user);
+    res.send("Link expired, a new email has been sent");
+  } else {
+    await service.activateAccount(user);
+    res.send("Your account has been activated");
   }
 
-  service
-    .activateAccount(user)
-    .then(() => res.status(Status.OK))
-    .catch((error) => next(error));
+  return next();
 }

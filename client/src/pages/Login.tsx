@@ -43,6 +43,8 @@ function Login() {
 
       if (status === Status.Unauthorized) {
         setError("Invalid username or password");
+      } else if (status === Status.Forbidden) {
+        setError("Please verify your email address");
       } else if (status === Status.TooManyRequests) {
         setError("Too many login attempts, please wait a while");
       } else if (status) {

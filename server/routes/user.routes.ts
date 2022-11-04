@@ -32,6 +32,6 @@ router.post("/logout", requireUser(), asyncHandler(controller.logout));
 router.get("/refresh", requireUser(), asyncHandler(controller.refresh));
 
 // Route for when a user clicks an email verification link.
-router.post("/activate/:token", asyncHandler(controller.activateAccount));
+router.get("/activate/:token", asyncHandler(controller.activateAccount));
 
 module.exports = router;

@@ -1,4 +1,3 @@
-import Activate from "./pages/Activate";
 import App from "./App";
 import AppContextProvider from "./context/AppContext";
 import NotFound from "./pages/NotFound";
@@ -16,7 +15,6 @@ root.render(
     <AppContextProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/activate/:token" element={<Activate />} />
           <Route path="/404" element={<NotFound />} />
           <Route path="/*" element={<App />} />
         </Routes>
