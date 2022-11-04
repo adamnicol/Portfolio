@@ -31,4 +31,7 @@ router.post("/logout", requireUser(), asyncHandler(controller.logout));
 // Re-checks the access token and returns an updated user object.
 router.get("/refresh", requireUser(), asyncHandler(controller.refresh));
 
+// Route for when a user clicks an email verification link.
+router.post("/activate/:token", asyncHandler(controller.activateAccount));
+
 module.exports = router;

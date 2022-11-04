@@ -1,7 +1,9 @@
 import bcrypt from "bcrypt";
 import config from "../utils/config";
 import db from "../database";
+import { AccessToken, ActivationToken, RefreshToken } from "../types";
 import { Prisma, Role, User } from "@prisma/client";
+import { signToken } from "../utils/auth";
 
 export function findById(id: number): Promise<User | null> {
   return db.user.findFirst({ where: { id } });
@@ -12,24 +14,39 @@ export function findByEmail(email: string): Promise<User | null> {
 }
 
 export async function create(user: Prisma.UserCreateInput): Promise<User> {
-  const salt = await bcrypt.genSalt(config.auth.saltRounds);
-  user.password = await bcrypt.hash(user.password, salt);
-
   if ((await db.user.count()) === 0) {
     // Make the first user an admin.
     user.role = Role.Admin;
   }
 
-  return db.user.create({
-    data: {
-      username: user.username,
-      email: user.email,
-      password: user.password,
-      role: user.role,
-    },
-  });
+  user.password = await hashPassword(user.password);
+  return db.user.create({ data: user });
+}
+
+export async function hashPassword(password: string) {
+  const salt = await bcrypt.genSalt(config.auth.saltRounds);
+  return bcrypt.hash(password, salt);
 }
 
 export function checkPassword(user: User, password: string): Promise<boolean> {
   return bcrypt.compare(password, user.password);
+}
+
+export async function activateAccount(user: User) {
+  return db.user.update({ where: { id: user.id }, data: { active: true } });
+}
+
+export function createAccessToken(user: User) {
+  const token: AccessToken = { userId: user.id, role: user.role };
+  return signToken(token, config.auth.accessTokenTTL);
+}
+
+export function createRefreshToken(user: User) {
+  const token: RefreshToken = { userId: user.id };
+  return signToken(token, config.auth.refreshTokenTTL);
+}
+
+export function createActivationToken(user: User) {
+  const token: ActivationToken = { email: user.email };
+  return signToken(token, config.auth.activationTokenTTL);
 }

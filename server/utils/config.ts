@@ -7,6 +7,7 @@ const HOSTNAME = process.env.HOSTNAME || "localhost";
 const PORT = process.env.PORT || 3001;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:3000";
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "";
+const BASE_URL = process.env.BASE_URL || "";
 const JWT_PUBLIC_KEY = process.env.JWT_PUBLIC_KEY || "";
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY || "";
 const JWT_ISSUER = process.env.JWT_ISSUER || "";
@@ -23,6 +24,7 @@ const config = {
     hostName: HOSTNAME,
     port: Number(PORT),
     contactEmail: CONTACT_EMAIL,
+    baseURL: BASE_URL,
   },
   cors: {
     credentials: true,
@@ -42,11 +44,12 @@ const config = {
     issuer: JWT_ISSUER,
     accessTokenTTL: "15m",
     refreshTokenTTL: "24h",
-  },
-  cookieOptions: {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
+    activationTokenTTL: "24h",
+    cookies: {
+      httpOnly: true,
+      secure: true,
+      sameSite: true,
+    },
   },
   loginLimit: {
     max: 5,

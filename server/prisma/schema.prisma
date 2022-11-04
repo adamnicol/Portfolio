@@ -20,7 +20,7 @@ model User {
   email     String      @unique @db.VarChar(100)
   password  String      @db.VarChar(100)
   role      Role        @default(User)
-  active    Boolean     @default(true)
+  active    Boolean     @default(false)
   createdAt DateTime    @default(now()) @map(name: "created_at")
   updatedAt DateTime    @updatedAt @map(name: "updated_at")
   posts     Post[]      @relation(name: "UserPosts")

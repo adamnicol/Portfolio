@@ -1,6 +1,7 @@
 import config from "../utils/config";
-import { CookieOptions, NextFunction, Request, Response } from "express";
+import { AccessToken, RefreshToken } from "../types";
 import { findById } from "../services/user.service";
+import { NextFunction, Request, Response } from "express";
 import { signToken, verifyToken } from "../utils/auth";
 
 async function checkAccessToken(
@@ -12,7 +13,7 @@ async function checkAccessToken(
 
   // Check for a valid access token.
   if (accessToken) {
-    const access = verifyToken(accessToken);
+    const access = verifyToken<AccessToken>(accessToken);
 
     if (access.valid && access.payLoad) {
       req.token = access.payLoad;
@@ -21,7 +22,7 @@ async function checkAccessToken(
 
     // Check for a valid refresh token.
     if (access.expired && refreshToken) {
-      const refresh = verifyToken(refreshToken);
+      const refresh = verifyToken<RefreshToken>(refreshToken);
 
       if (refresh.valid && refresh.payLoad) {
         await renewAccessToken(req, res, refresh.payLoad.userId);
@@ -37,15 +38,11 @@ async function renewAccessToken(req: Request, res: Response, userId: number) {
 
   if (user?.active) {
     // Generate a new access token.
-    const newPayLoad = { userId, role: user.role };
+    const newPayLoad: AccessToken = { userId, role: user.role };
     const newAccessToken = signToken(newPayLoad, config.auth.accessTokenTTL);
     req.token = newPayLoad;
 
-    res.cookie(
-      "accessToken",
-      newAccessToken,
-      config.cookieOptions as CookieOptions
-    );
+    res.cookie("accessToken", newAccessToken, config.auth.cookies);
   }
 }
 
