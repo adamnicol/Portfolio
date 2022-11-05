@@ -1,10 +1,11 @@
 import * as service from "../services/user.service";
 import config from "../utils/config";
-import send from "../utils/mailer";
+import path from "path";
 import Status from "../utils/statusCodes";
 import { ActivationToken, User } from "../types";
 import { ApiError } from "../middleware/errorHandler";
 import { NextFunction, Request, Response } from "express";
+import { sendTemplate } from "../utils/mailer";
 import { UserLoginSchema, UserSchema } from "../schemas/user.schema";
 import { verifyToken } from "../utils/auth";
 
@@ -25,15 +26,14 @@ export async function register(
   }
 
   // Create a new user account
-  const user = await service.create(data);
-
-  if (user) {
-    sendActivationEmail(user);
-    res.status(Status.OK).send({
-      ...user,
-      password: undefined,
+  service.create(data).then((user) => {
+    sendActivationEmail(user).then(() => {
+      res.status(Status.OK).send({
+        ...user,
+        password: undefined,
+      });
     });
-  }
+  });
 }
 
 export async function login(
@@ -91,11 +91,12 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
 }
 
 function sendActivationEmail(user: User) {
+  const template = path.join(__dirname, "..", "templates/activateAccount.hbs");
   const token = service.createActivationToken(user);
-  return send({
-    to: user.email,
-    subject: "Activate your account",
-    text: `${config.server.url}/users/activate/${token}`,
+
+  return sendTemplate(user.email, "Activate your account", template, {
+    username: user.username,
+    url: `${config.server.url}/users/activate/${token}`,
   });
 }
 
