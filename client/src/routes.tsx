@@ -8,6 +8,7 @@ import News from "./pages/news/NewsFeed";
 import NewsFilters from "./pages/news/Filters";
 import Projects from "./pages/projects/ProjectList";
 import ProjectFilters from "./pages/projects/Filters";
+import SkillList from "./pages/aside/SkillList";
 import ViewPost from "./pages/news/ViewPost";
 
 export function MainRoutes() {
@@ -27,5 +28,6 @@ export function AsideRoutes() {
     { path: "/", element: <NewsFilters /> },
     { path: "/news/*", element: <NewsFilters /> },
     { path: "/projects/*", element: <ProjectFilters /> },
+    { path: "/experience/*", element: <SkillList /> },
   ]);
 }
