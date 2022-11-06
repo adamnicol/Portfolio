@@ -2,6 +2,7 @@ import { useRoutes } from "react-router-dom";
 
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Experience from "./pages/Experience";
 import Home from "./pages/Home";
 import News from "./pages/news/NewsFeed";
 import NewsFilters from "./pages/news/Filters";
@@ -16,6 +17,7 @@ export function MainRoutes() {
     { path: "/news/:slug", element: <ViewPost /> },
     { path: "/about", element: <About /> },
     { path: "/projects", element: <Projects /> },
+    { path: "/experience", element: <Experience /> },
     { path: "/contact", element: <Contact /> },
   ]);
 }

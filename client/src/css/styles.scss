@@ -126,7 +126,7 @@ aside {
   border-left-width: 5px;
   border-left-color: $theme-accent;
   border-radius: 10px;
-  box-shadow: 1px 1px 3px lightgray;
+  box-shadow: 2px 2px 5px lightgray;
 }
 
 .login-link {
@@ -200,6 +200,15 @@ a:focus {
     width: 70px;
     height: 50px;
   }
+}
+
+.employer-logo {
+  width: 85px;
+  height: 70px;
+  border: 2px solid;
+  border-color: lightgray;
+  margin-bottom: 15px;
+  margin-right: 15px;
 }
 
 hr {

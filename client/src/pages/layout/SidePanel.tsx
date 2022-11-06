@@ -13,7 +13,7 @@ const menuLinks = [
   { text: "Home", path: "/", icon: faHouse },
   { text: "About", path: "/about", icon: faCircleInfo },
   { text: "Projects", path: "/projects", icon: faFolderOpen },
-  { text: "Something", path: "/something", icon: faStar },
+  { text: "Experience", path: "/experience", icon: faStar },
   { text: "Contact", path: "/contact", icon: faEnvelope },
 ];
 
