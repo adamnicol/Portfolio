@@ -102,10 +102,8 @@ header {
   }
 }
 
-@media (max-width: 1200px) {
-  aside {
-    display: none;
-  }
+.content {
+  max-width: 850px;
 }
 
 aside {
@@ -114,6 +112,10 @@ aside {
   margin-top: 40px;
   margin-left: 20px;
   max-width: 300px;
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
 }
 
 .callout {

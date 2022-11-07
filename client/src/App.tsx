@@ -14,7 +14,7 @@ function App() {
       <SidePanel />
       <div className="container-fluid">
         <div className="row">
-          <main className="col-xl-6">
+          <main className="col-xl-8 content">
             <MainRoutes />
           </main>
           <div className="col">
