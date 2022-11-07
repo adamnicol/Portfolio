@@ -15,7 +15,7 @@ function Experience() {
               />
             </a>
             <span className="me-auto">
-              <h4>
+              <h4 className="mb-0">
                 <a href={company.website} target="_blank">
                   {company.name}
                 </a>
