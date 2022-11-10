@@ -4,7 +4,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "prisma migrate deploy && ts-node --files server.ts",
+    "start": "prisma migrate deploy && prisma db seed && ts-node --files server.ts",
     "start-dev": "nodemon --files server.ts",
     "build": "tsc"
   },
@@ -45,5 +45,8 @@
   "devDependencies": {
     "@types/nodemon": "^1.19.2",
     "nodemon": "^2.0.19"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
