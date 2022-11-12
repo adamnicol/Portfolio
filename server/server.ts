@@ -8,10 +8,12 @@ import cors from "cors";
 import errorHandler from "./middleware/errorHandler";
 import express, { Request, Response } from "express";
 import helmet from "helmet";
+import jsdoc from "swagger-jsdoc";
 import logger from "./utils/logger";
 import requestLogger from "./middleware/requestLogger";
 import responseTime from "response-time";
 import Status from "./utils/statusCodes";
+import swagger from "swagger-ui-express";
 
 const app = express();
 
@@ -31,6 +33,11 @@ app.use("/contact", asyncHandler(contact));
 app.get("/healthcheck", (req: Request, res: Response) =>
   res.sendStatus(Status.OK)
 );
+
+//if (!config.isProduction) {
+const docs = jsdoc(require("./swagger.json"));
+app.use("/", swagger.serve, swagger.setup(docs));
+//}
 
 app.use(errorHandler);
 
