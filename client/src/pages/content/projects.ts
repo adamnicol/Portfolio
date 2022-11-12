@@ -5,7 +5,7 @@ const projects: IProject[] = [
     name: "Portfolio",
     description:
       "A fully responsive website that serves as my online portfolio and blog. Written in React/Typescript with a rest API on the backend. Currently deployed on Netlify.",
-    website: "https://www.adamnicol.com",
+    website: "https://www.adamnicol.dev",
     github: "https://github.com/adamnicol/Portfolio",
     tags: [
       { id: 1, name: "react" },
@@ -17,7 +17,7 @@ const projects: IProject[] = [
     name: "NodeJS Rest API",
     description:
       "A rest API written in Node/Express and Typescript that serves as the backend for my site. Featuring authentication using JWT tokens, schema validation using Zod, and connecting to a PostgreSQL database using the Prisma ORM.",
-    website: "https://www.adamnicol.dev/api",
+    website: "https://api.adamnicol.dev",
     github: "https://github.com/adamnicol/Portfolio",
     tags: [
       { id: 1, name: "node" },

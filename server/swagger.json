@@ -3,7 +3,18 @@
     "openapi": "3.0.0",
     "info": {
       "title": "adamnicol.dev",
+      "description": "Documentation for the backend API of adamnicol.dev",
       "version": "1.0.0"
+    },
+    "basePath": "/",
+    "components": {
+      "securitySchemes": {
+        "cookieAuth": {
+          "in": "cookie",
+          "type": "apiKey",
+          "name": "accessToken"
+        }
+      }
     }
   },
   "apis": ["./routes/*.ts"]

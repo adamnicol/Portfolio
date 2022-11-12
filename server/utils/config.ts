@@ -25,6 +25,7 @@ const config = {
     port: Number(PORT),
     url: API_URL,
     contactEmail: CONTACT_EMAIL,
+    useSwagger: true,
   },
   cors: {
     credentials: true,

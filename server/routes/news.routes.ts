@@ -1,5 +1,4 @@
 import * as controller from "../controllers/news.controller";
-import asyncHandler from "express-async-handler";
 import express from "express";
 import requireUser from "../middleware/requireUser";
 import validateSchema from "../middleware/validateSchema";
@@ -37,9 +36,9 @@ const router = express.Router();
  *        description: Return posts by tag
  *    responses:
  *      200:
- *        description: A list of news posts
+ *        description: Success
  */
-router.get("/", validateSchema(getNews), asyncHandler(controller.get));
+router.get("/", validateSchema(getNews), controller.get);
 
 /**
  * @swagger
@@ -55,9 +54,9 @@ router.get("/", validateSchema(getNews), asyncHandler(controller.get));
  *        description: The number of posts to return
  *    responses:
  *      200:
- *        description: A list of news posts
+ *        description: Success
  */
-router.get("/top", asyncHandler(controller.getTop));
+router.get("/top", controller.getTop);
 
 /**
  * @swagger
@@ -70,12 +69,12 @@ router.get("/top", asyncHandler(controller.getTop));
  *        name: tag
  *        type: string
  *        required: false
- *        description: Return count by tag
+ *        description: Count by tag
  *    responses:
  *      200:
- *        description: Returns the count
+ *        description: Success
  */
-router.get("/count", asyncHandler(controller.count));
+router.get("/count", controller.count);
 
 /**
  * @swagger
@@ -88,12 +87,12 @@ router.get("/count", asyncHandler(controller.count));
  *        name: limit
  *        type: number
  *        required: false
- *        description: The number of tags to return
+ *        description: The number to return
  *    responses:
  *      200:
- *        description: A list of tags
+ *        description: Success
  */
-router.get("/tags", asyncHandler(controller.getTags));
+router.get("/tags", controller.getTags);
 
 /**
  * @swagger
@@ -109,11 +108,11 @@ router.get("/tags", asyncHandler(controller.getTags));
  *        description: The slug
  *    responses:
  *      200:
- *        description: A single news post
+ *        description: Success
  *      404:
- *        description: Post not found
+ *        description: Not found
  */
-router.get("/:slug", asyncHandler(controller.getBySlug));
+router.get("/:slug", controller.getBySlug);
 
 /**
  * @swagger
@@ -139,15 +138,11 @@ router.get("/:slug", asyncHandler(controller.getBySlug));
  *        description: Offset for pagination
  *    responses:
  *      200:
- *        description: A list of comments
+ *        description: Success
  *      404:
- *        description: Post not found
+ *        description: Not found
  */
-router.get(
-  "/:id/comments",
-  validateSchema(getComments),
-  asyncHandler(controller.getComments)
-);
+router.get("/:id/comments", validateSchema(getComments), controller.getComments);
 
 /**
  * @swagger
@@ -161,20 +156,17 @@ router.get(
  *        type: object
  *        required: true
  *        description: The news post
+ *    security:
+ *      - cookieAuth: []
  *    responses:
  *      200:
- *        description: Post was added
+ *        description: Success
  *      401:
  *        description: Authentication required
  *      403:
  *        description: Forbidden
  */
-router.post(
-  "/",
-  requireUser(Role.Admin),
-  validateSchema(postNews),
-  asyncHandler(controller.post)
-);
+router.post("/", requireUser(Role.Admin), validateSchema(postNews), controller.post);
 
 /**
  * @swagger
@@ -193,20 +185,17 @@ router.post(
  *        type: object
  *        required: true
  *        description: The comment
+ *    security:
+ *      - cookieAuth: []
  *    responses:
  *      200:
- *        description: Comment was added
+ *        description: Success
  *      401:
  *        description: Authentication required
  *      404:
- *        description: Post not found
+ *        description: Not found
  */
-router.post(
-  "/:id/comments",
-  requireUser(Role.User),
-  validateSchema(postComment),
-  asyncHandler(controller.postComment)
-);
+router.post("/:id/comments", requireUser(Role.User), validateSchema(postComment), controller.postComment);
 
 /**
  * @swagger
@@ -220,20 +209,18 @@ router.post(
  *        type: number
  *        required: true
  *        description: The post id
+ *    security:
+ *      - cookieAuth: []
  *    responses:
  *      200:
- *        description: Like was recorded
+ *        description: Success
  *      401:
  *        description: Authentication required
  *      404:
- *        description: Post not found
+ *        description: Not found
  *      409:
  *        description: Already liked
  */
-router.post(
-  "/:id/like",
-  requireUser(Role.User),
-  asyncHandler(controller.likePost)
-);
+router.post("/:id/like", requireUser(Role.User), controller.likePost);
 
 module.exports = router;

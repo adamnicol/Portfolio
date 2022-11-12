@@ -26,18 +26,18 @@ app.use(responseTime());
 app.use(requestLogger);
 app.use(asyncHandler(checkAccessToken));
 
-app.use("/users", require("./routes/user.routes"));
-app.use("/news", require("./routes/news.routes"));
+app.use("/users", asyncHandler(require("./routes/user.routes")));
+app.use("/news", asyncHandler(require("./routes/news.routes")));
 app.use("/contact", asyncHandler(contact));
 
 app.get("/healthcheck", (req: Request, res: Response) =>
   res.sendStatus(Status.OK)
 );
 
-//if (!config.isProduction) {
-const docs = jsdoc(require("./swagger.json"));
-app.use("/", swagger.serve, swagger.setup(docs));
-//}
+if (config.server.useSwagger) {
+  const docs = jsdoc(require("./swagger.json"));
+  app.use("/", swagger.serve, swagger.setup(docs));
+}
 
 app.use(errorHandler);
 
