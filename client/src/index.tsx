@@ -4,6 +4,7 @@ import NotFound from "./pages/NotFound";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
+import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
@@ -14,6 +15,7 @@ root.render(
   <React.StrictMode>
     <AppContextProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/404" element={<NotFound />} />
           <Route path="/*" element={<App />} />
