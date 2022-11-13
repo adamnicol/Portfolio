@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "prisma migrate deploy && prisma db seed && ts-node --files server.ts",
     "start-dev": "nodemon --files server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint ./",
+    "lint:fix": "eslint ./ --fix"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
@@ -48,6 +50,9 @@
   },
   "devDependencies": {
     "@types/nodemon": "^1.19.2",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
     "nodemon": "^2.0.19"
   },
   "prisma": {
