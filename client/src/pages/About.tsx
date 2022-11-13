@@ -18,12 +18,19 @@ function About() {
           software solutions for some of the largest energy, construction, and
           defense companies in the world. This has primarily been in the form of
           data-driven, reporting, and decision-making software for the Windows
-          desktop, using C#, the .NET Framework, and SQL databases.
+          desktop, using C#, the Microsoft .NET Framework, and SQL databases.
         </p>
         <p>
-          I would describe myself as self-taught, though I also have an honours
-          degree. In my spare time I like to keep my skills up to date and read
-          about technology. I also enjoy gaming, running and going to the gym.
+          Recently I have been focusing on web development with React and
+          Node.js. This website was intended as a learning project to update my
+          skills and learn modern frameworks and tools. I'm more comfortable as
+          a back-end developer but I'm fairly pleased with how it turned out.
+        </p>
+        <p>
+          I would describe myself as self-taught, although I also have an
+          honours degree. In my spare time I like to keep my skills up to date
+          and read about technology. I also enjoy gaming, running and going to
+          the gym.
         </p>
       </div>
     </article>

@@ -1,12 +1,14 @@
 import { IProject } from "../../api/interfaces";
 
-const projects: IProject[] = [
+export const projects: IProject[] = [
   {
     name: "Portfolio",
     description:
-      "A fully responsive website that serves as my online portfolio and blog. Written in React/Typescript with a rest API on the backend. Currently deployed on Netlify.",
+      "A fully responsive website that serves as my online portfolio and blog. Written in React, Typescript, and Bootstrap with a rest API on the backend. Data is prefetched and cached using Axios and React-query. Currently deployed on Netlify.",
+    image: "thumbnail.jpg",
     website: "https://www.adamnicol.dev",
     github: "https://github.com/adamnicol/Portfolio",
+    complete: false,
     tags: [
       { id: 1, name: "react" },
       { id: 2, name: "typescript" },
@@ -16,9 +18,11 @@ const projects: IProject[] = [
   {
     name: "NodeJS Rest API",
     description:
-      "A rest API written in Node/Express and Typescript that serves as the backend for my site. Featuring authentication using JWT tokens, schema validation using Zod, and connecting to a PostgreSQL database using the Prisma ORM.",
+      "A Node/Express rest API written in Typescript that serves as the backend for my site. Featuring authentication using JWT tokens, schema validation using Zod, and connecting to a PostgreSQL database using the Prisma ORM. Currently deployed using Docker.",
+    image: "nodejs.jpg",
     website: "https://api.adamnicol.dev",
     github: "https://github.com/adamnicol/Portfolio",
+    complete: false,
     tags: [
       { id: 1, name: "node" },
       { id: 2, name: "express" },
@@ -28,5 +32,3 @@ const projects: IProject[] = [
     ],
   },
 ];
-
-export default projects;

@@ -13,6 +13,6 @@ export const skills: ISkill[] = [
   { name: "CSS", rating: 60 },
   { name: "Bootstrap", rating: 50 },
   { name: "React", rating: 50 },
-  { name: "Typescript", rating: 65 },
+  { name: "Typescript", rating: 60 },
   { name: "Node/Express", rating: 75 },
 ];

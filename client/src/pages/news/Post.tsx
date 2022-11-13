@@ -34,7 +34,7 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
   return (
     <article className="mt-3">
       <Link to={url}>
-        <h3>{post.title}</h3>
+        <h4>{post.title}</h4>
       </Link>
       <p>
         {content}

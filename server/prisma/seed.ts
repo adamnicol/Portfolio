@@ -23,7 +23,7 @@ async function seed() {
       author_id: user.id,
       createdAt: new Date("2022-10-14 22:19:35"),
       content:
-        "My new website is finally live, though it’s still a work in progress so you may see the odd “lorem ipsum” here and there. I've been meaning to learn a modern front end framework for a long time. Everything has changed since my PHP days over a decade ago, it almost feels like starting over again. I think React was a great choice for the front end. I like being able to split things up into components, the modular nature fits well with my development style. Some of my choices may have been a little overkill for a simple site like this but I had a lot of fun making it and learnt a great deal. Please leave a comment and let me know what you think.",
+        "My new website is finally live, though it’s still a work in progress so it's not in its final form yet. I've been meaning to learn a modern front end framework for a long time. Everything has changed since my PHP days over a decade ago, it almost feels like starting over again. I think React was a great choice for the front end. I like being able to split things up into components and the modular nature fits well with my development style. Front end design is something I always struggle with but I'm fairly happy with how it turned out. Some of my development choices may have been a little overkill for a simple site like this but I had a lot of fun making it and learnt a great deal. Please leave a comment below and let me know what you think.",
       tags: {
         connectOrCreate: [
           {
@@ -37,13 +37,33 @@ async function seed() {
         ],
       },
     },
+    {
+      title: "Why I changed to Postgres",
+      slug: "why-i-changed-to-postgres",
+      author_id: user.id,
+      createdAt: new Date("2022-11-10 20:30:14"),
+      content:
+        "This site uses a PostgreSQL database but that’s not how it started out. Originally my plan was to use MongoDB and the MERN stack. After 15 years working with relational databases I wanted to try something new and NoSQL was just what I was looking for. I'd read that relational data could be stored together, avoiding the need for joins across multiple tables. \“Data that is queried together should be stored together\” they said. Unfortunately I soon learnt that this was an over-simplification. I needed to return news without comments, tags without posts, and aggregation pipelines were becoming a headache. Eventually I made the decision to split up the data into separate collections which is when it occurred to me ....my data is relational. Don’t get me wrong, I can absolutely see the benefit of NoSQL databases and there are many cases where they are a good choice. I realise now it was the wrong choice for my site and I'm much happier having changed to Postgres.",
+      tags: {
+        connectOrCreate: [
+          {
+            where: { name: "website" },
+            create: { name: "website" },
+          },
+          {
+            where: { name: "database" },
+            create: { name: "database" },
+          },
+        ],
+      },
+    },
   ];
 
   for (const post of posts) {
     await db.post.upsert({
       where: { slug: post.slug },
-      update: { ...post },
-      create: { ...post },
+      update: post,
+      create: post,
     });
   }
 }

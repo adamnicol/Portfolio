@@ -9,7 +9,7 @@ function Project(props: { project: IProject }) {
       <div className="d-flex">
         <div className="d-flex flex-column text-center text-small">
           <img
-            src={require("../../assets/thumbnail.jpg")}
+            src={require(`../../assets/${project.image}`)}
             className="project-image"
             alt="image"
           />

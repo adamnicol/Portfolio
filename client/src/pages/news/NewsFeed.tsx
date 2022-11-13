@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { useGetNews } from "../../api/queries/news.queries";
 
 const postsPerPage = 5;
-const maxLength = 300;
+const maxLength = 400;
 
 function NewsFeed() {
   const [searchParams] = useSearchParams();
@@ -25,7 +25,7 @@ function NewsFeed() {
   }
 
   return (
-    <div>
+    <div className="mt-4">
       {news.data?.posts.map((post, index) => {
         return <NewsPost key={index} content={post} limit={maxLength} />;
       })}
