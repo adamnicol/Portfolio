@@ -41,6 +41,6 @@ export function postComment(post: INewsPost, comment: string) {
   return api.post<IComment>(`/news/${post.id}/comments`, { comment });
 }
 
-export function likePost(post: INewsPost) {
-  return api.post(`/news/${post.id}/like`);
+export function likePost(post: INewsPost, like: boolean) {
+  return api.post(`/news/${post.id}/like`, { params: { like }});
 }

@@ -20,6 +20,7 @@ export function useNetlifyContact() {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function encode(message: any) {
   return Object.keys(message)
     .map(

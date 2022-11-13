@@ -102,7 +102,7 @@ export function usePostComment(filters: ICommentFilters, post?: INewsPost) {
 export function useLikePost(post: INewsPost) {
   const queryClient = useQueryClient();
 
-  return useMutationWithAuth((like: boolean) => api.likePost(post), {
+  return useMutationWithAuth((like: boolean) => api.likePost(post, like), {
     onSuccess: () => {
       queryClient.invalidateQueries("news");
       queryClient.invalidateQueries("top-posts");

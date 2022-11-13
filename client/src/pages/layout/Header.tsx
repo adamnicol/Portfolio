@@ -66,6 +66,7 @@ function Socials() {
             title={item.name}
             href={item.url}
             target="_blank"
+            rel="noreferrer"
             className="nav-icon"
           >
             <FontAwesomeIcon icon={item.icon as IconProp} />

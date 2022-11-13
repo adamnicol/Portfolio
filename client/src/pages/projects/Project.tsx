@@ -13,10 +13,20 @@ function Project(props: { project: IProject }) {
             className="project-image"
             alt="image"
           />
-          <a href={project.website} title="Website" target="_blank">
+          <a
+            href={project.website}
+            title="Website"
+            target="_blank"
+            rel="noreferrer"
+          >
             Website
           </a>
-          <a href={project.github} title="GitHub" target="_blank">
+          <a
+            href={project.github}
+            title="GitHub"
+            target="_blank"
+            rel="noreferrer"
+          >
             GitHub
           </a>
         </div>

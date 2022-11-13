@@ -18,7 +18,7 @@ function Pagination(props: PaginationProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handlePageChanged(page: number) {
-    if (page != currentPage) {
+    if (page !== currentPage) {
       const params = new URLSearchParams(searchParams);
       params.set("page", page.toString());
       setSearchParams(params);

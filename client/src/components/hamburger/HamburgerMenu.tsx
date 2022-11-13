@@ -53,7 +53,7 @@ function HamburgerMenu() {
             <hr />
             {socials.map((item, index) => {
               return (
-                <span className="mb-2">
+                <span key={index} className="mb-2">
                   <FontAwesomeIcon
                     icon={item.icon as IconProp}
                     className="me-3"
@@ -63,6 +63,7 @@ function HamburgerMenu() {
                     title={item.name}
                     href={item.url}
                     target="_blank"
+                    rel="noreferrer"
                     className="nav-icon"
                   >
                     {item.name}

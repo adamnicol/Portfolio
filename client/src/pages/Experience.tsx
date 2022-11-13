@@ -7,7 +7,7 @@ function Experience() {
       {companies.map((company, index) => (
         <div key={index} className="callout">
           <div className="d-flex text-small text-secondary">
-            <a href={company.website} target="_blank">
+            <a href={company.website} target="_blank" rel="noreferrer">
               <img
                 src={require(`../assets/${company.logo}`)}
                 className="employer-logo"
@@ -16,7 +16,7 @@ function Experience() {
             </a>
             <span className="me-auto">
               <h4 className="mb-0">
-                <a href={company.website} target="_blank">
+                <a href={company.website} target="_blank" rel="noreferrer">
                   {company.name}
                 </a>
               </h4>
