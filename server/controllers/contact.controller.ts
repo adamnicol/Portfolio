@@ -5,7 +5,7 @@ import { ContactSchema } from "../schemas/contact.schema";
 import { NextFunction, Request, Response } from "express";
 
 export default function contact(
-  req: Request<{}, {}, ContactSchema["body"]>,
+  req: Request<never, never, ContactSchema["body"]>,
   res: Response,
   next: NextFunction
 ) {

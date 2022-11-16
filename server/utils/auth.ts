@@ -1,7 +1,11 @@
 import config from "./config";
 import jwt from "jsonwebtoken";
+import { AccessToken, ActivationToken, RefreshToken } from "../types";
 
-export function signToken(payLoad: any, expires: string | number) {
+export function signToken(
+  payLoad: AccessToken | RefreshToken | ActivationToken,
+  expires: string | number
+) {
   return jwt.sign(payLoad, config.auth.privateKey, {
     algorithm: "RS256",
     expiresIn: expires,
@@ -20,7 +24,7 @@ export function verifyToken<T>(token: string): {
     }) as T;
 
     return { valid: true, expired: false, payLoad };
-  } catch (e: any) {
+  } catch (e) {
     const error = e as Error;
     return {
       valid: false,

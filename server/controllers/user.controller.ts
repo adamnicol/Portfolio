@@ -10,7 +10,7 @@ import { UserLoginSchema, UserSchema } from "../schemas/user.schema";
 import { verifyToken } from "../utils/auth";
 
 export async function register(
-  req: Request<{}, {}, UserSchema["body"]>,
+  req: Request<never, never, UserSchema["body"]>,
   res: Response,
   next: NextFunction
 ) {
@@ -37,7 +37,7 @@ export async function register(
 }
 
 export async function login(
-  req: Request<{}, {}, UserLoginSchema["body"]>,
+  req: Request<never, never, UserLoginSchema["body"]>,
   res: Response,
   next: NextFunction
 ) {

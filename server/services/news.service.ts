@@ -97,7 +97,7 @@ export async function create(
 }
 
 export async function generateSlug(input: string): Promise<string> {
-  let options = { lower: true, strict: true };
+  const options = { lower: true, strict: true };
   let slug = slugify(input, options);
 
   for (let i = 1; ; i++) {

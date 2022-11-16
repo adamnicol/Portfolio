@@ -12,7 +12,7 @@ import {
 } from "../schemas/news.schema";
 
 export function get(
-  req: Request<{}, {}, {}, GetNewsSchema["query"]>,
+  req: Request<never, never, never, GetNewsSchema["query"]>,
   res: Response
 ) {
   const { limit = 100, offset = 0, tag } = req.query;
@@ -33,7 +33,7 @@ export function get(
 }
 
 export function getTop(
-  req: Request<{}, {}, {}, { limit?: number }>,
+  req: Request<never, never, never, { limit?: number }>,
   res: Response
 ) {
   const limit = req.query.limit || 10;
@@ -41,7 +41,7 @@ export function getTop(
 }
 
 export async function count(
-  req: Request<{}, {}, {}, { tag?: string }>,
+  req: Request<never, never, never, { tag?: string }>,
   res: Response
 ) {
   const count = req.query.tag
@@ -77,7 +77,7 @@ function flatten(post: PopulatedPost) {
 }
 
 export function getTags(
-  req: Request<{}, {}, {}, { limit?: number }>,
+  req: Request<never, never, never, { limit?: number }>,
   res: Response
 ) {
   const limit = req.query.limit || 10;
@@ -85,7 +85,7 @@ export function getTags(
 }
 
 export async function post(
-  req: Request<{}, {}, PostNewsSchema["body"]>,
+  req: Request<never, never, PostNewsSchema["body"]>,
   res: Response
 ) {
   const author = req.token.userId;
@@ -102,7 +102,12 @@ export async function post(
 }
 
 export function getComments(
-  req: Request<GetCommentsSchema["params"], {}, {}, GetCommentsSchema["query"]>,
+  req: Request<
+    GetCommentsSchema["params"],
+    never,
+    never,
+    GetCommentsSchema["query"]
+  >,
   res: Response
 ) {
   const { limit = 100, offset = 0 } = req.query;
@@ -121,7 +126,7 @@ export function getComments(
 }
 
 export async function postComment(
-  req: Request<PostCommentSchema["params"], {}, PostCommentSchema["body"]>,
+  req: Request<PostCommentSchema["params"], never, PostCommentSchema["body"]>,
   res: Response
 ) {
   const user = req.token.userId;
