@@ -5,6 +5,7 @@ import { faBars, faClose, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useAuth } from "../../context/AuthContext";
+import { useLogout } from "../../api/queries/user.queries";
 import { useModal } from "../../context/ModalContext";
 import { useState } from "react";
 
@@ -15,12 +16,13 @@ function HamburgerMenu() {
 
   const auth = useAuth();
   const modal = useModal();
+  const logout = useLogout();
 
   function handleLoginClicked() {
     setIsOpen(false);
 
     if (auth.user) {
-      auth.logout();
+      logout.mutate();
     } else {
       modal.show(<Login />);
     }

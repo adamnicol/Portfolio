@@ -4,6 +4,7 @@ import socials from "../content/socials";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useAuth } from "../../context/AuthContext";
+import { useLogout } from "../../api/queries/user.queries";
 import { useModal } from "../../context/ModalContext";
 
 function Header() {
@@ -30,6 +31,7 @@ function HeaderLeft() {
 function HeaderRight() {
   const auth = useAuth();
   const modal = useModal();
+  const logout = useLogout();
 
   return (
     <div>
@@ -49,7 +51,7 @@ function HeaderRight() {
 
   function handleLoginLinkClicked() {
     if (auth.user) {
-      auth.logout();
+      logout.mutate();
     } else {
       modal.show(<Login />);
     }

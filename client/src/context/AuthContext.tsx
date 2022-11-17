@@ -11,8 +11,7 @@ import {
 interface IAuthContext {
   user: IUser | null;
   setCurrentUser: (user: IUser) => void;
-  logout: () => void;
-  invalidate: () => void;
+  clearCurrentUser: () => void;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
@@ -29,6 +28,11 @@ export function AuthProvider(props: { children: ReactElement }) {
     localStorage.setItem("username", user.username);
   }
 
+  function clearCurrentUser() {
+    setUser(null);
+    localStorage.removeItem("username");
+  }
+
   useEffect(refresh, []);
 
   function refresh() {
@@ -38,21 +42,12 @@ export function AuthProvider(props: { children: ReactElement }) {
         // Check access token.
         .refreshLogin()
         .then((user) => setCurrentUser(user))
-        .catch(invalidate);
+        .catch(clearCurrentUser);
     }
   }
 
-  function logout() {
-    api.logout().finally(invalidate);
-  }
-
-  function invalidate() {
-    setUser(null);
-    localStorage.removeItem("username");
-  }
-
   return (
-    <AuthContext.Provider value={{ user, setCurrentUser, logout, invalidate }}>
+    <AuthContext.Provider value={{ user, setCurrentUser, clearCurrentUser }}>
       {props.children}
     </AuthContext.Provider>
   );

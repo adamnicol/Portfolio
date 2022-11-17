@@ -5,7 +5,6 @@ import { Form } from "react-bootstrap";
 import { FormEvent, useEffect, useState } from "react";
 import { IUser } from "../api/interfaces";
 import { Register } from "./Register";
-import { useAuth } from "../context/AuthContext";
 import { useLogin } from "../api/queries/user.queries";
 import { useModal } from "../context/ModalContext";
 
@@ -16,7 +15,6 @@ function Login() {
 
   const login = useLogin();
   const modal = useModal();
-  const auth = useAuth();
 
   useEffect(() => handleSuccess(login.data), [login.isSuccess]);
   useEffect(() => handleError(login.error), [login.isError]);
@@ -32,7 +30,6 @@ function Login() {
 
   function handleSuccess(user?: IUser) {
     if (user) {
-      auth.setCurrentUser(user);
       modal.close();
     }
   }

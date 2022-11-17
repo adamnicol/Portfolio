@@ -22,7 +22,7 @@ export function useMutationWithAuth<
   useEffect(() => {
     if (mutation.error instanceof AxiosError) {
       if (mutation.error.response?.status === Status.Unauthorized) {
-        auth.invalidate();
+        auth.clearCurrentUser();
         modal.show(<Login />);
       }
     }
