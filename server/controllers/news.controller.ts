@@ -13,31 +13,38 @@ import {
 
 export function get(
   req: Request<never, never, never, GetNewsSchema["query"]>,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) {
   const { limit = 100, offset = 0, tag } = req.query;
 
-  const user = req.token?.userId;
+  const userId = req.token?.userId;
   const count = tag ? service.countByTag(tag) : service.count();
   const posts = tag
-    ? service.getByTag(tag, limit, offset, user)
-    : service.getAll(limit, offset, user);
+    ? service.getByTag(tag, limit, offset, userId)
+    : service.getAll(limit, offset, userId);
 
-  Promise.all([posts, count]).then((values) => {
-    res.send({
-      posts: values[0].map((post) => flatten(post)),
-      total: values[1],
-      returned: values[0].length,
-    });
-  });
+  Promise.all([posts, count])
+    .then((values) => {
+      res.send({
+        posts: values[0].map((post) => flatten(post)),
+        total: values[1],
+        returned: values[0].length,
+      });
+    })
+    .catch((error) => next(error));
 }
 
 export function getTop(
   req: Request<never, never, never, { limit?: number }>,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) {
-  const limit = req.query.limit || 10;
-  service.getByMostLikes(limit).then((result) => res.send(result));
+  const limit = req.query.limit ?? 10;
+  service
+    .getByMostLikes(limit)
+    .then((result) => res.send(result))
+    .catch((error) => next(error));
 }
 
 export async function count(
@@ -56,14 +63,14 @@ export async function getBySlug(
   res: Response,
   next: NextFunction
 ) {
-  const user = req.token?.userId;
-  await service.find({ slug: req.params.slug }, user).then((post) => {
-    if (post) {
-      res.send(flatten(post));
-    } else {
-      next(new ApiError(Status.NotFound, "Not found"));
-    }
-  });
+  const userId = req.token?.userId;
+  const post = await service.find({ slug: req.params.slug }, userId);
+
+  if (post) {
+    res.send(flatten(post));
+  } else {
+    next(new ApiError(Status.NotFound, "Not found"));
+  }
 }
 
 function flatten(post: PopulatedPost) {
@@ -78,27 +85,33 @@ function flatten(post: PopulatedPost) {
 
 export function getTags(
   req: Request<never, never, never, { limit?: number }>,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) {
-  const limit = req.query.limit || 10;
-  service.getTags(limit).then((tags) => res.send(tags));
+  const limit = req.query.limit ?? 10;
+  service
+    .getTags(limit)
+    .then((result) => res.send(result))
+    .catch((error) => next(error));
 }
 
 export async function post(
   req: Request<never, never, PostNewsSchema["body"]>,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) {
   const author = req.token.userId;
-  const tags = req.body.tags || [];
+  const tags = req.body.tags ?? [];
   const post = {
     title: req.body.title,
     content: req.body.content,
     slug: await service.generateSlug(req.body.title),
   };
 
-  service.create(post, author, tags).then((result) => {
-    res.send(result);
-  });
+  service
+    .create(post, author, tags)
+    .then((result) => res.send(result))
+    .catch((error) => next(error));
 }
 
 export function getComments(
@@ -108,7 +121,8 @@ export function getComments(
     never,
     GetCommentsSchema["query"]
   >,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) {
   const { limit = 100, offset = 0 } = req.query;
 
@@ -116,29 +130,33 @@ export function getComments(
   const comments = service.getComments(post_id, limit, offset);
   const total = service.getCommentCount({ post_id });
 
-  Promise.all([comments, total]).then((values) => {
-    res.send({
-      comments: values[0],
-      total: values[1],
-      returned: values[0].length,
-    });
-  });
+  Promise.all([comments, total])
+    .then((values) => {
+      res.send({
+        comments: values[0],
+        total: values[1],
+        returned: values[0].length,
+      });
+    })
+    .catch((error) => next(error));
 }
 
-export async function postComment(
+export function postComment(
   req: Request<PostCommentSchema["params"], never, PostCommentSchema["body"]>,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) {
-  const user = req.token.userId;
-  const post = Number(req.params.id);
+  const userId = req.token.userId;
+  const postId = Number(req.params.id);
   const comment = req.body.comment;
 
-  await service
-    .createComment(comment, post, user)
-    .then((result) => res.send(result));
+  service
+    .createComment(comment, postId, userId)
+    .then((result) => res.send(result))
+    .catch((error) => next(error));
 }
 
-export async function likePost(
+export function likePost(
   req: Request<{ id: string }>,
   res: Response,
   next: NextFunction
@@ -146,12 +164,14 @@ export async function likePost(
   const userId = req.token.userId;
   const postId = Number(req.params.id);
 
-  await service
+  service
     .likePost(userId, postId)
     .then((result) => res.send(result))
-    .catch((e) => {
-      if (e.code === ErrorType.UniqueViolation) {
+    .catch((error) => {
+      if (error.code === ErrorType.UniqueViolation) {
         next(new ApiError(Status.Conflict, "Already liked"));
+      } else {
+        next(error);
       }
     });
 }

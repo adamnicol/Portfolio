@@ -1,8 +1,9 @@
-import * as controller from "../controllers/news.controller";
-import express from "express";
-import requireUser from "../middleware/requireUser";
-import validateSchema from "../middleware/validateSchema";
-import { Role } from "@prisma/client";
+import * as controller from '../controllers/news.controller';
+import asyncHandler from 'express-async-handler';
+import express from 'express';
+import requireUser from '../middleware/requireUser';
+import validateSchema from '../middleware/validateSchema';
+import { Role } from '@prisma/client';
 import {
   postNews,
   postComment,
@@ -38,7 +39,7 @@ const router = express.Router();
  *      200:
  *        description: Success
  */
-router.get("/", validateSchema(getNews), controller.get);
+router.get("/", validateSchema(getNews), asyncHandler(controller.get));
 
 /**
  * @swagger
@@ -56,7 +57,7 @@ router.get("/", validateSchema(getNews), controller.get);
  *      200:
  *        description: Success
  */
-router.get("/top", controller.getTop);
+router.get("/top", asyncHandler(controller.getTop));
 
 /**
  * @swagger
@@ -74,7 +75,7 @@ router.get("/top", controller.getTop);
  *      200:
  *        description: Success
  */
-router.get("/count", controller.count);
+router.get("/count", asyncHandler(controller.count));
 
 /**
  * @swagger
@@ -92,7 +93,7 @@ router.get("/count", controller.count);
  *      200:
  *        description: Success
  */
-router.get("/tags", controller.getTags);
+router.get("/tags", asyncHandler(controller.getTags));
 
 /**
  * @swagger
@@ -112,7 +113,7 @@ router.get("/tags", controller.getTags);
  *      404:
  *        description: Not found
  */
-router.get("/:slug", controller.getBySlug);
+router.get("/:slug", asyncHandler(controller.getBySlug));
 
 /**
  * @swagger
@@ -142,7 +143,7 @@ router.get("/:slug", controller.getBySlug);
  *      404:
  *        description: Not found
  */
-router.get("/:id/comments", validateSchema(getComments), controller.getComments);
+router.get("/:id/comments", validateSchema(getComments), asyncHandler(controller.getComments));
 
 /**
  * @swagger
@@ -166,7 +167,7 @@ router.get("/:id/comments", validateSchema(getComments), controller.getComments)
  *      403:
  *        description: Forbidden
  */
-router.post("/", requireUser(Role.Admin), validateSchema(postNews), controller.post);
+router.post("/", requireUser(Role.Admin), validateSchema(postNews), asyncHandler(controller.post));
 
 /**
  * @swagger
@@ -195,7 +196,7 @@ router.post("/", requireUser(Role.Admin), validateSchema(postNews), controller.p
  *      404:
  *        description: Not found
  */
-router.post("/:id/comments", requireUser(Role.User), validateSchema(postComment), controller.postComment);
+router.post("/:id/comments", requireUser(Role.User), validateSchema(postComment), asyncHandler(controller.postComment));
 
 /**
  * @swagger
@@ -221,6 +222,6 @@ router.post("/:id/comments", requireUser(Role.User), validateSchema(postComment)
  *      409:
  *        description: Already liked
  */
-router.post("/:id/like", requireUser(Role.User), controller.likePost);
+router.post("/:id/like", requireUser(Role.User), asyncHandler(controller.likePost));
 
 module.exports = router;

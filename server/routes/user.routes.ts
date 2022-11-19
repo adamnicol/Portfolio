@@ -1,10 +1,11 @@
-import * as controller from "../controllers/user.controller";
-import config from "./../utils/config";
-import express from "express";
-import rateLimit from "express-rate-limit";
-import requireUser from "../middleware/requireUser";
-import validate from "../middleware/validateSchema";
-import { createUserSchema, loginSchema } from "../schemas/user.schema";
+import * as controller from '../controllers/user.controller';
+import asyncHandler from 'express-async-handler';
+import config from './../utils/config';
+import express from 'express';
+import rateLimit from 'express-rate-limit';
+import requireUser from '../middleware/requireUser';
+import validate from '../middleware/validateSchema';
+import { createUserSchema, loginSchema } from '../schemas/user.schema';
 
 const router = express.Router();
 
@@ -48,7 +49,7 @@ router.post("/register", rateLimit(config.registrationLimit), validate(createUse
  *      403:
  *        description: Activation required
  */
-router.post("/login", rateLimit(config.loginLimit), validate(loginSchema), controller.login);
+router.post("/login", rateLimit(config.loginLimit), validate(loginSchema), asyncHandler(controller.login));
 
 /**
  * @swagger
@@ -62,7 +63,7 @@ router.post("/login", rateLimit(config.loginLimit), validate(loginSchema), contr
  *      200:
  *        description: Success
  */
-router.post("/logout", requireUser(), controller.logout);
+router.post("/logout", requireUser(), asyncHandler(controller.logout));
 
 /**
  * @swagger
@@ -76,7 +77,7 @@ router.post("/logout", requireUser(), controller.logout);
  *      200:
  *        description: Success
  */
-router.get("/refresh", requireUser(), controller.refresh);
+router.get("/refresh", requireUser(), asyncHandler(controller.refresh));
 
 /**
  * @swagger
@@ -100,6 +101,7 @@ router.get("/refresh", requireUser(), controller.refresh);
  *      404:
  *        description: Not found
  */
-router.get("/activate/:token", controller.activateAccount);
+router.get("/activate/:token", asyncHandler(controller.activateAccount));
+
 
 module.exports = router;

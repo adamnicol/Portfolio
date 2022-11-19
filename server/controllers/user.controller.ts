@@ -11,8 +11,7 @@ import { verifyToken } from "../utils/auth";
 
 export async function register(
   req: Request<never, never, UserSchema["body"]>,
-  res: Response,
-  next: NextFunction
+  res: Response
 ) {
   const data = {
     email: req.body.email,
@@ -22,42 +21,41 @@ export async function register(
 
   //Does the account already exist?
   if (await service.findByEmail(data.email)) {
-    return next(new ApiError(Status.Conflict, "User already exists"));
+    throw new ApiError(Status.Conflict, "User already exists");
   }
 
   // Create a new user account
-  service.create(data).then((user) => {
-    sendActivationEmail(user).then(() => {
-      res.status(Status.OK).send({
+  const user = await service.create(data);
+  if (user) {
+    await sendActivationEmail(user);
+    res.send({
         ...user,
         password: undefined,
       });
-    });
-  });
+  }
 }
 
 export async function login(
   req: Request<never, never, UserLoginSchema["body"]>,
-  res: Response,
-  next: NextFunction
+  res: Response
 ) {
   const { email, password } = req.body;
 
   // Find the user's account
   const user = await service.findByEmail(email);
   if (!user) {
-    return next(new ApiError(Status.Unauthorized, "Login failed"));
+    throw new ApiError(Status.Unauthorized, "Login failed");
   }
 
   // Check the passwords match.
   const match = await service.checkPassword(user, password);
   if (!match) {
-    return next(new ApiError(Status.Unauthorized, "Login failed"));
+    throw new ApiError(Status.Unauthorized, "Login failed");
   }
 
   // Check if the account has been activated.
   if (!user.active) {
-    return next(new ApiError(Status.Forbidden, "Account not activated"));
+    throw new ApiError(Status.Forbidden, "Account not activated");
   }
 
   const accessToken = service.createAccessToken(user);
@@ -73,20 +71,20 @@ export async function login(
   });
 }
 
-export async function logout(req: Request, res: Response) {
+export function logout(req: Request, res: Response) {
   // Revoke access tokens.
   res.clearCookie("accessToken", config.auth.cookies);
   res.clearCookie("refreshToken", config.auth.cookies);
 
-  res.status(Status.OK).send("Logout successful");
+  res.send("Logout successful");
 }
 
-export async function refresh(req: Request, res: Response, next: NextFunction) {
+export async function refresh(req: Request, res: Response) {
   const user = await service.findById(req.token.userId);
   if (user) {
     res.send({ ...user, password: undefined });
   } else {
-    next(new ApiError(Status.NotFound, "Not found"));
+    throw new ApiError(Status.NotFound, "Not found");
   }
 }
 

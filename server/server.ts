@@ -26,8 +26,8 @@ app.use(responseTime());
 app.use(requestLogger);
 app.use(asyncHandler(checkAccessToken));
 
-app.use("/users", asyncHandler(require("./routes/user.routes")));
-app.use("/news", asyncHandler(require("./routes/news.routes")));
+app.use("/users", require("./routes/user.routes"));
+app.use("/news", require("./routes/news.routes"));
 app.use("/contact", asyncHandler(contact));
 
 app.get("/healthcheck", (req: Request, res: Response) =>
