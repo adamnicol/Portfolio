@@ -21,7 +21,7 @@ export interface IUserProfile {
   username: string;
   active: boolean;
   createdAt: Date;
-  lastLogin: Date;
+  lastLogin?: Date;
   role: string;
   posts: number;
   comments: number;

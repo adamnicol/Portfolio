@@ -15,7 +15,10 @@ export function UserProfile(props: { user: string }) {
         <li>Active: {String(user.data?.active)}</li>
         <li>Role: {user.data?.role}</li>
         <li>Registered: {user.data && formatDate(user.data.createdAt)}</li>
-        <li>Last login: {user.data && formatRelative(user.data.lastLogin)}</li>
+        <li>
+          <span className="me-1">Last login:</span>
+          {user.data?.lastLogin ? formatRelative(user.data.lastLogin) : "never"}
+        </li>
         <li>Posts: {user.data?.posts}</li>
         <li>Posts liked: {user.data?.likes}</li>
         <li>Comments: {user.data?.comments}</li>
