@@ -224,4 +224,30 @@ router.post("/:id/comments", requireUser(Role.User), validateSchema(postComment)
  */
 router.post("/:id/like", requireUser(Role.User), asyncHandler(controller.likePost));
 
+/**
+ * @swagger
+ * /news/{id}/unlike:
+ *  post:
+ *    tags: ["News"]
+ *    summary: Decrements the like counter for a news post
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        type: number
+ *        required: true
+ *        description: The post id
+ *    security:
+ *      - cookieAuth: []
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Authentication required
+ *      404:
+ *        description: Not found
+ *      409:
+ *        description: Already liked
+ */
+router.post("/:id/unlike", requireUser(Role.User), asyncHandler(controller.unlikePost));
+
 module.exports = router;

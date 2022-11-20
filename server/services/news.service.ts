@@ -147,10 +147,25 @@ export async function createComment(
 }
 
 export async function likePost(userId: number, postId: number) {
-  return await db.postLikes.create({
+  await db.postLikes.create({
     data: {
       user_id: userId,
       post_id: postId,
     },
   });
+
+  return find({ id: postId }, userId);
+}
+
+export async function unlikePost(userId: number, postId: number) {
+  await db.postLikes.delete({
+    where: {
+      post_id_user_id: {
+        post_id: postId,
+        user_id: userId,
+      },
+    },
+  });
+
+  return find({ id: postId }, userId);
 }

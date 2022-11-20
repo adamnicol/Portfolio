@@ -102,15 +102,14 @@ export function usePostComment(filters: ICommentFilters, post?: INewsPost) {
 export function useLikePost(post: INewsPost) {
   const queryClient = useQueryClient();
 
-  return useMutationWithAuth((like: boolean) => api.likePost(post, like), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("news");
-      queryClient.invalidateQueries("top-posts");
-      queryClient.setQueryData(["post", post.slug], {
-        ...post,
-        liked: true,
-        likes: post.likes + 1,
-      });
-    },
-  });
+  return useMutationWithAuth(
+    (like: boolean) => (like ? api.likePost(post) : api.unlikePost(post)),
+    {
+      onSuccess: (post: INewsPost) => {
+        queryClient.invalidateQueries("news");
+        queryClient.invalidateQueries("top-posts");
+        queryClient.setQueryData(["post", post.slug], post);
+      },
+    }
+  );
 }

@@ -1,5 +1,4 @@
 import * as service from "../services/news.service";
-import ErrorType from "../prisma/error.codes";
 import Status from "../utils/statusCodes";
 import { ApiError } from "../middleware/errorHandler";
 import { NextFunction, Request, Response } from "express";
@@ -141,37 +140,38 @@ export function getComments(
     .catch((error) => next(error));
 }
 
-export function postComment(
+export async function postComment(
   req: Request<PostCommentSchema["params"], never, PostCommentSchema["body"]>,
-  res: Response,
-  next: NextFunction
+  res: Response
 ) {
   const userId = req.token.userId;
   const postId = Number(req.params.id);
-  const comment = req.body.comment;
+  const content = req.body.comment;
 
-  service
-    .createComment(comment, postId, userId)
-    .then((result) => res.send(result))
-    .catch((error) => next(error));
+  const comment = await service.createComment(content, postId, userId);
+  res.send(comment);
 }
 
-export function likePost(
-  req: Request<{ id: string }>,
-  res: Response,
-  next: NextFunction
-) {
+export async function likePost(req: Request<{ id: string }>, res: Response) {
   const userId = req.token.userId;
   const postId = Number(req.params.id);
 
-  service
-    .likePost(userId, postId)
-    .then((result) => res.send(result))
-    .catch((error) => {
-      if (error.code === ErrorType.UniqueViolation) {
-        next(new ApiError(Status.Conflict, "Already liked"));
-      } else {
-        next(error);
-      }
-    });
+  const post = await service.likePost(userId, postId);
+  if (post) {
+    res.send(flatten(post));
+  } else {
+    throw new ApiError(Status.NotFound, "Not found");
+  }
+}
+
+export async function unlikePost(req: Request<{ id: string }>, res: Response) {
+  const userId = req.token.userId;
+  const postId = Number(req.params.id);
+
+  const post = await service.unlikePost(userId, postId);
+  if (post) {
+    res.send(flatten(post));
+  } else {
+    throw new ApiError(Status.NotFound, "Not found");
+  }
 }
