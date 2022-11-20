@@ -13,7 +13,7 @@ export default [
   },
   {
     name: "LinkedIn",
-    url: "https://www.linkedin.com",
+    url: "https://www.linkedin.com/in/adam-nicol-460a23257",
     icon: faLinkedin,
   },
   {
