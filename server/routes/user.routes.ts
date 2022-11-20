@@ -27,7 +27,7 @@ const router = express.Router();
  *      409:
  *        description: User already exists
  */
-router.post("/register", rateLimit(config.registrationLimit), validate(createUserSchema), controller.register);
+router.post("/register", rateLimit(config.registrationLimit), validate(createUserSchema), asyncHandler(controller.register));
 
 /**
  * @swagger
@@ -103,5 +103,24 @@ router.get("/refresh", requireUser(), asyncHandler(controller.refresh));
  */
 router.get("/activate/:token", asyncHandler(controller.activateAccount));
 
+/**
+ * @swagger
+ * /users/{username}:
+ *  get:
+ *    tags: ["Users"]
+ *    summary: Returns the user profile
+ *    parameters:
+ *      - in: path
+ *        name: username
+ *        type: string
+ *        required: true
+ *        description: Username
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Not found
+ */
+router.get("/:username", asyncHandler(controller.getProfile));
 
 module.exports = router;

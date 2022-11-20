@@ -26,12 +26,13 @@ export async function register(
 
   // Create a new user account
   const user = await service.create(data);
+
   if (user) {
     await sendActivationEmail(user);
     res.send({
-        ...user,
-        password: undefined,
-      });
+      ...user,
+      password: undefined,
+    });
   }
 }
 
@@ -58,6 +59,9 @@ export async function login(
     throw new ApiError(Status.Forbidden, "Account not activated");
   }
 
+  // Record the last login date.
+  await service.setLoggedIn(user);
+
   const accessToken = service.createAccessToken(user);
   const refreshToken = service.createRefreshToken(user);
 
@@ -65,7 +69,7 @@ export async function login(
   res.cookie("accessToken", accessToken, config.auth.cookies);
   res.cookie("refreshToken", refreshToken, config.auth.cookies);
 
-  res.status(Status.OK).send({
+  res.send({
     ...user,
     password: undefined,
   });
@@ -103,12 +107,14 @@ export async function activateAccount(
   res: Response,
   next: NextFunction
 ) {
+  // Check the activation token is valid.
   const token = verifyToken<ActivationToken>(req.params.token);
   if (!token.payLoad) {
     res.send("Invalid activation link");
     return next();
   }
 
+  // Find the user's account.
   const user = await service.findByEmail(token.payLoad.email);
 
   if (!user) {
@@ -124,4 +130,22 @@ export async function activateAccount(
   }
 
   return next();
+}
+
+export async function getProfile(
+  req: Request<{ username: string }>,
+  res: Response
+) {
+  const username = req.params.username;
+  const profile = await service.getUserProfile(username);
+
+  if (!profile) {
+    throw new ApiError(Status.NotFound, "Not found");
+  }
+
+  res.send({
+    ...profile,
+    ...profile._count,
+    _count: undefined,
+  });
 }

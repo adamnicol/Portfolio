@@ -23,6 +23,17 @@ export async function create(user: Prisma.UserCreateInput): Promise<User> {
   return db.user.create({ data: user });
 }
 
+export async function activateAccount(user: User) {
+  return db.user.update({ where: { id: user.id }, data: { active: true } });
+}
+
+export async function setLoggedIn(user: User) {
+  return db.user.update({
+    where: { id: user.id },
+    data: { lastLogin: new Date() },
+  });
+}
+
 export async function hashPassword(password: string) {
   const salt = await bcrypt.genSalt(config.auth.saltRounds);
   return bcrypt.hash(password, salt);
@@ -30,10 +41,6 @@ export async function hashPassword(password: string) {
 
 export function checkPassword(user: User, password: string): Promise<boolean> {
   return bcrypt.compare(password, user.password);
-}
-
-export async function activateAccount(user: User) {
-  return db.user.update({ where: { id: user.id }, data: { active: true } });
 }
 
 export function createAccessToken(user: User) {
@@ -49,4 +56,18 @@ export function createRefreshToken(user: User) {
 export function createActivationToken(user: User) {
   const token: ActivationToken = { email: user.email };
   return signToken(token, config.auth.activationTokenTTL);
+}
+
+export async function getUserProfile(username: string) {
+  return db.user.findFirst({
+    where: { username },
+    select: {
+      username: true,
+      role: true,
+      active: true,
+      createdAt: true,
+      lastLogin: true,
+      _count: { select: { posts: true, comments: true, likes: true } },
+    },
+  });
 }

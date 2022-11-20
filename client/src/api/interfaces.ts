@@ -17,6 +17,17 @@ export interface IRegistration {
   passwordRetype: string;
 }
 
+export interface IUserProfile {
+  username: string;
+  active: boolean;
+  createdAt: Date;
+  lastLogin: Date;
+  role: string;
+  posts: number;
+  comments: number;
+  likes: number;
+}
+
 export interface INewsPost {
   id: string;
   title: string;

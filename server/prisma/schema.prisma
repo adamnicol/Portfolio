@@ -23,6 +23,7 @@ model User {
   active    Boolean     @default(false)
   createdAt DateTime    @default(now()) @map(name: "created_at")
   updatedAt DateTime    @updatedAt @map(name: "updated_at")
+  lastLogin DateTime?   @map(name: "last_login")
   posts     Post[]      @relation(name: "UserPosts")
   likes     PostLikes[]
   comments  Comment[]

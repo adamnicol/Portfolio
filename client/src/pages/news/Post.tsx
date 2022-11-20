@@ -2,7 +2,7 @@ import Login from "../Login";
 import { faHeart, faMessage } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { formatDate } from "../../utils/dateFormatter";
+import { formatRelative } from "../../utils/dateFormatter";
 import { INewsPost } from "../../api/interfaces";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -15,8 +15,7 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
   const url = `/news/${post.slug}`;
   const content =
     limit && post.content.length > limit
-      ? post.content.substring(0, Math.min(post.content.length, limit)).trim() +
-        "..."
+      ? post.content.substring(0, Math.min(post.content.length, limit)).trim()
       : post.content;
 
   const auth = useAuth();
@@ -39,9 +38,12 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
       <p>
         {content}
         {limit && post.content.length > limit && (
-          <Link to={url} className="ms-2">
-            Read more
-          </Link>
+          <span>
+            ...
+            <Link to={url} className="ms-2">
+              Read more
+            </Link>
+          </span>
         )}
       </p>
       <hr className="mb-2" />
@@ -66,7 +68,7 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
         {post.likes}
 
         <span className="ms-auto text-secondary text-small">
-          Posted {formatDate(post.createdAt)}
+          Posted {formatRelative(post.createdAt)}
         </span>
       </div>
     </article>
