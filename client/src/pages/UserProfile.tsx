@@ -1,28 +1,39 @@
+import avatar from "../assets/avatar_large.jpg";
 import { formatDate, formatRelative } from "../utils/dateFormatter";
 import { useGetUserProfile } from "../api/queries/user.queries";
 
 export function UserProfile(props: { user: string }) {
-  const user = useGetUserProfile(props.user);
+  const user = useGetUserProfile(props.user)?.data;
 
   return (
-    <div>
-      <div className="hstack gap-3">
-        <img src={require(`../assets/avatar.jpg`)} alt="avatar" />
-        <h1 className="my-auto">{props.user}</h1>
+    <div className="row me-4">
+      <div className="col col-auto divider">
+        <img
+          src={avatar}
+          alt="avatar"
+          width={85}
+          height={100}
+          className="img-thumbnail"
+        />
+        <div className="text-center text-primary mt-1">
+          {user?.role ?? "User"}
+        </div>
       </div>
 
-      <ul className="mt-3">
-        <li>Active: {String(user.data?.active)}</li>
-        <li>Role: {user.data?.role}</li>
-        <li>Registered: {user.data && formatDate(user.data.createdAt)}</li>
-        <li>
-          <span className="me-1">Last login:</span>
-          {user.data?.lastLogin ? formatRelative(user.data.lastLogin) : "never"}
-        </li>
-        <li>Posts: {user.data?.posts}</li>
-        <li>Posts liked: {user.data?.likes}</li>
-        <li>Comments: {user.data?.comments}</li>
-      </ul>
+      <div className="col ms-1">
+        <h1>{props.user}</h1>
+        <ul className="list-unstyled">
+          <li>Active: {String(user?.active)}</li>
+          <li>Registered: {user && formatDate(user.createdAt)}</li>
+          <li>
+            <span className="me-1">Last login:</span>
+            {user?.lastLogin ? formatRelative(user.lastLogin) : "never"}
+          </li>
+          <li>Posts: {user?.posts}</li>
+          <li>Posts liked: {user?.likes}</li>
+          <li>Comments: {user?.comments}</li>
+        </ul>
+      </div>
     </div>
   );
 }
