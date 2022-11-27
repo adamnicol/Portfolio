@@ -2,11 +2,16 @@ $theme-primary: rgb(0, 25, 25);
 $theme-secondary: rgb(0, 50, 50);
 $theme-accent: teal;
 $theme-background: white;
-$theme-primary-text: lightgrey;
-$theme-secondary-text: lightgrey;
+$theme-background2: rgb(245, 245, 245);
+$theme-text: black;
 
-$nav-full: 180px;
+$theme-dark-background: rgb(12, 12, 12);
+$theme-dark-background2: rgb(25, 25, 25);
+$theme-dark-text: lightgrey;
+
 $nav-compact: 40px;
+$nav-full: $nav-compact + 180px;
+$nav-text: lightgrey;
 
 $font-xs: 0.7rem;
 $font-small: 0.85rem;
@@ -25,3 +30,5 @@ $headings-font-weight: 700;
 
 $primary: $theme-accent;
 $secondary: grey;
+
+$enable-smooth-scroll: false;

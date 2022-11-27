@@ -14,7 +14,6 @@ function NewsFilters() {
         <Link to="/news" className="tag">
           all
         </Link>
-
         {tags.data?.map((tag, index) => (
           <Link
             key={index}
@@ -26,7 +25,7 @@ function NewsFilters() {
         ))}
       </section>
 
-      <section className="mt-5">
+      <section className="mt-4">
         <h2>Top Posts</h2>
         <ul className="list-unstyled">
           {posts.data?.map((post, index) => (
