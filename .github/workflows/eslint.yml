@@ -22,10 +22,14 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install @microsoft/eslint-formatter-sarif@2.1.7
+          npm install @microsoft/eslint-formatter-sarif
 
       - name: Run ESLint
-        run: npm run lint
+        run: npx eslint .
+          --config .eslintrc.json
+          --ext .js,.jsx,.ts,.tsx
+          --format @microsoft/eslint-formatter-sarif
+          --output-file eslint-results.sarif
         continue-on-error: true
 
       - name: Upload results
@@ -53,10 +57,14 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install @microsoft/eslint-formatter-sarif@2.1.7
+          npm install @microsoft/eslint-formatter-sarif
 
       - name: Run ESLint
-        run: npm run lint
+        run: npx eslint .
+          --config .eslintrc.json
+          --ext .js,.jsx,.ts,.tsx
+          --format @microsoft/eslint-formatter-sarif
+          --output-file eslint-results.sarif
         continue-on-error: true
 
       - name: Upload results
