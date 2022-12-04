@@ -35,7 +35,7 @@ app.get("/healthcheck", (req: Request, res: Response) =>
 );
 
 if (config.server.useSwagger) {
-  const docs = jsdoc(require("./swagger.json"));
+  const docs = jsdoc(require("./../swagger.json"));
   app.use("/", swagger.serve, swagger.setup(docs));
 }
 
