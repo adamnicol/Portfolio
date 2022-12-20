@@ -1,4 +1,4 @@
-import { createContext, ReactElement, useContext, useState } from "react";
+import { createContext, ReactElement, useState } from "react";
 import { ModalDialog } from "../components/modal/ModalDialog";
 
 interface IModalContext {
@@ -6,11 +6,7 @@ interface IModalContext {
   close: () => void;
 }
 
-const ModalContext = createContext<IModalContext>({} as IModalContext);
-
-export function useModal() {
-  return useContext(ModalContext);
-}
+export const ModalContext = createContext<IModalContext>({} as IModalContext);
 
 export function ModalProvider(props: {
   children: ReactElement | ReactElement[];

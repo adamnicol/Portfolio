@@ -7,7 +7,7 @@ import { LoginSchema } from "../schemas";
 import { Register } from "./Register";
 import { useForm } from "react-hook-form";
 import { useLogin } from "../api/queries/user.queries";
-import { useModal } from "../context/ModalContext";
+import { useModal } from "../hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 function Login() {

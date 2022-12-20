@@ -6,7 +6,7 @@ import { Form } from "react-bootstrap";
 import { IRegistration } from "../api/interfaces";
 import { RegisterSchema } from "../schemas";
 import { useForm } from "react-hook-form";
-import { useModal } from "../context/ModalContext";
+import { useModal } from "../hooks";
 import { useRegister } from "../api/queries/user.queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 

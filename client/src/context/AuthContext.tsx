@@ -1,12 +1,6 @@
 import * as api from "../api/routes/user.routes";
 import { IUser } from "../api/interfaces";
-import {
-  createContext,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactElement, useEffect, useState } from "react";
 
 interface IAuthContext {
   user: IUser | null;
@@ -14,11 +8,7 @@ interface IAuthContext {
   clearCurrentUser: () => void;
 }
 
-const AuthContext = createContext<IAuthContext>({} as IAuthContext);
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export function AuthProvider(props: { children: ReactElement }) {
   const [user, setUser] = useState<IUser | null>(null);

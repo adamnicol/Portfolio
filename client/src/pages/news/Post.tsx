@@ -5,9 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatRelative } from "../../utils/dateFormatter";
 import { INewsPost } from "../../api/interfaces";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth, useModal } from "../../hooks";
 import { useLikePost } from "../../api/queries/news.queries";
-import { useModal } from "../../context/ModalContext";
 
 function NewsPost(props: { content: INewsPost; limit?: number }) {
   const { content: post, limit } = props;

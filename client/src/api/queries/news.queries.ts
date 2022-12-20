@@ -1,5 +1,5 @@
 import * as api from "../routes/news.routes";
-import { useMutationWithAuth } from "../../hooks/useMutationWithAuth";
+import { useMutationWithAuth } from "../../hooks";
 import { useQuery, useQueryClient } from "react-query";
 import {
   ICommentFilters,

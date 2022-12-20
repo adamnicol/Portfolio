@@ -1,6 +1,6 @@
 import { formatRelative } from "../../utils/dateFormatter";
 import { IComment } from "../../api/interfaces";
-import { useModal } from "../../context/ModalContext";
+import { useModal } from "../../hooks";
 import { UserProfile } from "../UserProfile";
 
 function Comment(props: { content: IComment }) {

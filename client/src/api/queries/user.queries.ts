@@ -1,6 +1,6 @@
 import * as api from "../routes/user.routes";
 import { ICredentials, IRegistration, IUser } from "../interfaces";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 export function useRegister(successCallback?: (user: IUser) => void) {

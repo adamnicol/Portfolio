@@ -1,7 +1,6 @@
 import Login from "../Login";
 import { INewsFilters, INewsPost } from "../../api/interfaces";
-import { useAuth } from "../../context/AuthContext";
-import { useModal } from "../../context/ModalContext";
+import { useAuth, useModal } from "../../hooks";
 import { usePostComment } from "../../api/queries/news.queries";
 import { useState } from "react";
 

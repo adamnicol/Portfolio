@@ -2,9 +2,8 @@ import Login from "../pages/Login";
 import Status from "../utils/statusCodes";
 import { AxiosError } from "axios";
 import { MutationFunction, useMutation, UseMutationOptions } from "react-query";
-import { useAuth } from "../context/AuthContext";
+import { useAuth, useModal } from "../hooks";
 import { useEffect } from "react";
-import { useModal } from "../context/ModalContext";
 
 export function useMutationWithAuth<
   TData = unknown,

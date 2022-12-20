@@ -4,9 +4,8 @@ import socials from "../../pages/content/socials";
 import { faBars, faClose, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth, useModal } from "../../hooks";
 import { useLogout } from "../../api/queries/user.queries";
-import { useModal } from "../../context/ModalContext";
 import { useState } from "react";
 
 import "./HamburgerMenu.css";
