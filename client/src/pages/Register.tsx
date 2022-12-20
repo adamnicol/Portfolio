@@ -3,121 +3,123 @@ import SpinButton from "../components/button/SpinButton";
 import Status from "../utils/statusCodes";
 import { AxiosError } from "axios";
 import { Form } from "react-bootstrap";
-import { FormEvent, useEffect, useState } from "react";
-import { IRegistration, IUser } from "../api/interfaces";
+import { IRegistration } from "../api/interfaces";
+import { RegisterSchema } from "../schemas";
+import { useForm } from "react-hook-form";
 import { useModal } from "../context/ModalContext";
 import { useRegister } from "../api/queries/user.queries";
-
-const Defaults: IRegistration = {
-  email: "",
-  username: "",
-  password: "",
-  passwordRetype: "",
-};
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function Register() {
-  const [state, setState] = useState<IRegistration>(Defaults);
-  const [error, setError] = useState<string | null>(null);
-
-  const register = useRegister();
   const modal = useModal();
+  const signUp = useRegister(() => modal.close());
 
-  useEffect(() => handleSuccess(register.data), [register.isSuccess]);
-  useEffect(() => handleError(register.error), [register.isError]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IRegistration>({
+    resolver: zodResolver(RegisterSchema),
+    reValidateMode: "onChange",
+  });
 
-  function handleFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
+  const onSubmit = handleSubmit((data) => {
+    signUp.mutate(data);
+  });
 
-  function handleRegister(e: FormEvent) {
-    e.preventDefault();
-    setError(null);
-    register.mutate(state);
-  }
+  function getErrorMessage(error: unknown): string {
+    let message = null;
 
-  function handleSuccess(user?: IUser) {
-    if (user) {
-      modal.close();
-    }
-  }
-
-  function handleError(error: unknown) {
     if (error instanceof AxiosError) {
       const status = error.response?.status;
 
       if (status === Status.Conflict) {
-        setError("Email address already exists");
+        message = "Email address already exists";
       } else if (status === Status.TooManyRequests) {
-        setError("You are creating too many accounts");
+        message = "You are creating too many accounts";
       } else if (status) {
-        setError("Server returned error " + status);
+        message = `Server returned error ${status}`;
       } else {
-        setError("Server is not responding");
+        message = "Server is not responding";
       }
     }
+
+    return message ?? "An unknown error occurred";
   }
 
   return (
     <div className="login-form">
       <h2>Register</h2>
 
-      <Form onSubmit={handleRegister}>
+      <Form className="mt-2" onSubmit={onSubmit}>
         <Form.Group className="mb-3">
           <Form.Control
-            name="email"
-            type="email"
-            required
-            placeholder="Email address"
-            value={state.email}
-            onChange={handleFieldChange}
-            disabled={register.isLoading}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Control
-            name="username"
             type="text"
-            required
+            placeholder="Email address"
+            disabled={signUp.isLoading}
+            {...register("email")}
+          />
+          {errors.email && (
+            <Form.Text className="text-danger">
+              {errors.email.message}
+            </Form.Text>
+          )}
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Control
+            type="text"
             placeholder="Username"
-            value={state.username}
-            onChange={handleFieldChange}
-            disabled={register.isLoading}
+            disabled={signUp.isLoading}
+            {...register("username")}
           />
+          {errors.username && (
+            <Form.Text className="text-danger">
+              {errors.username.message}
+            </Form.Text>
+          )}
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Control
-            name="password"
             type="password"
-            required
             placeholder="Password"
-            value={state.password}
-            onChange={handleFieldChange}
-            disabled={register.isLoading}
+            disabled={signUp.isLoading}
+            {...register("password")}
           />
+          {errors.password && (
+            <Form.Text className="text-danger">
+              {errors.password.message}
+            </Form.Text>
+          )}
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Control
-            name="passwordRetype"
             type="password"
-            required
             placeholder="Retype password"
-            value={state.passwordRetype}
-            onChange={handleFieldChange}
-            disabled={register.isLoading}
+            disabled={signUp.isLoading}
+            {...register("passwordRetype")}
           />
+          {errors.passwordRetype && (
+            <Form.Text className="text-danger">
+              {errors.passwordRetype.message}
+            </Form.Text>
+          )}
         </Form.Group>
 
         <SpinButton
           text="Register"
           className="w-100"
-          loading={register.isLoading}
+          loading={signUp.isLoading}
         />
       </Form>
 
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {signUp.isError && (
+        <div className="alert alert-danger mt-3">
+          {getErrorMessage(signUp.error)}
+        </div>
+      )}
 
       <p className="mt-4">
         <span className="me-2">Already have an account?</span>

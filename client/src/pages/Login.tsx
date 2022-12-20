@@ -2,91 +2,94 @@ import SpinButton from "../components/button/SpinButton";
 import Status from "../utils/statusCodes";
 import { AxiosError } from "axios";
 import { Form } from "react-bootstrap";
-import { FormEvent, useEffect, useState } from "react";
-import { IUser } from "../api/interfaces";
+import { ICredentials } from "../api/interfaces";
+import { LoginSchema } from "../schemas";
 import { Register } from "./Register";
+import { useForm } from "react-hook-form";
 import { useLogin } from "../api/queries/user.queries";
 import { useModal } from "../context/ModalContext";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function Login() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
-
-  const login = useLogin();
   const modal = useModal();
+  const login = useLogin(() => modal.close());
 
-  useEffect(() => handleSuccess(login.data), [login.isSuccess]);
-  useEffect(() => handleError(login.error), [login.isError]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ICredentials>({
+    resolver: zodResolver(LoginSchema),
+    reValidateMode: "onChange",
+  });
 
-  function handleLogin(e: FormEvent) {
-    e.preventDefault();
-    setError(null);
+  const onSubmit = handleSubmit((credentials) => {
+    login.mutate(credentials);
+  });
 
-    if (email && password) {
-      login.mutate({ email, password });
-    }
-  }
+  function getErrorMessage(error: unknown): string {
+    let message = null;
 
-  function handleSuccess(user?: IUser) {
-    if (user) {
-      modal.close();
-    }
-  }
-
-  function handleError(error: unknown) {
     if (error instanceof AxiosError) {
       const status = error.response?.status;
 
       if (status === Status.Unauthorized) {
-        setError("Invalid username or password");
+        message = "Invalid username or password";
       } else if (status === Status.Forbidden) {
-        setError("Please verify your email address");
+        message = "Please verify your email address";
       } else if (status === Status.TooManyRequests) {
-        setError("Too many login attempts, please wait a while");
+        message = "Too many login attempts, please wait a while";
       } else if (status) {
-        setError("Server returned error " + status);
+        message = `Server returned error ${status}`;
       } else {
-        setError("Server is not responding");
+        message = "Server is not responding";
       }
     }
+
+    return message ?? "An unknown error occurred";
   }
 
   return (
     <div className="login-form">
       <h2>Login</h2>
 
-      <Form onSubmit={handleLogin}>
-        <Form.Group controlId="email" className="mb-3">
+      <Form className="mt-2" onSubmit={onSubmit}>
+        <Form.Group className="mb-3">
           <Form.Control
-            type="email"
-            required
+            type="text"
             placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            disabled={login.isLoading}
+            {...register("email")}
           />
-          <Form.Control.Feedback type="invalid">
-            Please enter a valid email address
-          </Form.Control.Feedback>
+          {errors.email && (
+            <Form.Text className="text-danger">
+              {errors.email.message}
+            </Form.Text>
+          )}
         </Form.Group>
 
-        <Form.Group controlId="password" className="mb-3">
+        <Form.Group className="mb-3">
           <Form.Control
             type="password"
-            required
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            disabled={login.isLoading}
+            {...register("password")}
           />
-          <Form.Control.Feedback type="invalid">
-            Please enter a password
-          </Form.Control.Feedback>
+          {errors.password && (
+            <Form.Text className="text-danger">
+              {errors.password.message}
+            </Form.Text>
+          )}
         </Form.Group>
 
         <SpinButton text="Login" className="w-100" loading={login.isLoading} />
       </Form>
 
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {login.isError && (
+        <div className="alert alert-danger mt-3">
+          {getErrorMessage(login.error)}
+        </div>
+      )}
 
       <p className="mt-4">
         <span className="me-2">Don't have an account?</span>

@@ -3,11 +3,17 @@ import { ICredentials, IRegistration, IUser } from "../interfaces";
 import { useAuth } from "../../context/AuthContext";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-export function useRegister() {
-  return useMutation((details: IRegistration) => api.register(details));
+export function useRegister(successCallback?: (user: IUser) => void) {
+  return useMutation((details: IRegistration) => api.register(details), {
+    onSuccess: (user: IUser) => {
+      if (successCallback) {
+        successCallback(user);
+      }
+    },
+  });
 }
 
-export function useLogin() {
+export function useLogin(successCallback?: (user: IUser) => void) {
   const queryClient = useQueryClient();
   const auth = useAuth();
 
@@ -16,6 +22,10 @@ export function useLogin() {
       auth.setCurrentUser(user);
       queryClient.invalidateQueries("news");
       queryClient.invalidateQueries("post");
+
+      if (successCallback) {
+        successCallback(user);
+      }
     },
   });
 }
