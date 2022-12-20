@@ -1,21 +1,15 @@
-![](https://img.shields.io/github/license/adamnicol/portfolio) 
-![](https://img.shields.io/github/last-commit/adamnicol/portfolio)
-![](https://img.shields.io/github/languages/count/adamnicol/portfolio)
-![](https://img.shields.io/github/languages/top/adamnicol/portfolio)
-
 # Server
-This is the backend API for my online portfolio and blog.
+A Node.js backend API for my online portfolio and blog.
 
 ## Features
-- Authentication with access and refresh tokens.
-- User roles with Express.js middleware.
-- Password hashing using bcrypt.
-- Rate limiting for added security.
-- Account activation using nodemailer and handlebars.
+- Written using Typescript and Express.
+- Uses the Prisma ORM with a PostgreSQL database.
 - Schema validation using Zod.
-- Connects to a PostgreSQL database using the Prisma ORM.
+- Authentication using JWT access and refresh tokens.
+- Password hashing using bcrypt.
+- Rate limiting for login and account creation.
+- Activation emails using nodemailer and handlebars.
 - Documentation with Swagger and JSDoc.
-- Fully type safe with Typescript.
 - Deployed using a Dockerfile.
 
 ## Installation and usage
