@@ -5,18 +5,6 @@ export interface IUser {
   active: boolean;
 }
 
-export interface ICredentials {
-  email: string;
-  password: string;
-}
-
-export interface IRegistration {
-  email: string;
-  username: string;
-  password: string;
-  passwordRetype: string;
-}
-
 export interface IUserProfile {
   username: string;
   active: boolean;

@@ -2,8 +2,7 @@ import SpinButton from "../components/button/SpinButton";
 import Status from "../utils/statusCodes";
 import { AxiosError } from "axios";
 import { Form } from "react-bootstrap";
-import { ICredentials } from "../api/interfaces";
-import { LoginSchema } from "../schemas";
+import { Credentials, LoginSchema } from "../schemas";
 import { Register } from "./Register";
 import { useForm } from "react-hook-form";
 import { useLogin } from "../api/queries/user.queries";
@@ -18,7 +17,7 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICredentials>({
+  } = useForm<Credentials>({
     resolver: zodResolver(LoginSchema),
     reValidateMode: "onChange",
   });

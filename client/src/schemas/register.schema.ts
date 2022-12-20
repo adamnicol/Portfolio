@@ -15,3 +15,5 @@ export const RegisterSchema = z
     message: "Passwords do not match",
     path: ["passwordRetype"],
   });
+
+export type Registration = z.infer<typeof RegisterSchema>;

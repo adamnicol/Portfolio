@@ -1,7 +1,8 @@
 import api from "../client";
-import { ICredentials, IRegistration, IUser, IUserProfile } from "../interfaces";
+import { Credentials, Registration } from "../../schemas";
+import { IUser, IUserProfile } from "../interfaces";
 
-export function login(credentials: ICredentials) {
+export function login(credentials: Credentials) {
   return api.post<IUser>("/users/login", credentials);
 }
 
@@ -13,7 +14,7 @@ export function refreshLogin() {
   return api.get<IUser>("/users/refresh");
 }
 
-export function register(details: IRegistration) {
+export function register(details: Registration) {
   return api.post<IUser>("/users/register", details);
 }
 

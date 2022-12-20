@@ -3,8 +3,7 @@ import SpinButton from "../components/button/SpinButton";
 import Status from "../utils/statusCodes";
 import { AxiosError } from "axios";
 import { Form } from "react-bootstrap";
-import { IRegistration } from "../api/interfaces";
-import { RegisterSchema } from "../schemas";
+import { RegisterSchema, Registration } from "../schemas";
 import { useForm } from "react-hook-form";
 import { useModal } from "../hooks";
 import { useRegister } from "../api/queries/user.queries";
@@ -18,7 +17,7 @@ export function Register() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegistration>({
+  } = useForm<Registration>({
     resolver: zodResolver(RegisterSchema),
     reValidateMode: "onChange",
   });
