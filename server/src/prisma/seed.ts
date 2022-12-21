@@ -9,7 +9,7 @@ async function seed() {
     create: {
       email: config.server.contactEmail,
       username: "Adam",
-      password: "",
+      password: "$2b$10$GAVS0QN4KZx.mWRN8ToMZ.TGh7satSFdqQGL8JSsRoSP8fw005cfS",
       role: Role.Admin,
       createdAt: new Date("2022-10-14 22:19:35"),
       active: true,
@@ -36,6 +36,15 @@ async function seed() {
           },
         ],
       },
+      comments: [
+        {
+          id: 1,
+          user_id: user.id,
+          content:
+            "Just testing the comments section. Please leave a comment !!",
+          createdAt: new Date("2022-10-14 23:17:00"),
+        },
+      ],
     },
     {
       title: "Why I changed to Postgres",
@@ -63,7 +72,7 @@ async function seed() {
       author_id: user.id,
       createdAt: new Date("2022-12-19 14:39:41"),
       content:
-        "I haven't had much time to work on the site lately as I’ve been busy redecorating my bathroom amongst other things. I plan to work on it some more in the near future, in particular I would like to make some improvements around the login and sign-up forms. I plan to add client side validation by implementing a library such as Formik or React-hook-form, and add more options such as password resets. I would also like to look into what’s involved in logging in using 3rd party sites (e.g. Github).",
+        "I haven't had much time to work on the site lately as I’ve been busy redecorating my bathroom amongst other things. I plan to work on it some more in the near future, in particular I would like to make some improvements around the login and registration forms. I plan to add client side validation by implementing a library such as Formik or React-hook-form, and add more options such as password resets. I would also like to look into what’s involved in logging in using 3rd party sites (e.g. Github).",
       tags: {
         connectOrCreate: [
           {
@@ -72,15 +81,35 @@ async function seed() {
           },
         ],
       },
+      comments: [
+        {
+          id: 2,
+          user_id: user.id,
+          content:
+            "Form validation has now been implemented using React-hook-form and Zod schemas. After some research react-hook-form had the best performance and the best typescript support.",
+          createdAt: new Date("2022-12-21 15:56:00"),
+        },
+      ],
     },
   ];
 
   for (const post of posts) {
-    await db.post.upsert({
+    const result = await db.post.upsert({
       where: { slug: post.slug },
-      update: post,
-      create: post,
+      update: { ...post, comments: undefined },
+      create: { ...post, comments: undefined },
+      select: { id: true },
     });
+
+    if (post.comments) {
+      for (const comment of post.comments) {
+        await db.comment.upsert({
+          where: { id: comment.id },
+          update: { ...comment, post_id: result.id },
+          create: { ...comment, post_id: result.id },
+        });
+      }
+    }
   }
 }
 
