@@ -6,11 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 export function useRegister(successCallback?: (user: IUser) => void) {
   return useMutation((details: Registration) => api.register(details), {
-    onSuccess: (user: IUser) => {
-      if (successCallback) {
-        successCallback(user);
-      }
-    },
+    onSuccess: successCallback,
   });
 }
 

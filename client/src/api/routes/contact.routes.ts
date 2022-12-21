@@ -1,6 +1,6 @@
 import api from "../client";
-import { IMessage } from "../interfaces";
+import { Message } from "../../schemas/contact.schema";
 
-export function contact(message: IMessage) {
-  return api.post<IMessage>("/contact", message);
+export function contact(message: Message) {
+  return api.post<Message>("/contact", message);
 }

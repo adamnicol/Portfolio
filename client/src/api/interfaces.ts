@@ -74,9 +74,3 @@ export interface IProject {
   complete: boolean;
   tags: ITag[];
 }
-
-export interface IMessage {
-  name: string;
-  email: string;
-  message: string;
-}

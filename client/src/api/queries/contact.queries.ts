@@ -1,13 +1,13 @@
 import * as api from "../routes/contact.routes";
-import { IMessage } from "../interfaces";
+import { Message } from "../../schemas/contact.schema";
 import { useMutation } from "react-query";
 
 export function useContact() {
-  return useMutation((message: IMessage) => api.contact(message));
+  return useMutation((message: Message) => api.contact(message));
 }
 
 export function useNetlifyContact() {
-  return useMutation((params: { message: IMessage; botfield: string }) =>
+  return useMutation((params: { message: Message; botfield: string }) =>
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
