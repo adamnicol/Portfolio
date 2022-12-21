@@ -7,6 +7,11 @@
     "start": "dotenv -- prisma migrate deploy && prisma db seed && ts-node --files src/server.ts",
     "start-dev": "dotenv -- nodemon --files src/server.ts",
     "build": "tsc",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:generate": "prisma generate",
+    "prisma:seed": "prisma db seed",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:reset": "prisma migrate reset",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix"
   },
