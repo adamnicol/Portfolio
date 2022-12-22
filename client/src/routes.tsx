@@ -4,7 +4,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Experience from "./pages/Experience";
 import Home from "./pages/Home";
-import News from "./pages/news/NewsFeed";
+import News from "./pages/News";
 import NewsFilters from "./pages/news/Filters";
 import Projects from "./pages/projects/ProjectList";
 import ProjectFilters from "./pages/projects/Filters";
