@@ -38,9 +38,13 @@ function Project(props: { project: IProject }) {
           <p>{project.description}</p>
           <div className="d-flex flex-wrap mt-3">
             {project.tags.map((tag) => (
-              <a key={tag.id} className="tag">
+              <Link
+                key={tag.id}
+                className="tag"
+                to={"/projects/?search=" + encodeURIComponent(tag.name)}
+              >
                 {tag.name}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
