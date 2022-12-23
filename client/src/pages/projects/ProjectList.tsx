@@ -8,7 +8,7 @@ function ProjectList() {
   const [projects, setProjects] = useState<IProject[]>(data);
   const [searchParams] = useSearchParams();
 
-  const search = searchParams.get("search");
+  const search = decodeURIComponent(searchParams.get("search") ?? "").trim();
 
   useEffect(() => filterProjects(), [search]);
 
@@ -16,7 +16,7 @@ function ProjectList() {
     let filtered = data;
 
     if (search) {
-      const value = decodeURIComponent(search.toLowerCase()).trim();
+      const value = search.toLowerCase();
       filtered = data.filter(
         (project) =>
           project.name.toLowerCase().includes(value) ||

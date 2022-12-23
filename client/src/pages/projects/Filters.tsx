@@ -4,13 +4,11 @@ import { useSearchParams } from "react-router-dom";
 function ProjectFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const search = decodeURIComponent(searchParams.get("search") ?? "");
+
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
-    const params = new URLSearchParams(searchParams);
-    if (e.target.value) {
-      params.set("search", encodeURIComponent(e.target.value.trim()));
-    } else {
-      params.delete("search");
-    }
+    const params = new URLSearchParams();
+    params.set("search", encodeURIComponent(e.target.value));
     setSearchParams(params);
   }
 
@@ -20,7 +18,7 @@ function ProjectFilters() {
       <Form.Control
         size="sm"
         placeholder="Search"
-        value={decodeURIComponent(searchParams.get("search") ?? "")}
+        value={search}
         onChange={handleSearch}
         maxLength={50}
       />
