@@ -7,6 +7,7 @@ This is the front end for my online portfolio and blog.
 - Connects to a Node.js backend API using Axios.
 - Data is prefetched and cached using React-query.
 - Form validation using React-hook-form and Zod.
+- Unit tests with Jest and React testing library.
 
 ## Installation and usage
 1) Clone the repository:
