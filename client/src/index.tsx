@@ -6,6 +6,7 @@ import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -20,6 +21,7 @@ root.render(
           <Route path="/404" element={<NotFound />} />
           <Route path="/*" element={<App />} />
         </Routes>
+        <ReactQueryDevtools position="bottom-right" />
       </BrowserRouter>
     </AppContextProvider>
   </React.StrictMode>
