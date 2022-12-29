@@ -1,17 +1,21 @@
 import Login from "../Login";
 import { faHeart, faMessage } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
+import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatRelative } from "../../utils/dateFormatter";
 import { INewsPost } from "../../api/interfaces";
 import { Link } from "react-router-dom";
+import { ShareLinks } from "../../components";
 import { useAuth, useModal } from "../../hooks";
 import { useLikePost } from "../../api/queries/news.queries";
+import { useState } from "react";
 
 function NewsPost(props: { content: INewsPost; limit?: number }) {
   const { content: post, limit } = props;
+  const [showShareLinks, setShowShareLinks] = useState(false);
 
-  const url = `/news/${post.slug}`;
+  const path = `/news/${post.slug}`;
   const content =
     limit && post.content.length > limit
       ? post.content.substring(0, Math.min(post.content.length, limit)).trim()
@@ -31,7 +35,7 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
 
   return (
     <article className="mt-3">
-      <Link to={url}>
+      <Link to={path}>
         <h4>{post.title}</h4>
       </Link>
       <p>
@@ -39,7 +43,7 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
         {limit && post.content.length > limit && (
           <span>
             ...
-            <Link to={url} className="ms-2">
+            <Link to={path} className="ms-2">
               Read more
             </Link>
           </span>
@@ -47,7 +51,7 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
       </p>
       <hr className="mb-2" />
       <div className="d-flex text-primary text-small">
-        <Link to={url} title="Comments">
+        <Link to={path} title="Comments">
           <FontAwesomeIcon icon={faMessage} size="sm" /> {post.comments}
         </Link>
 
@@ -66,10 +70,20 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
         </span>
         {post.likes}
 
+        <a className="ms-2" onClick={() => setShowShareLinks(!showShareLinks)}>
+          <FontAwesomeIcon icon={faShare} size="sm" title="Share" />
+        </a>
+
         <span className="ms-auto text-secondary text-small">
           Posted {formatRelative(post.createdAt)}
         </span>
       </div>
+
+      <ShareLinks
+        title={post.title}
+        url={`${window.location.hostname}${path}`}
+        visible={showShareLinks}
+      />
     </article>
   );
 }
