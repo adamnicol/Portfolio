@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 export function Register() {
   const modal = useModal();
-  const signUp = useRegister(() => modal.close());
+  const signUp = useRegister(modal.close);
 
   const {
     register,
@@ -47,7 +47,7 @@ export function Register() {
   }
 
   return (
-    <div className="login-form">
+    <>
       <h2>Register</h2>
 
       <Form className="mt-2" onSubmit={onSubmit}>
@@ -126,6 +126,6 @@ export function Register() {
           Login
         </a>
       </p>
-    </div>
+    </>
   );
 }
