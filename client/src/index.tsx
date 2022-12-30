@@ -7,6 +7,10 @@ import reportWebVitals from "./reportWebVitals";
 import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { sentry } from "./lib/sentry";
+
+// Enable error monitoring
+sentry.init();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
