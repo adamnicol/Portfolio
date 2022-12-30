@@ -10,16 +10,22 @@
   padding-right: 25px;
 }
 
-.menu-collapsed {
+.menuCollapsed {
   display: none;
 }
 
-.menu-toggle {
+.menuToggle {
   cursor: pointer;
   float: right;
 }
 
-.menu-links {
+.menuLinks {
   margin-top: 10px;
   padding: 35px;
+}
+
+@media (min-width: 576px) {
+  .menu {
+    display: none;
+  }
 }

@@ -8,7 +8,7 @@ import { useAuth, useModal } from "../../hooks";
 import { useLogout } from "../../api/queries/user.queries";
 import { useState } from "react";
 
-import "./HamburgerMenu.css";
+import styles from "./HamburgerMenu.module.css";
 
 function HamburgerMenu() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -30,20 +30,20 @@ function HamburgerMenu() {
   return (
     <div>
       <FontAwesomeIcon
-        className="menu-toggle"
+        className={styles.menuToggle}
         icon={faBars}
         onClick={() => setIsOpen(true)}
       />
 
       <Portal target="portal-root">
-        <div className={isOpen ? "menu mobile-only" : "menu-collapsed"}>
+        <div className={isOpen ? styles.menu : styles.menuCollapsed}>
           <FontAwesomeIcon
-            className="menu-toggle"
+            className={styles.menuToggle}
             icon={faClose}
             onClick={() => setIsOpen(false)}
           />
 
-          <div className="d-flex flex-column menu-links">
+          <div className={`d-flex flex-column ${styles.menuLinks}`}>
             <span>
               <FontAwesomeIcon icon={faLock} className="me-3" />
               <a onClick={handleLoginClicked}>

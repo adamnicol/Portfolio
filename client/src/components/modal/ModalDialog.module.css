@@ -14,12 +14,12 @@
   overflow-y: auto;
 }
 
-.dark .modal {
+:global(.dark) .modal {
   background-color: black;
   border: 1px solid teal;
 }
 
-.modal-overlay {
+.modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -30,7 +30,7 @@
   opacity: 0.7;
 }
 
-.modal-close {
+.modalClose {
   position: absolute;
   top: 0;
   right: 0;

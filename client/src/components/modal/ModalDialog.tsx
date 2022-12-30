@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import "./ModalDialog.css";
+import styles from "./ModalDialog.module.css";
 
 export type ModalProps = {
   visible: boolean;
@@ -12,9 +12,9 @@ export function ModalDialog(props: ModalProps) {
   if (!props.visible) return null;
   return (
     <>
-      <div className="modal-overlay" onClick={props.onRequestClose} />
-      <div className="modal">
-        <a className="modal-close" onClick={props.onRequestClose}>
+      <div className={styles.modalOverlay} onClick={props.onRequestClose} />
+      <div className={styles.modal}>
+        <a className={styles.modalClose} onClick={props.onRequestClose}>
           &times;
         </a>
         {props.children}
