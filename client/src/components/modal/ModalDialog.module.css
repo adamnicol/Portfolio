@@ -38,6 +38,8 @@
   font-size: 30px;
   color: black;
   text-decoration: none;
+  border: none;
+  background: none;
 }
 
 @media (max-width: 768px) {

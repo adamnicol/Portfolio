@@ -14,9 +14,9 @@ export function ModalDialog(props: ModalProps) {
     <>
       <div className={styles.modalOverlay} onClick={props.onRequestClose} />
       <div className={styles.modal}>
-        <a className={styles.modalClose} onClick={props.onRequestClose}>
+        <button className={styles.modalClose} onClick={props.onRequestClose}>
           &times;
-        </a>
+        </button>
         {props.children}
       </div>
     </>
