@@ -1,6 +1,7 @@
 import SpinButton from "../components/button/SpinButton";
 import { ContactSchema, Message } from "../schemas";
 import { Form } from "react-bootstrap";
+import { Recaptcha, resetCaptcha } from "../components/Recaptcha";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNetlifyContact } from "../api/queries/contact.queries";
@@ -13,6 +14,7 @@ function Contact() {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<Message>({
     resolver: zodResolver(ContactSchema),
@@ -24,17 +26,24 @@ function Contact() {
   useEffect(() => {
     if (contact.isSuccess) {
       reset();
+      resetCaptcha();
     }
   }, [contact.isSuccess]);
 
-  const onSubmit = handleSubmit((message) => {
+  function handleCaptcha(token: string | null) {
+    if (token) {
+      setValue("captcha", token, { shouldValidate: true });
+    }
+  }
+
+  const onSubmit = handleSubmit(async (message) => {
     contact.mutate({ message, botfield });
   });
 
   return (
     <div className="contact-form">
       <h1>Contact</h1>
-
+      <p>Please contact me using the form below.</p>
       <Form name="contact" method="post" className="mt-3" onSubmit={onSubmit}>
         <Form.Group className="d-none mb-3">
           <Form.Control
@@ -78,11 +87,18 @@ function Contact() {
           </Form.Text>
         </Form.Group>
 
+        <Form.Group className="mb-3">
+          <Recaptcha onChange={handleCaptcha} />
+          <Form.Text className="text-danger">
+            {errors.captcha && "Please confirm you are human"}
+          </Form.Text>
+        </Form.Group>
+
         <SpinButton text="Send" loading={contact.isLoading} />
       </Form>
 
       {contact.isSuccess && <p className="mt-4">Your message has been sent</p>}
-      {contact.isError && <p className="mt-4">An unknown error occurred</p>}
+      {contact.isError && <p className="mt-4">Something went wrong :(</p>}
     </div>
   );
 }

@@ -14,7 +14,9 @@ export function useNetlifyContact() {
       body: encode({
         "form-name": "contact",
         "bot-field": params.botfield,
+        "g-recaptcha-response": params.message.captcha,
         ...params.message,
+        captcha: undefined,
       }),
     })
   );
