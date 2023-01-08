@@ -250,4 +250,4 @@ router.post("/:id/like", requireUser(Role.User), asyncHandler(controller.likePos
  */
 router.post("/:id/unlike", requireUser(Role.User), asyncHandler(controller.unlikePost));
 
-module.exports = router;
+export default router;

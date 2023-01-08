@@ -123,4 +123,4 @@ router.get("/activate/:token", asyncHandler(controller.activateAccount));
  */
 router.get("/:username", asyncHandler(controller.getProfile));
 
-module.exports = router;
+export default router;
