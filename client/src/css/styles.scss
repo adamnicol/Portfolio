@@ -104,7 +104,7 @@ header {
 @media (min-width: 769px) {
   .container-fluid {
     padding: 20px;
-    padding-left: $nav-full + 20px;
+    padding-left: $nav-full + 25px;
   }
 }
 
@@ -178,6 +178,12 @@ a:focus {
 .bullet {
   color: $theme-accent;
   margin-right: 8px;
+  transition: 0.3s ease all;
+}
+
+.animate-bullet:hover .bullet {
+  margin-left: -10px;
+  padding-right: 10px;
 }
 
 .vr {

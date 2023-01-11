@@ -29,9 +29,9 @@ function NewsFilters() {
         <h2>Top Posts</h2>
         <ul className="list-unstyled">
           {posts.data?.map((post, index) => (
-            <li key={index}>
+            <li key={index} className="animate-bullet">
               <FontAwesomeIcon icon={faArrowRight} className="bullet" />
-              <Link to={"/news/" + post.slug} className="fw-bold">
+              <Link to={`/news/${post.slug}`} className="fw-bold">
                 {post.title}
               </Link>
             </li>
