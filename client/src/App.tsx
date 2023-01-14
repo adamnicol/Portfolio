@@ -1,3 +1,4 @@
+import { ErrorBoundary, ErrorFallback } from "./components";
 import { MainRoutes, AsideRoutes } from "./routes";
 
 import Header from "./pages/layout/Header";
@@ -13,16 +14,20 @@ function App() {
       <Header />
       <SidePanel />
       <div className="container-fluid">
-        <div className="row">
-          <main className="col-xl-8 content">
-            <MainRoutes />
-          </main>
-          <div className="col">
-            <aside>
-              <AsideRoutes />
-            </aside>
+        <ErrorBoundary fallback={<ErrorFallback />}>
+          <div className="row">
+            <main className="col-xl-8 content">
+              <MainRoutes />
+            </main>
+            <div className="col">
+              <aside>
+                <ErrorBoundary>
+                  <AsideRoutes />
+                </ErrorBoundary>
+              </aside>
+            </div>
           </div>
-        </div>
+        </ErrorBoundary>
       </div>
       <Footer />
     </div>

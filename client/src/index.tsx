@@ -4,12 +4,12 @@ import NotFound from "./pages/NotFound";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ErrorBoundary, ErrorFallback, ScrollToTop } from "./components";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { sentry } from "./lib/sentry";
 
-// Enable error monitoring
+// Enable error logging
 sentry.init();
 
 const root = ReactDOM.createRoot(
@@ -18,16 +18,18 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <AppContextProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/404" element={<NotFound />} />
-          <Route path="/*" element={<App />} />
-        </Routes>
-        <ReactQueryDevtools position="bottom-right" />
-      </BrowserRouter>
-    </AppContextProvider>
+    <BrowserRouter>
+      <ErrorBoundary fallback={<ErrorFallback />}>
+        <AppContextProvider>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/404" element={<NotFound />} />
+            <Route path="/*" element={<App />} />
+          </Routes>
+          <ReactQueryDevtools position="bottom-right" />
+        </AppContextProvider>
+      </ErrorBoundary>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
