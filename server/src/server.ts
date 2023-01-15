@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import checkAccessToken from "./middleware/checkAccessToken";
 import compression from "compression";
 import config from "./utils/config";
@@ -14,6 +15,9 @@ import swagger from "./middleware/swagger";
 
 const app = express();
 
+Sentry.init(config.sentry);
+
+app.use(Sentry.Handlers.requestHandler());
 app.use(express.json());
 app.use(cors(config.cors));
 app.use(cookies());
@@ -24,6 +28,7 @@ app.use(requestLogger);
 app.use(checkAccessToken());
 app.use(routes);
 app.use(swagger());
+app.use(Sentry.Handlers.errorHandler());
 app.use(errorHandler);
 
 app.listen(config.server.port, () => {
