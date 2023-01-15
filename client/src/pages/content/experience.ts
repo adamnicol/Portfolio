@@ -14,7 +14,7 @@ export const companies: ICompany[] = [
     logo: "twi.jpg",
     website: "https://www.twi-global.com",
     from: "2012",
-    to: "Present",
+    to: "Now",
     position: "Senior Software Engineer",
     responsibilities: [
       "As the lead developer for one of their flagship applications, I maintain a legacy WinForms codebase, develop new and bespoke features, fix bugs, and do customer releases.",

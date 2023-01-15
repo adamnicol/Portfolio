@@ -28,9 +28,9 @@ async function seed() {
       comments: [
         {
           user_id: user.id,
+          createdAt: new Date("2022-10-14 23:17:00"),
           content:
             "Just testing the comments section. Please leave a comment !!",
-          createdAt: new Date("2022-10-14 23:17:00"),
         },
       ],
     },
@@ -51,13 +51,30 @@ async function seed() {
       createdAt: new Date("2022-12-19 14:39:41"),
       tags: ["website"],
       content:
-        "I haven't had much time to work on the site as I’ve been busy lately. I plan to work on it some more in the near future, in particular I would like to make some improvements around the login and registration forms. I plan to add client side validation by implementing a library such as Formik or React-hook-form, and add more options such as password resets. I would also like to look into what’s involved in logging in using 3rd party sites.",
+        "I haven't had much time to work on the site as I’ve been busy lately. I plan to work on it some more in the near future, in particular I would like to make some improvements around the login and registration forms. I plan to add client side validation by implementing a library such as Formik or React-hook-form, and add more options such as password resets. I would also like to look into logging in using 3rd party sites.",
       comments: [
         {
           user_id: user.id,
+          createdAt: new Date("2022-12-21 15:56:00"),
           content:
             "Form validation has now been implemented using React-hook-form and Zod schemas. After some research react-hook-form had the best performance and the best typescript support.",
-          createdAt: new Date("2022-12-21 15:56:00"),
+        },
+      ],
+    },
+    {
+      title: "Error logging with Sentry",
+      slug: "error-logging-with-sentry",
+      author_id: user.id,
+      createdAt: new Date("2023-01-15 17:36:01"),
+      tags: ["website", "features"],
+      content:
+        "Sentry is now being used for error logging on both the front and backend. They have a very generous free tier which is more than enough for this site. It was very easy to set up, although I did run into a problem with my ad blocker stopping the reports from being uploaded to Sentry. After reading the documentation I found that I could get around this by tunnelling the requests via my backend and now it’s working well.",
+      comments: [
+        {
+          user_id: user.id,
+          createdAt: new Date("2023-01-15 17:45:21"),
+          content:
+            "I might enable the tracing features at some point. I don't want to slow the site down too much by sending a lot of extra data, and turning down the sample rate seemed to affect the error logging as well.",
         },
       ],
     },
@@ -79,7 +96,12 @@ async function seed() {
     await db.post.upsert({
       where: { slug: post.slug },
       update: { ...data, comments: undefined },
-      create: { ...data, comments: { createMany: { data: post.comments } } },
+      create: {
+        ...data,
+        comments: {
+          createMany: { data: post.comments },
+        },
+      },
     });
   }
 }
