@@ -1,16 +1,17 @@
 # Server
-A Node.js backend API for my online portfolio and blog.
+This is the backend rest API for my online portfolio and blog.
 
 ## Features
-- Written using Typescript and Express.
+- Written using Node/Express and Typescript.
 - Uses the Prisma ORM with a PostgreSQL database.
-- Schema validation using Zod.
-- Authentication using JWT access and refresh tokens.
-- Password hashing using bcrypt.
-- Rate limiting for login and account creation.
+- Requests are validated using Zod schemas.
+- Authentication with JWT access and refresh tokens.
+- Passwords are hashed using bcrypt.
 - Activation emails using nodemailer and handlebars.
+- Rate limiting for login and account creation.
 - Documentation with Swagger and JSDoc.
-- Deployed using a Dockerfile.
+- Error logging using Sentry.io.
+- Deployed using Docker.
 
 ## Installation and usage
 1) Clone the repository:

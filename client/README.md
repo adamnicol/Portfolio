@@ -2,12 +2,14 @@
 This is the front end for my online portfolio and blog.
 
 ## Features
-- Written in React and Typescript.
-- Uses Bootstrap and Sass for styling.
-- Connects to a Node.js backend API using Axios.
-- Data is prefetched and cached using React-query.
-- Form validation using React-hook-form and Zod.
-- Unit tests with Jest and React testing library.
+- Written using React and Typescript.
+- Uses Bootstrap and SCSS for styling.
+- Connects to a rest API using Axios.
+- Data is preloaded and cached using React-query.
+- Authentication with JWT access and refresh tokens.
+- Forms are validated using React-hook-form and Zod.
+- Unit testing with Jest and React testing library.
+- Error logging using Sentry.io.
 
 ## Installation and usage
 1) Clone the repository:
