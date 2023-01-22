@@ -11,7 +11,7 @@ export function News() {
   return (
     <>
       {tag && <h1>Tag: {decodeURIComponent(tag)}</h1>}
-      <NewsFeed />
+      <NewsFeed tag={tag} />
     </>
   );
 }

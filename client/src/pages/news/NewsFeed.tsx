@@ -2,16 +2,18 @@ import { NewsPost } from "./NewsPost";
 import { Pagination } from "../../components";
 import { useGetNews } from "../../api/queries/news.queries";
 import { usePagination } from "../../hooks";
-import { useSearchParams } from "react-router-dom";
 
 const POSTS_PER_PAGE = 5;
 const MAX_POST_LENGTH = 400;
 
-export function NewsFeed() {
-  const [searchParams] = useSearchParams();
+export type NewsFeedProps = {
+  tag?: string | null;
+};
+
+export function NewsFeed(props: NewsFeedProps) {
+  const { tag } = props;
   const { page, limit, offset } = usePagination(POSTS_PER_PAGE);
 
-  const tag = searchParams.get("tag");
   const news = useGetNews({ limit, offset, tag });
 
   if (news.isLoading) {
