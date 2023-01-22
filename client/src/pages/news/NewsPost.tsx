@@ -1,18 +1,22 @@
-import Login from "../Login";
+import * as date from "../../utils/dateFormatter";
 import { faHeart, faMessage } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { formatRelative } from "../../utils/dateFormatter";
 import { INewsPost } from "../../api/interfaces";
 import { Link } from "react-router-dom";
 import { ShareLinks } from "../../components";
-import { useAuth, useModal } from "../../hooks";
 import { useLikePost } from "../../api/queries/news.queries";
+import { useRequireLogin } from "../../hooks";
 import { useState } from "react";
 
-function NewsPost(props: { content: INewsPost; limit?: number }) {
-  const { content: post, limit } = props;
+type NewsPostProps = {
+  post: INewsPost;
+  limit?: number;
+};
+
+export function NewsPost(props: NewsPostProps) {
+  const { post, limit } = props;
   const [showShareLinks, setShowShareLinks] = useState(false);
 
   const path = `/news/${post.slug}`;
@@ -21,17 +25,14 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
       ? post.content.substring(0, Math.min(post.content.length, limit)).trim()
       : post.content;
 
-  const auth = useAuth();
-  const modal = useModal();
-  const likePost = useLikePost(post);
+  const { requireLogin } = useRequireLogin();
 
-  function handleLikePost() {
-    if (auth.user) {
+  const likePost = useLikePost(post);
+  const handleLikePost = () => {
+    requireLogin(() => {
       likePost.mutate(!post.liked);
-    } else {
-      modal.show(<Login />);
-    }
-  }
+    });
+  };
 
   return (
     <article className="mt-3">
@@ -75,7 +76,7 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
         </a>
 
         <span className="ms-auto text-secondary text-small">
-          Posted {formatRelative(post.createdAt)}
+          Posted {date.formatRelative(post.createdAt)}
         </span>
       </div>
 
@@ -87,5 +88,3 @@ function NewsPost(props: { content: INewsPost; limit?: number }) {
     </article>
   );
 }
-
-export default NewsPost;

@@ -1,45 +1,46 @@
-import NewsPost from "./Post";
-import Pagination from "../../components/Pagination";
-import { useSearchParams } from "react-router-dom";
+import { NewsPost } from "./NewsPost";
+import { Pagination } from "../../components";
 import { useGetNews } from "../../api/queries/news.queries";
+import { usePagination } from "../../hooks";
+import { useSearchParams } from "react-router-dom";
 
-const postsPerPage = 5;
-const maxLength = 400;
+const POSTS_PER_PAGE = 5;
+const MAX_POST_LENGTH = 400;
 
-function NewsFeed() {
+export function NewsFeed() {
   const [searchParams] = useSearchParams();
+  const { page, limit, offset } = usePagination(POSTS_PER_PAGE);
 
   const tag = searchParams.get("tag");
-  const page = Number(searchParams.get("page")) || 1;
-  const offset = (page - 1) * postsPerPage;
-
-  const news = useGetNews({ limit: postsPerPage, offset, tag });
+  const news = useGetNews({ limit, offset, tag });
 
   if (news.isLoading) {
     return (
-      <div>
+      <>
         <div className="spinner-border spinner-border-sm text-primary" />
         <span className="ms-2">Loading</span>
+      </>
+    );
+  }
+
+  if (news.isSuccess) {
+    return (
+      <div className="mt-4">
+        {news.data.posts.map((post, index) => {
+          return <NewsPost key={index} post={post} limit={MAX_POST_LENGTH} />;
+        })}
+
+        {news.data.total > limit && (
+          <Pagination
+            className="pagination-sm justify-content-end mt-4"
+            currentPage={page}
+            totalPages={Math.ceil(news.data.total / limit)}
+            onPageChanged={() => window.scrollTo(0, 0)}
+          />
+        )}
       </div>
     );
   }
 
-  return (
-    <div className="mt-4">
-      {news.data?.posts.map((post, index) => {
-        return <NewsPost key={index} content={post} limit={maxLength} />;
-      })}
-
-      {news.data && news.data.total > postsPerPage && (
-        <Pagination
-          className="pagination-sm justify-content-end mt-4"
-          currentPage={page}
-          totalPages={Math.ceil(news.data.total / postsPerPage)}
-          onPageChanged={() => window.scrollTo(0, 0)}
-        />
-      )}
-    </div>
-  );
+  return <p>Error loading news feed.</p>;
 }
-
-export default NewsFeed;

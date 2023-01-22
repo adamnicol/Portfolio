@@ -1,21 +1,18 @@
-import { useRoutes } from "react-router-dom";
-
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Experience from "./pages/Experience";
 import Home from "./pages/Home";
-import News from "./pages/News";
-import NewsFilters from "./pages/news/Filters";
-import Projects from "./pages/projects/ProjectList";
 import ProjectFilters from "./pages/projects/Filters";
+import Projects from "./pages/projects/ProjectList";
 import SkillList from "./pages/aside/SkillList";
-import ViewPost from "./pages/news/ViewPost";
+import { Article, News, NewsFilters } from "./pages/news";
+import { useRoutes } from "react-router-dom";
 
 export function MainRoutes() {
   return useRoutes([
     { path: "/", element: <Home /> },
     { path: "/news", element: <News /> },
-    { path: "/news/:slug", element: <ViewPost /> },
+    { path: "/news/:slug", element: <Article /> },
     { path: "/about", element: <About /> },
     { path: "/projects", element: <Projects /> },
     { path: "/experience", element: <Experience /> },

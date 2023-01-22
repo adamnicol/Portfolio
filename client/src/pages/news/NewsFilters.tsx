@@ -1,24 +1,24 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { useGetTopTags, useGetTopPosts } from "../../api/queries/news.queries";
+import { useGetTopPosts, useGetTopTags } from "../../api/queries/news.queries";
 
-function NewsFilters() {
+export function NewsFilters() {
   const tags = useGetTopTags(10);
   const posts = useGetTopPosts(10);
 
   return (
-    <div>
+    <>
       <h2>Tags</h2>
       <section className="d-flex flex-wrap">
-        <Link to="/news" className="tag">
+        <Link to="/" className="tag">
           all
         </Link>
         {tags.data?.map((tag, index) => (
           <Link
             key={index}
             className="tag"
-            to={"/news/?tag=" + encodeURIComponent(tag.name)}
+            to={`/news/?tag=${encodeURIComponent(tag.name)}`}
           >
             {tag.name}
           </Link>
@@ -38,8 +38,6 @@ function NewsFilters() {
           ))}
         </ul>
       </section>
-    </div>
+    </>
   );
 }
-
-export default NewsFilters;

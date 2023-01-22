@@ -1,4 +1,4 @@
-import NewsFeed from "./news/NewsFeed";
+import { NewsFeed } from "./news/NewsFeed";
 
 function Home() {
   return (

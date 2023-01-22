@@ -70,7 +70,7 @@ export function useGetComments(filters: ICommentFilters, post?: INewsPost) {
   });
 }
 
-export function usePostComment(filters: ICommentFilters, post?: INewsPost) {
+export function usePostComment(filters: ICommentFilters, post: INewsPost) {
   const queryClient = useQueryClient();
 
   return useMutationWithAuth(
@@ -86,7 +86,7 @@ export function usePostComment(filters: ICommentFilters, post?: INewsPost) {
           });
         }
 
-        const key = ["comments", post?.id, filters];
+        const key = ["comments", post.id, filters];
         const payLoad = queryClient.getQueryData<ICommentPayload>(key);
 
         if (payLoad) {
