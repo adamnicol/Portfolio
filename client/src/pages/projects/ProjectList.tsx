@@ -9,10 +9,9 @@ function ProjectList() {
   const [searchParams] = useSearchParams();
 
   const search = decodeURIComponent(searchParams.get("search") ?? "").trim();
+  const stage = decodeURIComponent(searchParams.get("stage") ?? "").trim();
 
-  useEffect(() => filterProjects(), [search]);
-
-  function filterProjects() {
+  useEffect(() => {
     let filtered = data;
 
     if (search) {
@@ -24,23 +23,34 @@ function ProjectList() {
       );
     }
 
-    setProjects(filtered);
-  }
+    if (stage) {
+      switch (stage.toLowerCase()) {
+        case "complete":
+          filtered = filtered.filter((project) => project.complete);
+          break;
+        case "development":
+          filtered = filtered.filter((project) => !project.complete);
+          break;
+      }
+    }
 
-  if (projects.length === 0) {
-    return (
-      <>
-        <h1>Projects</h1>
-        <p>Your search for "{search}" returned no results.</p>
-      </>
-    );
-  } else {
+    setProjects(filtered);
+  }, [searchParams]);
+
+  if (projects.length > 0) {
     return (
       <>
         <h1>Projects</h1>
         {projects.map((project, index) => (
           <Project key={index} project={project} />
         ))}
+      </>
+    );
+  } else {
+    return (
+      <>
+        <h1>Projects</h1>
+        <p>Your search returned no results.</p>
       </>
     );
   }

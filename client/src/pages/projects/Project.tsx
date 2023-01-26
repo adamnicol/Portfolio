@@ -1,8 +1,15 @@
 import { IProject } from "../../api/interfaces";
 import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 function Project(props: { project: IProject }) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { project } = props;
+
+  function setSearchFilter(tag: string) {
+    searchParams.set("search", encodeURIComponent(tag));
+    setSearchParams(searchParams);
+  }
 
   return (
     <article className="callout">
@@ -38,13 +45,13 @@ function Project(props: { project: IProject }) {
           <p>{project.description}</p>
           <div className="d-flex flex-wrap mt-3">
             {project.tags.map((tag) => (
-              <Link
+              <a
                 key={tag.id}
                 className="tag"
-                to={"/projects/?search=" + encodeURIComponent(tag.name)}
+                onClick={() => setSearchFilter(tag.name)}
               >
                 {tag.name}
-              </Link>
+              </a>
             ))}
           </div>
         </div>
