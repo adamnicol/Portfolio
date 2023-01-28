@@ -15,6 +15,9 @@ const SMTP_FROM = process.env.SMTP_FROM || "";
 const SENTRY_DSN = process.env.SENTRY_DSN || "";
 const SENTRY_ENABLED = Boolean(process.env.SENTRY_ENABLED) || true;
 const SENTRY_TRACE_RATE = Number(process.env.SENTRY_TRACE_RATE) || 1.0;
+const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME || "";
+const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY || "";
+const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET || "";
 
 const config = {
   isDevelopment: NODE_ENV === "development",
@@ -40,6 +43,11 @@ const config = {
     dsn: SENTRY_DSN,
     enabled: SENTRY_ENABLED,
     tracesSampleRate: SENTRY_TRACE_RATE,
+  },
+  cloudinary: {
+    cloudName: CLOUDINARY_CLOUD_NAME,
+    apiKey: CLOUDINARY_API_KEY,
+    apiSecret: CLOUDINARY_API_SECRET,
   },
   auth: {
     saltRounds: 10,

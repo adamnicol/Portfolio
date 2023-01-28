@@ -5,7 +5,7 @@ export const projects: IProject[] = [
     name: "Portfolio",
     description:
       "A fully responsive website that serves as my online portfolio and blog. Written in React, Typescript, and Bootstrap with a rest API on the backend. Data is prefetched and cached using Axios and React-query. Currently deployed on Netlify.",
-    image: "thumbnail.jpg",
+    image: "portfolio_bhowlp",
     website: "https://www.adamnicol.dev",
     github: "https://github.com/adamnicol/Portfolio",
     complete: false,
@@ -19,7 +19,7 @@ export const projects: IProject[] = [
     name: "NodeJS Rest API",
     description:
       "A Node/Express rest API written in Typescript that serves as the backend for my site. Featuring authentication using JWT tokens, schema validation using Zod, and connecting to a PostgreSQL database using the Prisma ORM. Currently deployed using Docker.",
-    image: "nodejs.jpg",
+    image: "nodejs_vx3owd",
     website: "https://api.adamnicol.dev",
     github: "https://github.com/adamnicol/Portfolio",
     complete: false,

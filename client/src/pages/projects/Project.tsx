@@ -1,3 +1,4 @@
+import { Image } from "../../components";
 import { IProject } from "../../api/interfaces";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
@@ -15,11 +16,7 @@ function Project(props: { project: IProject }) {
     <article className="callout">
       <div className="d-flex">
         <div className="d-flex flex-column text-center text-small">
-          <img
-            src={require(`../../assets/${project.image}`)}
-            className="project-image"
-            alt="image"
-          />
+          <Image id={`projects/${project.image}`} className="project-image" />
           <a
             href={project.website}
             title="Website"
