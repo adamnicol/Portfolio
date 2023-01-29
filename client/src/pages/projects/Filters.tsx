@@ -1,4 +1,7 @@
-import { Form } from "react-bootstrap";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Form, InputGroup } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 
 function ProjectFilters() {
@@ -6,6 +9,11 @@ function ProjectFilters() {
 
   const search = decodeURIComponent(searchParams.get("search") ?? "");
   const stage = decodeURIComponent(searchParams.get("stage") ?? "all");
+
+  function clearSearch() {
+    searchParams.delete("search");
+    setSearchParams(searchParams);
+  }
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     const value = encodeURIComponent(e.target.value);
@@ -16,14 +24,24 @@ function ProjectFilters() {
   return (
     <>
       <h2>Filter</h2>
-      <Form.Control
-        size="sm"
-        name="search"
-        placeholder="Search"
-        maxLength={50}
-        value={search}
-        onChange={handleSearch}
-      />
+      <InputGroup>
+        <Form.Control
+          size="sm"
+          name="search"
+          placeholder="Search"
+          maxLength={50}
+          value={search}
+          onChange={handleSearch}
+        />
+        <InputGroup.Text
+          role="button"
+          className="input-button"
+          title={search ? "Clear Search" : "Search"}
+          onClick={clearSearch}
+        >
+          <FontAwesomeIcon icon={search ? faCircleXmark : faSearch} />
+        </InputGroup.Text>
+      </InputGroup>
 
       <div className="form-check mt-3">
         <input
