@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"No tests specified\"",
     "start": "dotenv -- prisma migrate deploy && prisma db seed && ts-node --files src/server.ts",
     "start-dev": "dotenv -- nodemon --files src/server.ts",
     "build": "tsc",

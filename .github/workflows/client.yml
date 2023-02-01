@@ -1,0 +1,43 @@
+name: Client
+
+on: [push, pull_request]
+
+defaults:
+  run:
+    working-directory: ./client
+
+jobs:
+  check:
+    name: Run checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          cache-dependency-path: ./client/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install @microsoft/eslint-formatter-sarif
+
+      - name: Run ESLint
+        run: npx eslint .
+          --config .eslintrc.json
+          --format @microsoft/eslint-formatter-sarif
+          --output-file eslint-results.sarif
+        continue-on-error: true
+
+      - name: Upload results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ./client/eslint-results.sarif
+          wait-for-processing: true
+
+      - run: npm test
+      - run: npm run build
