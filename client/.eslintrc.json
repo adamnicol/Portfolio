@@ -19,5 +19,6 @@
     "react/react-in-jsx-scope": 0,
     "react/no-unescaped-entities": 0,
     "eqeqeq": 2
-  }
+  },
+  "ignorePatterns": ["**/build/*", "**/coverage/*"]
 }
