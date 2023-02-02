@@ -4,9 +4,13 @@
   "editor.formatOnPaste": true,
   "editor.renderFinalNewline": false,
   "files.exclude": {
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/coverage": true
   },
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
-  }
+  },
+  "git.enableCommitSigning": true
 }
