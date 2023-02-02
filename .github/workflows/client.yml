@@ -21,10 +21,31 @@ jobs:
           cache: npm
           cache-dependency-path: ./client/package-lock.json
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: cache-dependencies
+        with:
+          path: ./client/node_modules
+          key: dependencies-client-${{ hashFiles('package-lock.json') }}
+
       - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: |
           npm ci
           npm install @microsoft/eslint-formatter-sarif
+
+      - name: Build
+        run: npm run build
+
+      - name: Run unit tests
+        run: npm test -- --coverage
+
+      - name: Upload test coverage report
+        uses: codecov/codecov-action@v3
+        with:
+          flags: client
+          files: ./client/coverage/coverage-final.json
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Run ESLint
         run: npx eslint .
@@ -38,16 +59,3 @@ jobs:
         with:
           sarif_file: ./client/eslint-results.sarif
           wait-for-processing: true
-
-      - name: Build
-        run: npm run build
-
-      - name: Run unit tests
-        run: npm test -- --coverage
-
-      - name: Upload test coverage
-        uses: codecov/codecov-action@v3
-        with:
-          flags: client
-          files: ./client/coverage/coverage-final.json
-          token: ${{ secrets.CODECOV_TOKEN }}
