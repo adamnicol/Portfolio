@@ -1,6 +1,6 @@
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { menuLinks } from "pages/content/menu";
+import { menuLinks } from "../content/menu";
 import { NavLink } from "react-router-dom";
 import { Themes } from "../../context/ThemeContext";
 import { useMatch } from "react-router";
