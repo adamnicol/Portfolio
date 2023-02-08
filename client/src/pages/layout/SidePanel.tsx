@@ -1,25 +1,10 @@
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { menuLinks } from "pages/content/menu";
 import { NavLink } from "react-router-dom";
 import { Themes } from "../../context/ThemeContext";
 import { useMatch } from "react-router";
 import { useTheme } from "../../hooks";
-import {
-  faHouse,
-  faCircleInfo,
-  faFolderOpen,
-  faStar,
-  faEnvelope,
-  faSun,
-  faMoon,
-} from "@fortawesome/free-solid-svg-icons";
-
-const menuLinks = [
-  { text: "Home", path: "/", icon: faHouse },
-  { text: "About", path: "/about", icon: faCircleInfo },
-  { text: "Projects", path: "/projects", icon: faFolderOpen },
-  { text: "Experience", path: "/experience", icon: faStar },
-  { text: "Contact", path: "/contact", icon: faEnvelope },
-];
 
 function SidePanel() {
   const isNewsPage = useMatch("/news/*");
@@ -30,7 +15,7 @@ function SidePanel() {
   }
 
   return (
-    <nav className="side-panel d-flex position-fixed">
+    <nav className="side-panel d-flex position-fixed mobile-hidden">
       <div className="side-panel-left d-flex flex-column">
         <ul className="list-unstyled">
           {menuLinks.map((link, index) => {

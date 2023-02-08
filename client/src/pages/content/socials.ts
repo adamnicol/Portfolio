@@ -2,7 +2,6 @@ import {
   faGithub,
   faLinkedin,
   faTwitter,
-  faSteam,
 } from "@fortawesome/free-brands-svg-icons";
 
 export default [
@@ -20,10 +19,5 @@ export default [
     name: "Twitter",
     url: "https://twitter.com/",
     icon: faTwitter,
-  },
-  {
-    name: "Steam",
-    url: "https://steamcommunity.com/id/Kobrakai85",
-    icon: faSteam,
   },
 ];

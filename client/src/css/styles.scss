@@ -54,6 +54,10 @@ header {
     width: $nav-full - $nav-compact;
     background-color: $theme-secondary;
     padding-top: 40px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }
 
@@ -91,20 +95,15 @@ header {
   background-size: 100% 3px;
 }
 
-@media (max-width: 768px) {
   .container-fluid {
     padding: 20px;
+  padding-left: $nav-full + 25px;
+
+  @media (max-width: 768px) {
     padding-left: $nav-compact + 20px;
   }
-  .side-panel-right {
-    display: none;
-  }
-}
-
-@media (min-width: 769px) {
-  .container-fluid {
-    padding: 20px;
-    padding-left: $nav-full + 25px;
+  @media (max-width: 576px) {
+    padding-left: 20px;
   }
 }
 
@@ -234,13 +233,13 @@ hr {
 
 .mobile-only {
   @media (min-width: 576px) {
-    display: none;
+    display: none !important;
   }
 }
 
 .mobile-hidden {
   @media (max-width: 576px) {
-    display: none;
+    display: none !important;
   }
 }
 
