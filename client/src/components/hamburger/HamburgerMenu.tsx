@@ -5,9 +5,9 @@ import { faBars, faClose, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { menuLinks } from "../../pages/content/menu";
-import { useAuth, useModal } from "../../hooks";
+import { useAuth, useLostFocus, useModal } from "../../hooks";
 import { useLogout } from "../../api/queries/user.queries";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import styles from "./HamburgerMenu.module.css";
 
@@ -17,6 +17,11 @@ export function HamburgerMenu() {
   const auth = useAuth();
   const modal = useModal();
   const logout = useLogout();
+
+  const menuRef = useRef(null);
+  useLostFocus(menuRef, () => {
+    setIsOpen(false);
+  });
 
   function handleLoginClicked() {
     setIsOpen(false);
@@ -37,7 +42,10 @@ export function HamburgerMenu() {
       />
 
       <Portal target="portal-root">
-        <nav className={isOpen ? styles.menu : styles.menuCollapsed}>
+        <nav
+          ref={menuRef}
+          className={isOpen ? styles.menu : styles.menuCollapsed}
+        >
           <FontAwesomeIcon
             className={styles.menuToggle}
             icon={faClose}
@@ -69,6 +77,7 @@ export function HamburgerMenu() {
                       title={item.text}
                       to={item.path}
                       className="nav-icon"
+                      onClick={() => setIsOpen(false)}
                     >
                       {item.text}
                     </Link>
