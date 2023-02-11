@@ -21,10 +21,9 @@ function About() {
           desktop, using C#, the Microsoft .NET Framework, and SQL databases.
         </p>
         <p>
-          Recently I have been focusing on web development with React and
-          Node.js. This website was intended as a learning project to update my
-          skills and learn modern frameworks and tools. I'm more comfortable as
-          a back-end developer but I'm fairly pleased with how it turned out.
+          Currently I am focusing on web development with React and Node.js.
+          This website was intended as a learning project to update my skills
+          and learn modern frameworks and tools.
         </p>
         <p>
           I would describe myself as self-taught, although I also have an
