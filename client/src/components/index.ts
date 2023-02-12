@@ -4,7 +4,7 @@ import Image from "./Image";
 import Markdown from "./markdown/Markdown";
 import Pagination from "./Pagination";
 import Portal from "./Portal";
-import ScrollToTop from "./ScrollToTop";
+import ScrollToTop from "./scrolling/ScrollToTop";
 import ShareLinks from "./ShareLinks";
 
 export {
