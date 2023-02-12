@@ -1,10 +1,11 @@
 import * as date from "../../utils/dateFormatter";
 import avatar from "../../assets/avatar.jpg";
 import { IComment } from "../../api/interfaces";
+import { Markdown } from "../../components";
 import { useModal } from "../../hooks";
 import { UserProfile } from "../UserProfile";
 
-type CommentProps = {
+export type CommentProps = {
   content: IComment;
 };
 
@@ -31,7 +32,8 @@ export function Comment(props: CommentProps) {
         <span className="text-secondary text-small ms-1">
           - {date.formatRelative(createdAt)}
         </span>
-        <p className="text-small mb-0">{content}</p>
+
+        <Markdown className="text-small mb-0">{content}</Markdown>
       </div>
     </article>
   );

@@ -41,7 +41,7 @@ async function seed() {
       createdAt: new Date("2022-11-10 20:30:14"),
       tags: ["website", "database"],
       content:
-        "This site now uses a Postgres database but that’s not how it started out. Originally the plan was to use MongoDB and the MERN stack. After 15 years working with relational databases I wanted to try something new and NoSQL was just what I was looking for. I'd read that relational data could be stored together, avoiding the need for joins across multiple tables. “Data that is queried together should be stored together” they said. Unfortunately I soon learnt that this was an over simplification. I needed to return news without comments, tags without posts, and aggregation pipelines were becoming a headache. Eventually I decided to split up the data into separate collections but that came with problems of its own. That's when I made the decision to move to Postgres and I haven't looked back since. Don’t get me wrong, I can absolutely see the benefit of NoSQL databases. There are many cases where they are a good choice, but I think it was the wrong approach for this site.",
+        "This site now uses a Postgres database but that’s not how it started out. Originally the plan was to use MongoDB and the MERN stack. After 15 years working with relational databases I wanted to try something new and NoSQL was just what I was looking for. I'd read that relational data could be stored together, avoiding the need for joins across multiple tables. *Data that is queried together should be stored together* they said. Unfortunately I soon learnt that this was an over simplification. I needed to return news without comments, tags without posts, and aggregation pipelines were becoming a headache. Eventually I decided to split up the data into separate collections but that came with problems of its own. That's when I made the decision to move to Postgres and I haven't looked back since. Don’t get me wrong, I can absolutely see the benefit of NoSQL databases. There are many cases where they are a good choice, but I think it was the wrong approach for this site.",
       comments: [],
     },
     {
@@ -76,6 +76,12 @@ async function seed() {
           content:
             "I might enable the tracing features at some point. I don't want to slow the site down too much by sending a lot of extra data, and turning down the sample rate seemed to affect the error logging as well.",
         },
+        {
+          user_id: user.id,
+          createdAt: new Date("2023-02-12 09:48:02"),
+          content:
+            "For more information about Sentry see [www.sentry.io](https://sentry.io)",
+        },
       ],
     },
     {
@@ -93,6 +99,12 @@ async function seed() {
           content:
             "I’m a little concerned about the number of services I’m using for the backend now. I was trying to save money on hosting fees but if it starts to become difficult to manage then I will consider moving to an all-in-one solution such as AWS.",
         },
+        {
+          user_id: user.id,
+          createdAt: new Date("2023-02-12 09:48:02"),
+          content:
+            "For more information about Cloudinary see [www.cloudinary.com](https://cloudinary.com)",
+        },
       ],
     },
     {
@@ -107,7 +119,8 @@ async function seed() {
         {
           user_id: user.id,
           createdAt: new Date("2023-02-10 16:25:59"),
-          content: "For more information about Codedov see www.codecov.io",
+          content:
+            "For more information about Codedov see [www.codecov.io](https://codecov.io)",
         },
       ],
     },

@@ -5,7 +5,7 @@ import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { INewsPost } from "../../api/interfaces";
 import { Link } from "react-router-dom";
-import { ShareLinks } from "../../components";
+import { Markdown, ShareLinks } from "../../components";
 import { useLikePost } from "../../api/queries/news.queries";
 import { useRequireLogin } from "../../hooks";
 import { useState } from "react";
@@ -22,7 +22,9 @@ export function NewsPost(props: NewsPostProps) {
   const path = `/news/${post.slug}`;
   const content =
     limit && post.content.length > limit
-      ? post.content.substring(0, Math.min(post.content.length, limit)).trim()
+      ? `${post.content
+          .substring(0, Math.min(post.content.length, limit))
+          .trim()}... [Read more](${path})`
       : post.content;
 
   const { requireLogin } = useRequireLogin();
@@ -39,17 +41,9 @@ export function NewsPost(props: NewsPostProps) {
       <Link to={path}>
         <h4>{post.title}</h4>
       </Link>
-      <p>
-        {content}
-        {limit && post.content.length > limit && (
-          <span>
-            ...
-            <Link to={path} className="ms-2">
-              Read more
-            </Link>
-          </span>
-        )}
-      </p>
+
+      <Markdown>{content}</Markdown>
+
       <hr className="mb-2" />
       <div className="d-flex text-primary text-small">
         <Link to={path} title="Comments">
