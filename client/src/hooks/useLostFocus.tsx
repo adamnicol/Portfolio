@@ -10,7 +10,7 @@ export function useLostFocus(
 
     return () => {
       document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchend", listener);
+      document.removeEventListener("touchstart", listener);
     };
   }, [ref]);
 
