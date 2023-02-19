@@ -1,9 +1,9 @@
 import { ProgressBar } from "react-bootstrap";
-import { skills } from "../content/skills";
+import { skills } from "./SkillList.content";
 
-function SkillList() {
+export function SkillList() {
   return (
-    <div>
+    <>
       <h2>Skills</h2>
       <ul className="list-unstyled">
         {skills.map((skill, index) => (
@@ -13,8 +13,6 @@ function SkillList() {
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 }
-
-export default SkillList;

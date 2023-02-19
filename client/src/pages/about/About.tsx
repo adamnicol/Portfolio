@@ -1,11 +1,11 @@
-import image from "../assets/logo.jpg";
+import image from "../../assets/logo.jpg";
 
-function About() {
+export function About() {
   return (
     <article>
       <h1>About</h1>
       <div className="callout">
-        <img src={image} className="about-image" />
+        <img src={image} className="about-image" alt="photo" />
         <p>
           I'm a software developer with a passion for writing code, solving
           problems, and learning new things. I enjoy the fast paced and
@@ -35,5 +35,3 @@ function About() {
     </article>
   );
 }
-
-export default About;

@@ -1,10 +1,8 @@
-import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Experience from "./pages/Experience";
 import Home from "./pages/Home";
 import ProjectFilters from "./pages/projects/Filters";
 import Projects from "./pages/projects/ProjectList";
-import SkillList from "./pages/aside/SkillList";
+import { About, Experience, SkillList } from "./pages";
 import { Article, News, NewsFilters } from "./pages/news";
 import { useRoutes } from "react-router-dom";
 

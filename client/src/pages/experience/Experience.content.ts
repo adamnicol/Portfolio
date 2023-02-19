@@ -20,7 +20,7 @@ export const companies: ICompany[] = [
       "As the lead developer for one of their flagship applications, I maintain a legacy WinForms codebase, develop new and bespoke features, fix bugs, and do customer releases.",
       "I architected their next generation of flagship software using C#, WPF, and MVVM.",
       "I designed and built a complex rule engine used for decision making and validation of user data against international welding standards involving hundreds of variables.",
-      "As part of a team I have developed numerous bespoke applications used by major engineering and utility companies around the world. I work with subject matter experts to turn complex requirements into software solutions using agile development methodologies.",
+      "As part of a team I have developed numerous bespoke applications used by major engineering and utility companies around the world. I work with subject matter experts to turn complex business requirements into software solutions using agile development methodologies.",
       "I was tasked with learning React and assessing its suitability to extend their software onto the web. I developed a web application using React, Typescript, Bootstrap, and rest services.",
     ],
   },
