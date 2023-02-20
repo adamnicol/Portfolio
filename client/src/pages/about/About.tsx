@@ -1,4 +1,4 @@
-import image from "../../assets/logo.jpg";
+import image from "@assets/logo.jpg";
 
 export function About() {
   return (
