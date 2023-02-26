@@ -1,12 +1,12 @@
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { menuLinks } from "../content/menu";
+import { menuLinks } from "@data/navigation";
 import { NavLink } from "react-router-dom";
 import { Themes } from "../../context/ThemeContext";
 import { useMatch } from "react-router";
-import { useTheme } from "../../hooks";
+import { useTheme } from "@hooks";
 
-function SidePanel() {
+export function SidePanel() {
   const isNewsPage = useMatch("/news/*");
 
   const { theme, setTheme } = useTheme();

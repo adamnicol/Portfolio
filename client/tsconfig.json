@@ -26,6 +26,7 @@
       "@interfaces": ["api/interfaces"],
       "@components": ["components"],
       "@components/*": ["components/*"],
+      "@data/*": ["data/*"],
       "@hooks": ["hooks"],
       "@schemas": ["schemas"],
       "@utils/*": ["utils/*"]

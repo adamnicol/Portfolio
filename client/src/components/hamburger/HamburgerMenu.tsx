@@ -1,12 +1,12 @@
 import Login from "../../pages/account/Login";
 import Portal from "../Portal";
-import socials from "../../pages/content/socials";
 import { faBars, faClose, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { menuLinks } from "../../pages/content/menu";
-import { useAuth, useLostFocus, useModal } from "../../hooks";
-import { useLogout } from "../../api/queries/user.queries";
+import { menuLinks } from "@data/navigation";
+import { socials } from "@data/socials";
+import { useAuth, useLostFocus, useModal } from "@hooks";
+import { useLogout } from "@api/queries/user.queries";
 import { useRef, useState } from "react";
 
 import styles from "./HamburgerMenu.module.css";

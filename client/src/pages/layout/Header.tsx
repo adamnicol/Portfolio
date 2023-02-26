@@ -1,12 +1,12 @@
-import socials from "../content/socials";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { HamburgerMenu } from "@components/hamburger/HamburgerMenu";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Login } from "../account/Login";
+import { socials } from "@data/socials";
 import { useAuth, useModal } from "@hooks";
 import { useLogout } from "@api/queries/user.queries";
 
-function Header() {
+export function Header() {
   return (
     <header className="d-flex align-items-center">
       <HeaderLeft />
