@@ -1,4 +1,4 @@
-import { AdvancedImage, responsive, lazyload } from "@cloudinary/react";
+import { AdvancedImage, responsive } from "@cloudinary/react";
 import { getImage } from "../lib/cloudinary";
 
 export type ImageProps = {
@@ -19,7 +19,7 @@ export function Image(props: ImageProps) {
       className={props.className}
       width={props.width}
       height={props.height}
-      plugins={[lazyload(), responsive()]}
+      plugins={[responsive()]}
     />
   );
 }
