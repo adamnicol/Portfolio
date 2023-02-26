@@ -291,6 +291,11 @@ p {
   box-shadow: none;
 }
 
+.dark .page-item .page-link {
+  background: $theme-dark-background;
+  border-color: $theme-dark-background2;
+}
+
 .dark img {
   border: 0;
 }
