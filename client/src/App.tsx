@@ -1,9 +1,9 @@
 import { ErrorBoundary, ErrorFallback } from "./components";
 import { MainRoutes, AsideRoutes } from "./routes";
 
-import Header from "./pages/layout/Header";
-import Footer from "./pages/layout/Footer";
-import SidePanel from "./pages/layout/SidePanel";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import SidePanel from "./components/layout/SidePanel";
 
 import "./css/bootstrap.scss";
 import "./css/styles.scss";

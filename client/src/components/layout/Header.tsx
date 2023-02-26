@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { HamburgerMenu } from "@components/hamburger/HamburgerMenu";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { Login } from "../account/Login";
+import { Login } from "../../pages/account/Login";
 import { socials } from "@data/socials";
 import { useAuth, useModal } from "@hooks";
 import { useLogout } from "@api/queries/user.queries";
