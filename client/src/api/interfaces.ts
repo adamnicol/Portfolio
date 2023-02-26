@@ -28,6 +28,7 @@ export interface INewsPost {
   tags?: ITag[];
   createdAt: Date;
   updatedAt: Date;
+  image: string;
 }
 
 export interface INewsPayload {

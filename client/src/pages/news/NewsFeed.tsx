@@ -1,7 +1,7 @@
-import { NewsPost } from "./NewsPost";
-import { Pagination } from "../../components";
-import { useGetNews } from "../../api/queries/news.queries";
-import { usePagination } from "../../hooks";
+import { NewsPost } from "./Post";
+import { Pagination } from "@components";
+import { useGetNews } from "@api/queries/news.queries";
+import { usePagination } from "@hooks";
 
 const POSTS_PER_PAGE = 5;
 const MAX_POST_LENGTH = 400;

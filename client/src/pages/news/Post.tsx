@@ -1,16 +1,16 @@
-import * as date from "../../utils/dateFormatter";
+import * as date from "@utils/dateFormatter";
 import { faHeart, faMessage } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { INewsPost } from "../../api/interfaces";
+import { Image, Markdown, ShareLinks } from "@components";
+import { INewsPost } from "@interfaces";
 import { Link } from "react-router-dom";
-import { Markdown, ShareLinks } from "../../components";
-import { useLikePost } from "../../api/queries/news.queries";
-import { useRequireLogin } from "../../hooks";
+import { useLikePost } from "@api/queries/news.queries";
+import { useRequireLogin } from "@hooks";
 import { useState } from "react";
 
-type NewsPostProps = {
+export type NewsPostProps = {
   post: INewsPost;
   limit?: number;
 };
@@ -38,9 +38,12 @@ export function NewsPost(props: NewsPostProps) {
 
   return (
     <article className="mt-3">
-      <Link to={path}>
-        <h4>{post.title}</h4>
-      </Link>
+      <div className="d-flex align-items-center mb-1">
+        <Image id={`news/${post.image}`} width={25} height={25} />
+        <Link to={path}>
+          <h4 className="ms-2 mb-0">{post.title}</h4>
+        </Link>
+      </div>
 
       <Markdown>{content}</Markdown>
 

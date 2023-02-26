@@ -1,7 +1,7 @@
 import { CommentSection } from "./CommentSection";
-import { ErrorBoundary } from "../../components";
-import { NewsPost } from "./NewsPost";
-import { useGetPost } from "../../api/queries/news.queries";
+import { ErrorBoundary } from "@components";
+import { NewsPost } from "./Post";
+import { useGetPost } from "@api/queries/news.queries";
 import { useParams } from "react-router-dom";
 
 export function Article() {
