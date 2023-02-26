@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { SkillList } from "./SkillList";
-import { skills } from "./SkillList.content";
+import { SkillList, skills } from "./SkillList";
 
 describe("SkillList", () => {
   beforeEach(() => {

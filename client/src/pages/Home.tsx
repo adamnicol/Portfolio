@@ -1,8 +1,8 @@
-import { NewsFeed } from "./news/NewsFeed";
+import { NewsFeed } from "./news";
 
-function Home() {
+export function Home() {
   return (
-    <div>
+    <>
       <h1>Welcome</h1>
       <div className="callout">
         <p>
@@ -12,8 +12,6 @@ function Home() {
         </p>
       </div>
       <NewsFeed />
-    </div>
+    </>
   );
 }
-
-export default Home;

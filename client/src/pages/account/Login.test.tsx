@@ -1,12 +1,12 @@
-import Login from "../pages/Login";
-import Status from "../utils/statusCodes";
+import Login from "./Login";
+import Status from "@utils/statusCodes";
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
 import { AxiosResponse } from "axios";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { useLogin } from "../api/queries/user.queries";
+import { useLogin } from "@api/queries/user.queries";
 
-jest.mock("../api/queries/user.queries.ts");
+jest.mock("@api/queries/user.queries.ts");
 
 describe("Login", () => {
   const mockedUseLogin = useLogin as jest.Mock;

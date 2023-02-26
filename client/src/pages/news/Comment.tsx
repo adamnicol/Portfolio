@@ -1,9 +1,9 @@
-import * as date from "../../utils/dateFormatter";
-import avatar from "../../assets/avatar.jpg";
-import { IComment } from "../../api/interfaces";
-import { Markdown } from "../../components";
-import { useModal } from "../../hooks";
-import { UserProfile } from "../UserProfile";
+import * as date from "@utils/dateFormatter";
+import avatar from "@assets/avatar.jpg";
+import { IComment } from "@api/interfaces";
+import { Markdown } from "@components";
+import { useModal } from "@hooks";
+import { UserProfile } from "../account/UserProfile";
 
 export type CommentProps = {
   content: IComment;

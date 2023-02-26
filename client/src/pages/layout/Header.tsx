@@ -1,10 +1,10 @@
-import HamburgerMenu from "../../components/hamburger/HamburgerMenu";
-import Login from "../Login";
 import socials from "../content/socials";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { HamburgerMenu } from "@components/hamburger/HamburgerMenu";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { useAuth, useModal } from "../../hooks";
-import { useLogout } from "../../api/queries/user.queries";
+import { Login } from "../account/Login";
+import { useAuth, useModal } from "@hooks";
+import { useLogout } from "@api/queries/user.queries";
 
 function Header() {
   return (
@@ -20,7 +20,7 @@ function HeaderLeft() {
   return (
     <>
       <span className="logo">
-        <img src={require("../../assets/logo.jpg")} alt="logo" />
+        <img src={require("@assets/logo.jpg")} alt="logo" />
       </span>
       <span className="title">Adam Nicol</span>
     </>

@@ -1,15 +1,15 @@
-import SpinButton from "../components/button/SpinButton";
-import Status from "../utils/statusCodes";
+import SpinButton from "@components/button/SpinButton";
+import Status from "@utils/statusCodes";
 import { AxiosError } from "axios";
 import { Form } from "react-bootstrap";
-import { Credentials, LoginSchema } from "../schemas";
+import { Credentials, LoginSchema } from "@schemas";
 import { Register } from "./Register";
 import { useForm } from "react-hook-form";
-import { useLogin } from "../api/queries/user.queries";
-import { useModal } from "../hooks";
+import { useLogin } from "@api/queries/user.queries";
+import { useModal } from "@hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-function Login() {
+export function Login() {
   const modal = useModal();
   const login = useLogin(modal.close);
 

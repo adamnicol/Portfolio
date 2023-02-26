@@ -1,8 +1,8 @@
-import Login from "../pages/Login";
-import Status from "../utils/statusCodes";
+import Status from "@utils/statusCodes";
 import { AxiosError } from "axios";
+import { Login } from "../pages/account/Login";
 import { MutationFunction, useMutation, UseMutationOptions } from "react-query";
-import { useAuth, useModal } from "../hooks";
+import { useAuth, useModal } from "@hooks";
 import { useEffect } from "react";
 
 export function useMutationWithAuth<

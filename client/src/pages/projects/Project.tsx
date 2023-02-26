@@ -1,9 +1,9 @@
-import { Image } from "../../components";
-import { IProject } from "../../api/interfaces";
+import { Image } from "@components";
+import { IProject } from "@interfaces";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 
-function Project(props: { project: IProject }) {
+export function Project(props: { project: IProject }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const { project } = props;
 

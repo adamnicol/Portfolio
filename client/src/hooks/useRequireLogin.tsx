@@ -1,4 +1,4 @@
-import Login from "../pages/Login";
+import { Login } from "../pages/account/Login";
 import { useAuth, useModal } from ".";
 
 export function useRequireLogin() {

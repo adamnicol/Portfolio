@@ -1,12 +1,12 @@
 import Login from "./Login";
-import SpinButton from "../components/button/SpinButton";
-import Status from "../utils/statusCodes";
+import SpinButton from "@components/button/SpinButton";
+import Status from "@utils/statusCodes";
 import { AxiosError } from "axios";
 import { Form } from "react-bootstrap";
-import { RegisterSchema, Registration } from "../schemas";
+import { RegisterSchema, Registration } from "@schemas";
 import { useForm } from "react-hook-form";
-import { useModal } from "../hooks";
-import { useRegister } from "../api/queries/user.queries";
+import { useModal } from "@hooks";
+import { useRegister } from "@api/queries/user.queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export function Register() {

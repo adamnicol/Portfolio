@@ -1,13 +1,13 @@
-import SpinButton from "../components/button/SpinButton";
-import { ContactSchema, Message } from "../schemas";
+import SpinButton from "@components/button/SpinButton";
+import { ContactSchema, Message } from "@schemas";
 import { Form } from "react-bootstrap";
-import { Recaptcha, resetCaptcha } from "../components/Recaptcha";
+import { Recaptcha, resetCaptcha } from "@components/Recaptcha";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNetlifyContact } from "../api/queries/contact.queries";
+import { useNetlifyContact } from "@api/queries/contact.queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-function Contact() {
+export function Contact() {
   const [botfield, setBotfield] = useState<string>("");
 
   const {

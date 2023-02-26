@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form, InputGroup } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 
-function ProjectFilters() {
+export function ProjectFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const search = decodeURIComponent(searchParams.get("search") ?? "");

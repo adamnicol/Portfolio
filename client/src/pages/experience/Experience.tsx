@@ -1,4 +1,4 @@
-import { companies, ICompany } from "./Experience.content";
+import { companies, ICompany } from "./Experience.data";
 
 export function Experience() {
   return (

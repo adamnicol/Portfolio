@@ -1,3 +1,10 @@
+export { Home } from "./Home";
 export { About } from "./about/About";
+export { ProjectList } from "./projects/ProjectList";
+export { ProjectFilters } from "./projects/Filters";
 export { Experience } from "./experience/Experience";
 export { SkillList } from "./experience/SkillList";
+export { Contact } from "./Contact";
+export { Login } from "./account/Login";
+export { Register } from "./account/Register";
+export { UserProfile } from "./account/UserProfile";

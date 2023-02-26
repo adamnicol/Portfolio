@@ -1,4 +1,4 @@
-import { companies } from "./Experience.content";
+import { companies } from "./Experience.data";
 import { Experience } from "./Experience";
 import { render, screen, within } from "@testing-library/react";
 
