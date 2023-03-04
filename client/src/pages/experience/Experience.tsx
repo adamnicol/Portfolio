@@ -1,4 +1,8 @@
+import { Collapse } from "react-bootstrap";
 import { companies, ICompany } from "./Experience.data";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 export function Experience() {
   return (
@@ -13,6 +17,8 @@ export function Experience() {
 
 function Company(props: { company: ICompany }) {
   const { company } = props;
+  const [expanded, setExpanded] = useState(true);
+
   return (
     <article className="callout">
       <div className="d-flex text-small text-secondary">
@@ -28,18 +34,28 @@ function Company(props: { company: ICompany }) {
             <a href={company.website} target="_blank" rel="noreferrer">
               {company.name}
             </a>
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              size="xs"
+              className="ms-1"
+              role="button"
+              onClick={() => setExpanded(!expanded)}
+            />
           </h4>
           {company.position}
         </span>
         {company.from} - {company.to}
       </div>
-      <div>
-        <ul>
-          {company.responsibilities.map((entry, index) => (
-            <li key={index}>{entry}</li>
-          ))}
-        </ul>
-      </div>
+
+      <Collapse in={expanded}>
+        <div>
+          <ul>
+            {company.responsibilities.map((entry, index) => (
+              <li key={index}>{entry}</li>
+            ))}
+          </ul>
+        </div>
+      </Collapse>
     </article>
   );
 }
