@@ -1,0 +1,20 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Adam Nicol",
+  "homepage": "www.adamnicol.dev",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "npm-run-all lint:client lint:server",
+    "test": "npm-run-all test:client test:server",
+    "lint:client": "cd client && npm run lint",
+    "lint:server": "cd server && npm run lint",
+    "test:client": "cd client && npm test -- --watchAll=false",
+    "test:server": "cd server && npm test -- --watchAll=false"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "npm-run-all": "^4.1.5"
+  }
+}
