@@ -41,7 +41,8 @@ header {
 
 footer {
   width: 100%;
-  margin-top: 30px;
+  height: $footer-height;
+  margin-top: 20px;
   padding: 30px;
   background-color: $theme-primary;
   color: $nav-text;
@@ -117,6 +118,7 @@ footer {
 
 .content {
   max-width: 850px;
+  min-height: calc(100vh - $footer-height - $nav-compact - 60px);
 }
 
 aside {
