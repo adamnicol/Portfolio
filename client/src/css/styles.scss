@@ -42,14 +42,14 @@ header {
 footer {
   width: 100%;
   height: $footer-height;
-  margin-top: 20px;
+  margin-top: 30px;
   padding: 30px;
   background-color: $theme-primary;
   color: $nav-text;
 }
 
 .side-panel {
-  height: calc(100vh - $nav-compact);
+  height: calc(100dvh - $nav-compact);
   line-height: 50px;
 
   .side-panel-left {
@@ -118,7 +118,7 @@ footer {
 
 .content {
   max-width: 850px;
-  min-height: calc(100vh - $footer-height - $nav-compact - 60px);
+  min-height: calc(100dvh - $nav-compact - $footer-height - 70px);
 }
 
 aside {
