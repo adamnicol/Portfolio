@@ -15,13 +15,31 @@
       "request": "launch",
       "cwd": "${workspaceRoot}/client/",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["start"]
+      "runtimeArgs": ["start"],
+      "env": {
+        "Browser": "none"
+      }
+    },
+    {
+      "name": "Firefox",
+      "type": "firefox",
+      "request": "launch",
+      "reAttach": true,
+      "url": "http://localhost:3000",
+      "enableCRAWorkaround": true
+    },
+    {
+      "name": "Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000"
     }
   ],
   "compounds": [
     {
-      "name": "Server/Client",
-      "configurations": ["Server", "Client"]
+      "name": "Portfolio",
+      "configurations": ["Server", "Client", "Firefox"],
+      "stopAll": true
     }
   ]
 }
