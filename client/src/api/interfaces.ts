@@ -67,11 +67,15 @@ export interface ICommentFilters {
 }
 
 export interface IProject {
+  id: number;
   name: string;
+  slug: string;
   description: string;
-  image: string;
+  thumbnail: string;
   website: string;
   github: string;
   complete: boolean;
   tags: ITag[];
+  features: string[];
+  images: string[];
 }

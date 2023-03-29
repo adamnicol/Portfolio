@@ -8,6 +8,7 @@ import {
   ProjectFilters,
   ProjectList,
   SkillList,
+  ViewProject,
 } from "./pages";
 
 export function MainRoutes() {
@@ -17,6 +18,7 @@ export function MainRoutes() {
     { path: "/news/:slug", element: <Article /> },
     { path: "/about", element: <About /> },
     { path: "/projects", element: <ProjectList /> },
+    { path: "/project/:slug", element: <ViewProject /> },
     { path: "/experience", element: <Experience /> },
     { path: "/contact", element: <Contact /> },
   ]);

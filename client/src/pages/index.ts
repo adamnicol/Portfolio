@@ -8,3 +8,4 @@ export { Contact } from "./Contact";
 export { Login } from "./account/Login";
 export { Register } from "./account/Register";
 export { UserProfile } from "./account/UserProfile";
+export { ViewProject } from "./projects/ViewProject";
