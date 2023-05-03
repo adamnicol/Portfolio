@@ -68,4 +68,32 @@ export const projects: IProject[] = [
     ],
     images: ["swagger_thppju"],
   },
+  {
+    id: 2,
+    name: "Spaced",
+    slug: "spaced",
+    description:
+      "Spaced is a new project I am building using NextJS. Spaced will allow users to design their own digital flashcards for studying and language learning. Spaced repetition algorithms will determine which cards have not been practiced in a while.",
+    thumbnail: "thumbnail_t2ihpp",
+    website: "https://github.com/adamnicol/spaced",
+    github: "https://github.com/adamnicol/spaced",
+    complete: false,
+    tags: [
+      { id: 1, name: "nextjs" },
+      { id: 2, name: "typescript" },
+      { id: 3, name: "mantine" },
+      { id: 4, name: "prisma" },
+      { id: 5, name: "postgres" },
+    ],
+    features: [
+      "Built using NextJS and Typescript",
+      "Mantine for UI controls",
+      "Uses the Prisma ORM with PostgreSQL",
+      "Authentication using NextAuth",
+      "Nodemailer and handlebars for emails",
+      "Error logging using Sentry.io",
+      "Deployed on Vercel and Supabase",
+    ],
+    images: [],
+  },
 ];
