@@ -6,7 +6,7 @@
       "request": "launch",
       "cwd": "${workspaceRoot}/server/",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start-dev"],
+      "runtimeArgs": ["run", "start:dev"],
       "outputCapture": "std"
     },
     {
@@ -25,14 +25,19 @@
       "type": "firefox",
       "request": "launch",
       "reAttach": true,
-      "url": "http://localhost:3000",
-      "enableCRAWorkaround": true
+      "url": "http://localhost:5173",
+      "pathMappings": [
+        {
+          "url": "http://localhost:5173/src",
+          "path": "${workspaceFolder}/client/src"
+        }
+      ]
     },
     {
       "name": "Chrome",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:3000"
+      "url": "http://localhost:5173"
     }
   ],
   "compounds": [

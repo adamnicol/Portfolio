@@ -3,6 +3,7 @@ import { companies, ICompany } from "./Experience.data";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useImage } from "@hooks";
 
 export function Experience() {
   return (
@@ -19,15 +20,13 @@ function Company(props: { company: ICompany }) {
   const { company } = props;
   const [expanded, setExpanded] = useState(true);
 
+  const image = useImage(company.logo);
+
   return (
     <article className="callout">
       <div className="d-flex text-small text-secondary">
         <a href={company.website} target="_blank" rel="noreferrer">
-          <img
-            src={require(`../../assets/${company.logo}`)}
-            className="employer-logo"
-            alt="logo"
-          />
+          <img src={image} className="employer-logo" alt="logo" />
         </a>
         <span className="me-auto">
           <h4 className="mb-0">

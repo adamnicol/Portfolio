@@ -1,3 +1,4 @@
+import logo from "@assets/logo.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { HamburgerMenu } from "@components/hamburger/HamburgerMenu";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -10,7 +11,6 @@ export function Header() {
   return (
     <header className="d-flex align-items-center">
       <HeaderLeft />
-      <span className="me-auto" />
       <HeaderRight />
     </header>
   );
@@ -20,9 +20,9 @@ function HeaderLeft() {
   return (
     <>
       <span className="logo">
-        <img src={require("@assets/logo.jpg")} alt="logo" />
+        <img src={logo} alt="logo" />
       </span>
-      <span className="title">Adam Nicol</span>
+      <span className="title me-auto">Adam Nicol</span>
     </>
   );
 }
@@ -33,7 +33,7 @@ function HeaderRight() {
   const logout = useLogout();
 
   return (
-    <div>
+    <>
       <div className="nav-icon me-4 mobile-only">
         <HamburgerMenu />
       </div>
@@ -45,7 +45,7 @@ function HeaderRight() {
           {auth.user ? "Logout" : "Login"}
         </a>
       </div>
-    </div>
+    </>
   );
 
   function handleLoginLinkClicked() {

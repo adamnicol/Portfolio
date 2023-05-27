@@ -1,6 +1,6 @@
 Dockerfile
 node_modules
-build
+dist
 .git
 .env
 .*ignore

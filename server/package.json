@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"No tests specified\"",
     "start": "dotenv -- prisma migrate deploy && prisma db seed && ts-node --files src/server.ts",
-    "start-dev": "dotenv -- nodemon --files src/server.ts",
+    "start:dev": "dotenv -- nodemon --files src/server.ts",
     "build": "tsc",
     "outdated": "npm outdated",
     "update": "npm update --save",

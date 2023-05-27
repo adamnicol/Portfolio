@@ -1,6 +1,7 @@
 import { AuthContext, ModalContext, ThemeContext } from "../context";
 import { useContext } from "react";
 
+export * from "./useImage";
 export * from "./usePagination";
 export * from "./useRequireLogin";
 export * from "./useMutationWithAuth";
