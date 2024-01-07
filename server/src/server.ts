@@ -27,6 +27,7 @@ app.use(responseTime());
 app.use(requestLogger);
 app.use(checkAccessToken());
 app.use(routes);
+app.use(express.static(__dirname + "/public"));
 app.use(swagger());
 app.use(Sentry.Handlers.errorHandler());
 app.use(errorHandler);
